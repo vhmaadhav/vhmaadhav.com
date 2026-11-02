@@ -1,0 +1,296 @@
+{
+  "basics": {
+    "name": "Maadhav V H",
+    "label": "AI/ML Engineer · On-Device AI",
+    "email": "sid.maadhav@gmail.com",
+    "url": "https://vhmaadhav.com/",
+    "summary": "AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up. ECE undergraduate at KPR Institute of Engineering and Technology, graduating 2028, open to internships.",
+    "location": {
+      "city": "Coimbatore",
+      "region": "Tamil Nadu",
+      "countryCode": "IN"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "vhmaadhav",
+        "url": "https://github.com/vhmaadhav"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "vhmaadhav",
+        "url": "https://linkedin.com/in/vhmaadhav"
+      },
+      {
+        "network": "LeetCode",
+        "username": "vhmaadhav",
+        "url": "https://leetcode.com/u/vhmaadhav/"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "PhobosQ",
+      "position": "Machine Learning Intern",
+      "startDate": "2025-08",
+      "endDate": "2025-10",
+      "highlights": [
+        "Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware."
+      ]
+    },
+    {
+      "name": "Enthu Technology Solutions",
+      "position": "Software Engineering Intern, Embedded Systems",
+      "startDate": "2025-12",
+      "endDate": "2026-01",
+      "highlights": [
+        "Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "KPR Institute of Engineering and Technology",
+      "area": "Electronics and Communication Engineering (Honours in IoT for Smart Systems)",
+      "studyType": "B.E.",
+      "startDate": "2024-09",
+      "endDate": "2028-06",
+      "score": "8.43"
+    }
+  ],
+  "awards": [
+    {
+      "title": "SEMICON India Hackathon 2026, Applied Materials track",
+      "date": "2026-09",
+      "summary": "Runner-up · ₹75,000."
+    },
+    {
+      "title": "Caterpillar Tech Challenge 2026",
+      "date": "2026-06",
+      "summary": "Top 10 of ~1,500 teams · Grand Finale, Chennai."
+    },
+    {
+      "title": "Schneider Electric Yuva Yodha, Challenge 3",
+      "date": "2026",
+      "summary": "selected for Phase 2, with DT Guardian."
+    },
+    {
+      "title": "Arm × Bharat AI-SoC Challenge 2026–27",
+      "date": "2026-10",
+      "summary": "shortlisted for on-device scam detection, as team lead."
+    },
+    {
+      "title": "iQOO Hackathon 2026",
+      "date": "2026-10",
+      "summary": "Grand Finale, 48-h build, Bengaluru."
+    },
+    {
+      "title": "Health-a-thon 2026",
+      "date": "2026-10",
+      "summary": "top 150 of 450+, build sprint."
+    },
+    {
+      "title": "ISRO Bharatiya Antariksh Hackathon",
+      "date": "2026-08",
+      "summary": "Grand Finale shortlist."
+    },
+    {
+      "title": "Qualcomm Snapdragon Multiverse Hackathon",
+      "date": "2026-07",
+      "summary": "selected for on-site build."
+    },
+    {
+      "title": "Atomic Hacks (IIT Bombay × Rosatom)",
+      "date": "2026",
+      "summary": "finalist."
+    },
+    {
+      "title": "Ossomehacks 2.0, SRM IST",
+      "date": "2025-03",
+      "summary": "top 3, Web3 track."
+    }
+  ],
+  "projects": [
+    {
+      "name": "DriftSense",
+      "description": "Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.",
+      "highlights": [
+        "match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600",
+        "public code"
+      ],
+      "keywords": [
+        "runner-up · SEMICON India 2026"
+      ],
+      "url": "https://vhmaadhav.com/work/driftsense/",
+      "roles": [
+        "team lead"
+      ]
+    },
+    {
+      "name": "VehicleGPT",
+      "description": "Ask a car about its own data: a small LLM answering from CAN logs, fully offline.",
+      "highlights": [
+        "hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB",
+        "code private (competition)"
+      ],
+      "keywords": [
+        "Tata Elxsi Teliport S4"
+      ],
+      "url": "https://vhmaadhav.com/work/vehiclegpt/",
+      "roles": [
+        "team lead · benchmark harness"
+      ]
+    },
+    {
+      "name": "Mouna",
+      "description": "Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.",
+      "highlights": [
+        "false utterances 23% → 7% · Kannada top-1 75.3%",
+        "code private"
+      ],
+      "keywords": [
+        "grand finale · iQOO 2026"
+      ]
+    },
+    {
+      "name": "Rakshak-Edge",
+      "description": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
+      "highlights": [
+        "offline on Arm · phase 1 due nov 2026",
+        "code private until phase 1"
+      ],
+      "keywords": [
+        "in progress · Arm × Bharat AI-SoC"
+      ],
+      "roles": [
+        "team lead"
+      ]
+    },
+    {
+      "name": "DT Guardian",
+      "description": "Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.",
+      "highlights": [
+        "energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)",
+        "code private (competition)"
+      ],
+      "keywords": [
+        "phase 2 · Schneider Yuva Yodha"
+      ],
+      "url": "https://vhmaadhav.com/work/dt-guardian/",
+      "roles": [
+        "co-developer (2-person team)"
+      ]
+    },
+    {
+      "name": "Axiom Trace",
+      "description": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
+      "highlights": [
+        "Next.js web + Kotlin app · 176 tests",
+        "code private for now"
+      ],
+      "keywords": [
+        "personal project"
+      ],
+      "roles": [
+        "solo"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "ml · vision",
+      "keywords": [
+        "PyTorch",
+        "scikit-learn",
+        "LightGBM",
+        "OpenCV",
+        "pandas"
+      ]
+    },
+    {
+      "name": "edge ai",
+      "keywords": [
+        "ONNX Runtime",
+        "llama.cpp / GGUF",
+        "Qualcomm AI Hub / QNN",
+        "quantization"
+      ]
+    },
+    {
+      "name": "llm · agents",
+      "keywords": [
+        "RAG",
+        "knowledge graphs",
+        "sentence-transformers",
+        "LLM evaluation"
+      ]
+    },
+    {
+      "name": "languages",
+      "keywords": [
+        "Python",
+        "C",
+        "Java",
+        "TypeScript",
+        "Kotlin",
+        "SQL"
+      ]
+    },
+    {
+      "name": "optimisation",
+      "keywords": [
+        "MILP (PuLP / HiGHS)",
+        "forecasting"
+      ]
+    },
+    {
+      "name": "web · apps",
+      "keywords": [
+        "FastAPI",
+        "Django",
+        "React",
+        "Next.js",
+        "Jetpack Compose"
+      ]
+    },
+    {
+      "name": "embedded",
+      "keywords": [
+        "CAN / SocketCAN",
+        "UART / SPI / I²C",
+        "LoRaWAN",
+        "Linux"
+      ]
+    },
+    {
+      "name": "tooling",
+      "keywords": [
+        "Docker",
+        "GitHub Actions",
+        "pytest",
+        "Git"
+      ]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Bosch EMS & Vehicle Networking"
+    },
+    {
+      "name": "NPTEL Industry 4.0 & IIoT"
+    },
+    {
+      "name": "NPTEL · Electronic Systems for Cancer Diagnosis (IIT Madras, 2026)"
+    },
+    {
+      "name": "AWS AI & ML Scholars 2026"
+    },
+    {
+      "name": "IEEE member"
+    }
+  ],
+  "meta": {
+    "canonical": "https://vhmaadhav.com/resume.json",
+    "lastModified": "2026-11-02T04:47:37.802Z"
+  }
+}

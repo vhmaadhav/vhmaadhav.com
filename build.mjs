@@ -7,14 +7,19 @@
 //   dist/robots.txt   crawl rules, including AI crawlers, plus the sitemap line
 //   dist/sitemap.xml  home URL with lastmod
 //   dist/llms.txt     llmstxt.org summary for LLM crawlers
+//   dist/llms-full.txt  every fact in content.json as markdown
+//   dist/resume.json    JSON Resume (jsonresume.org/schema)
+//   dist/for-agents.txt plain facts with the link that checks each one
 //   dist/leetcode.json  LeetCode snapshot (network; kept if the fetch fails)
-// Every absolute URL comes from site.url in content.json.
+// Every absolute URL comes from site.url in content.json. The agent files
+// and the JSON-LD graph are built by lib/agents.mjs.
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchLeetcode } from './lib/leetcode.mjs';
+import { agentFiles } from './lib/agents.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(here, 'dist');
@@ -30,7 +35,6 @@ if (!site || !site.url) throw new Error('content.json: site.url is required');
 
 const base = site.url.replace(/\/+$/, '');
 const home = `${base}/`;
-const personId = `${home}#person`;
 const now = new Date();
 const today = [
   now.getFullYear(),
@@ -42,16 +46,6 @@ const hasPng = existsSync(path.join(distDir, 'og.png'));
 const ogImage = `${base}/${hasPng ? 'og.png' : 'og.svg'}`;
 const ogType = hasPng ? 'image/png' : 'image/svg+xml';
 const ogAlt = `${profile.name}, ${profile.role}`;
-
-const link = (label) => profile.links.find((l) => l.label === label)?.url;
-const emailLink = link('email');
-const sameAs = ['github', 'linkedin', 'leetcode'].map(link).filter(Boolean);
-
-const absolute = (url) => (/^(https?:|mailto:)/.test(url) ? url : `${base}/${url}`);
-const slug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-const [locality = '', region = ''] = profile.location.split(',').map((s) => s.trim());
-const college = (data.education[0]?.title || '').split(',')[0].trim();
 
 // LeetCode snapshot for the page's heatmap. A failed fetch keeps the last file.
 async function writeLeetcode() {
@@ -93,68 +87,12 @@ function seoHead() {
   ].join('\n  ');
 }
 
-function jsonLd() {
-  const person = {
-    '@type': 'Person',
-    '@id': personId,
-    name: profile.name,
-    alternateName: ['Maadhav VH', profile.handle, 'Maadhav'],
-    jobTitle: 'AI/ML Engineer',
-    description: `${site.description} ECE undergraduate graduating 2028.`,
-    url: home,
-    image: ogImage,
-    ...(emailLink ? { email: emailLink } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: locality,
-      addressRegion: region,
-      addressCountry: 'IN'
-    },
-    affiliation: { '@type': 'EducationalOrganization', name: college },
-    knowsAbout: [
-      'machine learning', 'deep learning', 'LLMs', 'on-device AI', 'computer vision',
-      'RAG', 'edge AI', 'embedded systems', 'PyTorch', 'ONNX', 'llama.cpp'
-    ],
-    award: data.wins.map((w) => `${w.event} — ${w.result} (${w.date})`),
-    sameAs
-  };
-
-  const projectNodes = data.projects.map((p) => ({
-    '@type': 'SoftwareSourceCode',
-    '@id': `${home}#project-${slug(p.title)}`,
-    name: p.title,
-    description: p.what,
-    ...(p.url ? { codeRepository: p.url } : {}),
-    author: { '@id': personId }
-  }));
-
-  const profilePage = {
-    '@type': 'ProfilePage',
-    '@id': `${home}#profilepage`,
-    url: home,
-    name: site.title,
-    description: site.description,
-    inLanguage: 'en',
-    dateModified: today,
-    mainEntity: { '@id': personId }
-  };
-
-  const graph = {
-    '@context': 'https://schema.org',
-    '@graph': [profilePage, person, ...projectNodes]
-  };
-
-  // Escape characters that could close the script tag or break HTML parsing.
-  // The escapes are valid JSON string escapes, so JSON.parse still reads them.
-  const json = JSON.stringify(graph, null, 2)
-    .replace(/[<>&]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`);
-  return `<script type="application/ld+json">\n${json}\n  </script>`;
-}
+const agent = agentFiles({ data, now, today, ogImage, durationLabel: SR.durationLabel, distDir });
 
 const template = readFileSync(path.join(here, 'src', 'index.template.html'), 'utf8');
 const html = template
   .replace('{{SEO}}', () => seoHead())
-  .replace('{{JSON_LD}}', () => jsonLd())
+  .replace('{{JSON_LD}}', () => agent.jsonLd)
   .replace('{{CONTENT}}', () => SR.content(data, { now }));
 
 const AI_BOTS = [
@@ -179,45 +117,11 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 </urlset>
 `;
 
-function llmsTxt() {
-  const lines = [
-    `# ${profile.name}`,
-    '',
-    `> ${site.description} ECE undergraduate (2028), open to internships.`,
-    '',
-    profile.bio.join(' '),
-    '',
-    `Role: ${profile.role}. Location: ${profile.location}. Site: ${home}`,
-    '',
-    '## Projects',
-    ...data.projects.map((p) => {
-      const name = p.url ? `[${p.title}](${p.url})` : p.title;
-      return `- ${name}: ${p.what} Proof: ${p.proof}.`;
-    }),
-    `- Also on GitHub: ${data.moreProjects.map((m) => `[${m.name}](${m.url})`).join(', ')}`,
-    '',
-    '## Experience',
-    ...data.experience.map((j) => {
-      const span = `${j.start} to ${j.end || 'present'}, ${SR.durationLabel(j.start, j.end, now)}`;
-      return `- ${j.role}, ${j.company} (${span})${j.description ? `: ${j.description}` : ''}`;
-    }),
-    '',
-    '## Awards',
-    ...data.wins.map((w) => `- ${w.date}: ${w.event}. ${w.result}`),
-    '',
-    '## Links',
-    `- site: ${home}`,
-    ...profile.links.map((l) => {
-      const target = l.label === 'email' ? l.url.replace(/^mailto:/, '') : absolute(l.url);
-      return `- ${l.label}: ${target}`;
-    }),
-    ''
-  ];
-  return lines.join('\n');
-}
-
 writeFileSync(path.join(distDir, 'index.html'), html);
 writeFileSync(path.join(distDir, 'robots.txt'), robots);
 writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap);
-writeFileSync(path.join(distDir, 'llms.txt'), llmsTxt());
+writeFileSync(path.join(distDir, 'llms.txt'), agent.llms);
+writeFileSync(path.join(distDir, 'llms-full.txt'), agent.llmsFull);
+writeFileSync(path.join(distDir, 'resume.json'), agent.resumeJson);
+writeFileSync(path.join(distDir, 'for-agents.txt'), agent.forAgents);
 console.log(`built ${home} (og image: ${ogImage}, lastmod ${today})`);

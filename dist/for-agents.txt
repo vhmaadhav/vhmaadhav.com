@@ -1,0 +1,27 @@
+# plain facts about Maadhav V H, each with a link you can check
+# same facts as the human page at https://vhmaadhav.com/
+# last checked 2026-11-02
+
+name: Maadhav V H
+role: AI/ML Engineer · On-Device AI
+seeking: open to ai/ml & on-device ai internships
+graduating: 2028 (B.E. Electronics and Communication Engineering, KPR Institute of Engineering and Technology)
+location: Coimbatore, Tamil Nadu, India
+contact: sid.maadhav@gmail.com
+site: https://vhmaadhav.com/
+
+claims → evidence
+
+claim                                                         | value                   | evidence                                                                                                                                             | type
+--------------------------------------------------------------+-------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------
+SEMICON India 2026 runner-up                                  | Runner-up · ₹75,000     | https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ | third-party
+DriftSense match F1                                           | 0.91 on 2,250 pairs     | https://github.com/vhmaadhav/semicon-driftsense                                                                                                      | public code
+Hiver email suggested response: held-out eval                 | see repository          | https://github.com/vhmaadhav/hiver-email-suggested-response                                                                                          | public code
+EmbeddingGemma mobile benchmark                               | in progress             | https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark                                                                                         | public code
+Caterpillar Tech Challenge 2026                               | top 10 of ~1,500 teams  | organiser email (not published)                                                                                                                      | self-reported
+VehicleGPT hybrid rules + small LLM, 200 car-signal questions | 29.5% → 95.5%           | https://vhmaadhav.com/work/vehiclegpt/                                                                                                               | self-reported
+DT Guardian energy not served, 6 h outage                     | 121.2 → 56.7 kWh (−53%) | https://vhmaadhav.com/work/dt-guardian/                                                                                                              | self-reported (simulation)
+GitHub activity                                               | public profile          | https://github.com/vhmaadhav                                                                                                                         | live
+LeetCode problems solved                                      | 73 solved               | https://leetcode.com/u/vhmaadhav/                                                                                                                    | live
+
+private code (not public): VehicleGPT, Mouna, Rakshak-Edge, DT Guardian, Axiom Trace. Table rows about these link to a case study or are self-reported.

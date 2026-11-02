@@ -1,0 +1,151 @@
+# Maadhav V H
+
+> AI/ML engineer focused on on-device AI · ECE undergraduate at KPRIET, graduating 2028 · open to AI/ML and on-device AI internships
+
+I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals.
+
+- Site title: Maadhav V H — AI/ML Engineer · On-Device AI
+- Role: ai / ml engineer · on-device ai
+- Status: open to ai/ml & on-device ai internships
+- Location: Coimbatore, Tamil Nadu, India
+- Email: sid.maadhav@gmail.com
+- Site: https://vhmaadhav.com/
+- Résumé (PDF): https://vhmaadhav.com/Maadhav_VH_Resume.pdf
+- GitHub: https://github.com/vhmaadhav
+- LinkedIn: https://linkedin.com/in/vhmaadhav
+- LeetCode: https://leetcode.com/u/vhmaadhav/
+
+## Projects
+
+### DriftSense
+
+- What: Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.
+- Role: team lead
+- Result: match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600
+- Tag: runner-up · SEMICON India 2026
+- Code: public code
+- Case study: https://vhmaadhav.com/work/driftsense/
+- Public repository: https://github.com/vhmaadhav/semicon-driftsense
+
+### VehicleGPT
+
+- What: Ask a car about its own data: a small LLM answering from CAN logs, fully offline.
+- Role: team lead · benchmark harness
+- Result: hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB
+- Tag: Tata Elxsi Teliport S4
+- Code: code private (competition)
+- Case study: https://vhmaadhav.com/work/vehiclegpt/
+
+### Mouna
+
+- What: Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.
+- Result: false utterances 23% → 7% · Kannada top-1 75.3%
+- Tag: grand finale · iQOO 2026
+- Code: code private
+
+### Rakshak-Edge
+
+- What: Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.
+- Role: team lead
+- Result: offline on Arm · phase 1 due nov 2026
+- Tag: in progress · Arm × Bharat AI-SoC
+- Code: code private until phase 1
+
+### DT Guardian
+
+- What: Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.
+- Role: co-developer (2-person team)
+- Result: energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)
+- Tag: phase 2 · Schneider Yuva Yodha
+- Code: code private (competition)
+- Case study: https://vhmaadhav.com/work/dt-guardian/
+
+### Axiom Trace
+
+- What: A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.
+- Role: solo
+- Result: Next.js web + Kotlin app · 176 tests
+- Tag: personal project
+- Code: code private for now
+
+## More public repositories
+
+- [embeddinggemma-mobile-benchmark](https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark)
+- [hiver-email-suggested-response](https://github.com/vhmaadhav/hiver-email-suggested-response)
+
+## Headline results
+
+- runner-up: SEMICON India Hackathon 2026 · Applied Materials track · ₹75,000. Link: https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ
+- top 10 / ~1,500: Caterpillar Tech Challenge 2026 · grand finale, Chennai (interview shortlist).
+- 29.5% → 95.5%: VehicleGPT · hybrid rules + small LLM on 200 car-signal questions. Link: https://vhmaadhav.com/work/vehiclegpt
+
+## Awards
+
+- Sep 2026: SEMICON India Hackathon 2026, Applied Materials track. Runner-up · ₹75,000. Source: https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ
+- Jun 2026: Caterpillar Tech Challenge 2026. Top 10 of ~1,500 teams · Grand Finale, Chennai.
+- 2026: Schneider Electric Yuva Yodha, Challenge 3. selected for Phase 2, with DT Guardian.
+- Oct 2026: Arm × Bharat AI-SoC Challenge 2026–27. shortlisted for on-device scam detection, as team lead.
+- Oct 2026: iQOO Hackathon 2026. Grand Finale, 48-h build, Bengaluru.
+- Oct 2026: Health-a-thon 2026. top 150 of 450+, build sprint.
+- Aug 2026: ISRO Bharatiya Antariksh Hackathon. Grand Finale shortlist.
+- Jul 2026: Qualcomm Snapdragon Multiverse Hackathon. selected for on-site build.
+- 2026: Atomic Hacks (IIT Bombay × Rosatom). finalist.
+- Mar 2025: Ossomehacks 2.0, SRM IST. top 3, Web3 track.
+
+## Experience
+
+### Machine Learning Intern, PhobosQ
+
+- Dates: 2025-08 to 2025-10 (3 months)
+- Summary: Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware.
+
+### Software Engineering Intern, Embedded Systems, Enthu Technology Solutions
+
+- Dates: 2025-12 to 2026-01 (2 months)
+- Summary: Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks.
+
+## Education
+
+### KPR Institute of Engineering and Technology, Coimbatore
+
+- Program: B.E. ECE · Honours in IoT for Smart Systems · CGPA 8.43
+- Dates: 2024 – 2028
+
+## Skills
+
+- ml · vision: PyTorch, scikit-learn, LightGBM, OpenCV, pandas
+- edge ai: ONNX Runtime, llama.cpp / GGUF, Qualcomm AI Hub / QNN, quantization
+- llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation
+- languages: Python, C, Java, TypeScript, Kotlin, SQL
+- optimisation: MILP (PuLP / HiGHS), forecasting
+- web · apps: FastAPI, Django, React, Next.js, Jetpack Compose
+- embedded: CAN / SocketCAN, UART / SPI / I²C, LoRaWAN, Linux
+- tooling: Docker, GitHub Actions, pytest, Git
+
+## Credentials
+
+- Bosch EMS & Vehicle Networking
+- NPTEL Industry 4.0 & IIoT
+- NPTEL · Electronic Systems for Cancer Diagnosis (IIT Madras, 2026)
+- AWS AI & ML Scholars 2026
+- IEEE member
+
+## Off-hours
+
+- Films: interstellar · tenet · mystic river · premam · the martian
+- Note: favourite kind of plot: someone solves an impossible problem with whatever's on hand. same reason i fit llms into 2 gb.
+
+## Verification
+
+- SEMICON India Hackathon 2026, Applied Materials track (Sep 2026): https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ
+- DriftSense case study: https://vhmaadhav.com/work/driftsense/
+- DriftSense public code: https://github.com/vhmaadhav/semicon-driftsense
+- VehicleGPT case study: https://vhmaadhav.com/work/vehiclegpt/
+- DT Guardian case study: https://vhmaadhav.com/work/dt-guardian/
+- embeddinggemma-mobile-benchmark (public code): https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark
+- hiver-email-suggested-response (public code): https://github.com/vhmaadhav/hiver-email-suggested-response
+- github: https://github.com/vhmaadhav
+- leetcode: https://leetcode.com/u/vhmaadhav/
+- linkedin: https://linkedin.com/in/vhmaadhav
+- email: mailto:sid.maadhav@gmail.com
+- resume: https://vhmaadhav.com/Maadhav_VH_Resume.pdf
