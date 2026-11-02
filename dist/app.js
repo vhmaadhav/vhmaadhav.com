@@ -485,7 +485,7 @@
     }
   }
 
-  // The Pages Function first, then the snapshot build.mjs writes next to the page.
+  // The Worker's /api/leetcode route first, then the snapshot build.mjs writes next to the page.
   // If both fail, the link stands in for the heatmap.
   async function loadLeetcode() {
     const host = document.getElementById('leetcode');

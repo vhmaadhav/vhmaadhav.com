@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vhmaadhav-com",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+    // Run the Worker before static assets so the www redirect also covers "/".
+    "run_worker_first": true
+  },
+  "observability": {
+    "enabled": true
+  }
+}

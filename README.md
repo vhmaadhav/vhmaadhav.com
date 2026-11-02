@@ -1,6 +1,6 @@
 # maadhav-site
 
-Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page with a braille hero, GitHub and LeetCode contribution heatmaps, and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Pages Function serves the LeetCode snapshot.
+Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page with a braille hero, GitHub and LeetCode contribution heatmaps, and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Worker (`worker/index.js`) serves the LeetCode snapshot and the static files in `dist/`.
 
 ## Build
 
@@ -20,18 +20,19 @@ python3 -m http.server 4173 --directory dist
 
 Then open http://localhost:4173.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-Create a Pages project from this GitHub repo with these settings:
+The site is a Cloudflare Worker with static assets. `wrangler.jsonc` serves `dist/` as assets and runs `worker/index.js` first. The Worker serves `/api/leetcode` with the same normalisation as the build, cached for six hours, and redirects `www.vhmaadhav.com` to `vhmaadhav.com`. Every other path is served from `dist/`. The page falls back to `dist/leetcode.json`, then to a plain link.
 
-- Framework preset: `None`
+Create the Worker from this GitHub repo with Workers Builds:
+
 - Build command: `node build.mjs`
-- Build output directory: `dist`
+- Deploy command: `npx wrangler deploy`
 - Root directory: `/`
 
-`functions/api/leetcode.js` is a Pages Function. It is picked up automatically from `functions/` at the root, and serves `/api/leetcode` with the same normalisation as the build, cached for six hours. The page falls back to `dist/leetcode.json`, then to a plain link.
+Custom domains: add `vhmaadhav.com` and `www.vhmaadhav.com` under the Worker's Settings → Domains & Routes. The canonical URL, og:url, sitemap, llms.txt and JSON-LD all derive from `site.url` in `dist/content.json`, which is already `https://vhmaadhav.com`.
 
-Custom domain: add `vhmaadhav.com` under the project's Custom domains. The canonical URL, og:url, sitemap, llms.txt and JSON-LD all derive from `site.url` in `dist/content.json`, which is already `https://vhmaadhav.com`.
+Local preview, including `/api/leetcode`: `npx wrangler dev` (optional).
 
 ## Edit
 
