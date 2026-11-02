@@ -75,12 +75,19 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   opacity: 0.9;
   user-select: none;
 }
-#hero-cloud { height: 14em; touch-action: pan-y; cursor: grab; }
+/* 10 rows of 1em on desktop (7 on phones, see the 600px query below) */
+#hero-cloud { height: 10em; touch-action: pan-y; cursor: grab; }
 .role { color: var(--muted); font-size: 1.1rem; margin-top: 0.6rem; }
 .bio { display: grid; gap: 0.6rem; }
 .location { color: var(--muted); font-size: 0.95rem; }
-.links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.25rem; }
-.links a { color: var(--text); }
+.links { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 2px;
+  color: var(--text);
+}
 .links a:hover { color: var(--accent); }
 
 /* sections */
@@ -114,6 +121,7 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
 /* rows */
 .list { display: grid; gap: 1.4rem; }
 .item { min-width: 0; }
+h3.item-title { margin: 0; font: inherit; }
 .item-head {
   display: flex;
   flex-wrap: wrap;
@@ -149,10 +157,18 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
 }
 .item-body.what { color: var(--text); margin-top: 0.3rem; }
 .item-body.result.hl { color: var(--accent); }
+.item-body.result .source { font-size: 0.8rem; white-space: nowrap; }
+.more-awards {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1.25rem 0 0 1.7rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
 .item-body.proof {
   margin-top: 0.35rem;
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.875rem;
   color: var(--accent);
   overflow-wrap: anywhere;
 }
@@ -164,7 +180,7 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   border: 1px solid var(--accent-soft);
   border-radius: 999px;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 @media (min-width: 521px) {
@@ -249,7 +265,7 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   margin-top: 4rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
-  color: var(--faint);
+  color: var(--muted);
   font-size: 0.9rem;
 }
 .footer-cloud {
@@ -272,9 +288,9 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   .stats .link { margin-left: 0; }
 }
 
-/* phones: 10 rows of 10px type for the hero cloud */
+/* phones: 7 rows of 10px type for the hero cloud */
 @media (max-width: 600px) {
-  #hero-cloud { height: 10em; font-size: 10px; }
+  #hero-cloud { height: 7em; font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

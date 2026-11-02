@@ -8,11 +8,11 @@
     "name": "Maadhav V H",
     "handle": "vhmaadhav",
     "leetcodeHandle": "vhmaadhav",
-    "role": "ai / ml engineer · on-device ai",
+    "role": "ai / ml engineer · on-device ai · ece undergrad, graduating 2028",
     "location": "Coimbatore, Tamil Nadu",
     "bio": [
       "hey, i'm maadhav. i build ml systems — small llms, vision models, rag — and get them running on real hardware: phone npus, arm boards, a car's own signals.",
-      "studying ece at kpriet, coimbatore. when i'm not in class, i'm usually at a hackathon finale somewhere in india."
+      "studying ece at kpriet, coimbatore — open to ai/ml and on-device ai internships. most weekends i'm at a hackathon finale somewhere in india."
     ],
     "links": [
       { "label": "github", "url": "https://github.com/vhmaadhav" },
@@ -44,7 +44,8 @@
       "date": "Sep 2026",
       "event": "SEMICON India Hackathon 2026, Applied Materials track",
       "result": "Runner-up · ₹75,000",
-      "highlight": true
+      "highlight": true,
+      "source": "https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ"
     },
     {
       "date": "Jun 2026",
@@ -95,16 +96,17 @@
   ],
   "projects": [
     {
-      "title": "VehicleGPT",
-      "what": "Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline.",
-      "proof": "accuracy 29.5% → 95.5% · 1.7 s on 2 cores / 2 GiB",
-      "tag": "Tata Elxsi Teliport S4"
+      "title": "DriftSense",
+      "what": "Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there.",
+      "proof": "match F1 0.91 on 2,250 pairs · CAD-to-SEM registration within 1 px on 600 pairs",
+      "tag": "runner-up · SEMICON India 2026",
+      "url": "https://github.com/vhmaadhav/semicon-driftsense"
     },
     {
-      "title": "Rakshak-Edge",
-      "what": "Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up.",
-      "proof": "on-device · adversarially tested",
-      "tag": "shortlisted · Arm × Bharat AI-SoC"
+      "title": "VehicleGPT",
+      "what": "Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline.",
+      "proof": "hybrid rules + model: 29.5% → 95.5% on 200 questions · best single model 82% at 1.74 s (2 cores, 2 GiB)",
+      "tag": "Tata Elxsi Teliport S4"
     },
     {
       "title": "Mouna",
@@ -113,23 +115,22 @@
       "tag": "grand finale · iQOO Hackathon 2026"
     },
     {
-      "title": "DriftSense",
-      "what": "Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there.",
-      "proof": "F1 0.91 · sub-pixel CAD-to-SEM registration",
-      "tag": "runner-up · SEMICON India 2026",
-      "url": "https://github.com/vhmaadhav/semicon-driftsense"
+      "title": "Rakshak-Edge",
+      "what": "Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up.",
+      "proof": "offline on Arm · phase 1 due nov 2026",
+      "tag": "in progress · Arm × Bharat AI-SoC shortlist"
+    },
+    {
+      "title": "DT Guardian",
+      "what": "Simulated edge controller for a 200 kVA distribution transformer: schedules battery, EV charging and pump loads with MILP.",
+      "proof": "energy not served in a 6 h outage: 121.2 → 56.7 kWh (−53% vs no control, −31% vs battery-only)",
+      "tag": "phase 2 · Schneider Yuva Yodha"
     },
     {
       "title": "Axiom Trace",
       "what": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
-      "proof": "Next.js + Kotlin · 176 tests",
+      "proof": "Next.js web + Kotlin app · knowledge-graph RAG · 176 tests",
       "tag": "personal project"
-    },
-    {
-      "title": "DT Guardian",
-      "what": "Keeps a neighbourhood transformer from overheating by scheduling batteries, EV chargers and pumps at the edge.",
-      "proof": "−53% essential energy lost in an outage simulation",
-      "tag": "phase 2 · Schneider Yuva Yodha"
     }
   ],
   "moreProjects": [

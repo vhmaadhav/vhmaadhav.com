@@ -100,7 +100,7 @@ function jsonLd() {
     name: profile.name,
     alternateName: ['Maadhav VH', profile.handle, 'Maadhav'],
     jobTitle: 'AI/ML Engineer',
-    description: site.description,
+    description: `${site.description} ECE undergraduate graduating 2028.`,
     url: home,
     image: ogImage,
     ...(emailLink ? { email: emailLink } : {}),
@@ -110,7 +110,7 @@ function jsonLd() {
       addressRegion: region,
       addressCountry: 'IN'
     },
-    alumniOf: { '@type': 'CollegeOrUniversity', name: college },
+    affiliation: { '@type': 'EducationalOrganization', name: college },
     knowsAbout: [
       'machine learning', 'deep learning', 'LLMs', 'on-device AI', 'computer vision',
       'RAG', 'edge AI', 'embedded systems', 'PyTorch', 'ONNX', 'llama.cpp'
@@ -183,7 +183,7 @@ function llmsTxt() {
   const lines = [
     `# ${profile.name}`,
     '',
-    `> ${site.description}`,
+    `> ${site.description} ECE undergraduate (2028), open to internships.`,
     '',
     profile.bio.join(' '),
     '',
@@ -196,14 +196,14 @@ function llmsTxt() {
     }),
     `- Also on GitHub: ${data.moreProjects.map((m) => `[${m.name}](${m.url})`).join(', ')}`,
     '',
-    '## Wins',
-    ...data.wins.map((w) => `- ${w.date}: ${w.event}. ${w.result}`),
-    '',
     '## Experience',
     ...data.experience.map((j) => {
       const span = `${j.start} to ${j.end || 'present'}, ${SR.durationLabel(j.start, j.end, now)}`;
       return `- ${j.role}, ${j.company} (${span})${j.description ? `: ${j.description}` : ''}`;
     }),
+    '',
+    '## Awards',
+    ...data.wins.map((w) => `- ${w.date}: ${w.event}. ${w.result}`),
     '',
     '## Links',
     `- site: ${home}`,

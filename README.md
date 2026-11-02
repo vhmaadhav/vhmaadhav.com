@@ -40,7 +40,7 @@ All content lives in `dist/content.json`:
 
 - `profile`: name, role, bio lines, location, header links (`github`, `linkedin`, `email`, `resume`). `handle` is the GitHub username used for the contribution heatmap.
 - `experience`: `start` and `end` as `YYYY-MM`. Omit `end` for a current role. Durations are computed automatically.
-- `wins`: newest first. `highlight: true` bolds the title.
+- `wins`: shown as "awards", newest first. The first three are full entries (`highlight: true` colours the result, `source` adds a link); the rest become a compact list.
 - `projects`: add `url` only for public repos. Private projects get a `note` and no link.
 - `education`, `credentials`: plain entries.
 - `skills`: `label` plus an optional `icon`, a devicon class from the pinned devicon v2.16.0 stylesheet. Entries without an icon show as text-only chips.

@@ -1,21 +1,25 @@
 # Maadhav V H
 
-> AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up.
+> AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up. ECE undergraduate (2028), open to internships.
 
-hey, i'm maadhav. i build ml systems — small llms, vision models, rag — and get them running on real hardware: phone npus, arm boards, a car's own signals. studying ece at kpriet, coimbatore. when i'm not in class, i'm usually at a hackathon finale somewhere in india.
+hey, i'm maadhav. i build ml systems — small llms, vision models, rag — and get them running on real hardware: phone npus, arm boards, a car's own signals. studying ece at kpriet, coimbatore — open to ai/ml and on-device ai internships. most weekends i'm at a hackathon finale somewhere in india.
 
-Role: ai / ml engineer · on-device ai. Location: Coimbatore, Tamil Nadu. Site: https://vhmaadhav.com/
+Role: ai / ml engineer · on-device ai · ece undergrad, graduating 2028. Location: Coimbatore, Tamil Nadu. Site: https://vhmaadhav.com/
 
 ## Projects
-- VehicleGPT: Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline. Proof: accuracy 29.5% → 95.5% · 1.7 s on 2 cores / 2 GiB.
-- Rakshak-Edge: Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up. Proof: on-device · adversarially tested.
+- [DriftSense](https://github.com/vhmaadhav/semicon-driftsense): Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there. Proof: match F1 0.91 on 2,250 pairs · CAD-to-SEM registration within 1 px on 600 pairs.
+- VehicleGPT: Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline. Proof: hybrid rules + model: 29.5% → 95.5% on 200 questions · best single model 82% at 1.74 s (2 cores, 2 GiB).
 - Mouna: Speak by mouthing words — silent lip-reading turned into voice on a phone's NPU, no internet. Proof: false utterances 23% → 7% · Kannada top-1 75.3%.
-- [DriftSense](https://github.com/vhmaadhav/semicon-driftsense): Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there. Proof: F1 0.91 · sub-pixel CAD-to-SEM registration.
-- Axiom Trace: A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Proof: Next.js + Kotlin · 176 tests.
-- DT Guardian: Keeps a neighbourhood transformer from overheating by scheduling batteries, EV chargers and pumps at the edge. Proof: −53% essential energy lost in an outage simulation.
+- Rakshak-Edge: Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up. Proof: offline on Arm · phase 1 due nov 2026.
+- DT Guardian: Simulated edge controller for a 200 kVA distribution transformer: schedules battery, EV charging and pump loads with MILP. Proof: energy not served in a 6 h outage: 121.2 → 56.7 kWh (−53% vs no control, −31% vs battery-only).
+- Axiom Trace: A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Proof: Next.js web + Kotlin app · knowledge-graph RAG · 176 tests.
 - Also on GitHub: [embeddinggemma-mobile-benchmark](https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark), [hiver-email-suggested-response](https://github.com/vhmaadhav/hiver-email-suggested-response)
 
-## Wins
+## Experience
+- Machine Learning Intern, PhobosQ (2025-08 to 2025-10, 3 months): Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware.
+- Software Engineering Intern, Embedded Systems, Enthu Technology Solutions (2025-12 to 2026-01, 2 months): Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks.
+
+## Awards
 - Sep 2026: SEMICON India Hackathon 2026, Applied Materials track. Runner-up · ₹75,000
 - Jun 2026: Caterpillar Tech Challenge 2026. Top 10 of ~1,500 teams · Grand Finale, Chennai
 - 2026: Schneider Electric Yuva Yodha, Challenge 3. selected for Phase 2, with DT Guardian
@@ -26,10 +30,6 @@ Role: ai / ml engineer · on-device ai. Location: Coimbatore, Tamil Nadu. Site: 
 - Jul 2026: Qualcomm Snapdragon Multiverse Hackathon. selected for on-site build
 - 2026: Atomic Hacks (IIT Bombay × Rosatom). finalist
 - Mar 2025: Ossomehacks 2.0, SRM IST. top 3, Web3 track
-
-## Experience
-- Machine Learning Intern, PhobosQ (2025-08 to 2025-10, 3 months): Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware.
-- Software Engineering Intern, Embedded Systems, Enthu Technology Solutions (2025-12 to 2026-01, 2 months): Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks.
 
 ## Links
 - site: https://vhmaadhav.com/

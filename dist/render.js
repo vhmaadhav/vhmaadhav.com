@@ -129,20 +129,34 @@
       `${list.length} roles · since ${earliest.split('-')[0]}`);
   }
 
-  function wins(list) {
-    const items = list.map((win) => {
+  // The first FEATURED_WINS entries (in content.json order) get full entries;
+  // the rest follow as a compact list, one line each.
+  const FEATURED_WINS = 3;
+
+  function awards(list) {
+    const featured = list.slice(0, FEATURED_WINS);
+    const rest = list.slice(FEATURED_WINS);
+    const dateOf = (win) => {
       const iso = isoFromDate(win.date);
-      const date = iso ? time(iso, win.date) : esc(win.date);
+      return iso ? time(iso, win.date) : esc(win.date);
+    };
+    const items = featured.map((win) => {
+      const source = win.source
+        ? ` <a class="link source" href="${esc(win.source)}"${linkAttrs(win.source)}>source ↗</a>`
+        : '';
       return `
       <li class="item">
         <div class="item-head">
           <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="event">${esc(win.event)}</span></p>
-          <p class="dates">${date}</p>
+          <p class="dates">${dateOf(win)}</p>
         </div>
-        <p class="item-body result${win.highlight ? ' hl' : ''}">${esc(win.result)}</p>
+        <p class="item-body result${win.highlight ? ' hl' : ''}">${esc(win.result)}${source}</p>
       </li>`;
     }).join('');
-    return section('wins', 'wins', `<ul class="list">${items}</ul>`);
+    const more = rest.map((win) => `
+        <li>${esc(win.event)} — ${esc(win.result)} · ${dateOf(win)}</li>`).join('');
+    const moreList = more ? `<ul class="more-awards">${more}</ul>` : '';
+    return section('awards', 'awards', `<ul class="list">${items}</ul>${moreList}`, '& selections');
   }
 
   function projects(list, more = []) {
@@ -154,7 +168,7 @@
         <li class="item">
           <article>
             <div class="item-head">
-              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(project.title)}</span></p>
+              <h3 class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(project.title)}</span></h3>
               ${project.tag ? `<span class="pill">${esc(project.tag)}</span>` : ''}
             </div>
             <p class="item-body what">${esc(project.what)}</p>
@@ -247,9 +261,9 @@
     const now = options.now || new Date();
     return [
       hero(data.profile),
-      experience(data.experience, now),
-      wins(data.wins),
       projects(data.projects, data.moreProjects),
+      experience(data.experience, now),
+      awards(data.wins),
       education(data.education),
       skills(data.skills),
       credentials(data.credentials),
