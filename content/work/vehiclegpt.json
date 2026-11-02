@@ -1,0 +1,165 @@
+{
+  "order": 2,
+  "slug": "vehiclegpt",
+  "title": "VehicleGPT",
+  "description": "VehicleGPT: an offline assistant design for a car's own signal data. A small model answers through verified tool calls; a 2-core CPU benchmark reached 82% accuracy at 1.74 s median.",
+  "lede": "An offline assistant for a car's own logged signals. A small language model turns each question into one verified tool call on a read-only store, so the model never reads raw data.",
+  "tags": [
+    {
+      "text": "Teliport S4 · Case 5",
+      "accent": true
+    },
+    "offline",
+    "CAN · COVESA VSS",
+    "private code"
+  ],
+  "facts": [
+    [
+      "my role",
+      "team lead · team of 3"
+    ],
+    [
+      "stack",
+      "Python · llama.cpp · CAN · COVESA VSS"
+    ],
+    [
+      "when",
+      "oct 2026"
+    ]
+  ],
+  "sections": [
+    {
+      "id": "problem",
+      "command": "cat problem.md",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Team entry to Tata Elxsi Teliport Season 4, Case 5. The proposal is an in-vehicle assistant that answers natural-language questions about the vehicle's own data, with no cloud connection."
+        },
+        {
+          "type": "p",
+          "text": "Deterministic code ingests and stores the signals and detects events. A small language model, 2B parameters or fewer, only turns a question into one tool call, constrained to a flat JSON schema. Code checks the call against the signal catalogue, runs parameterised SQL, and checks that every number in the reply matches a query result."
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "command": "tree pipeline/",
+      "blocks": [
+        {
+          "type": "diagram",
+          "art": [
+            "  CAN tap (SocketCAN, listen-only)",
+            "  VSS catalogue",
+            "        │",
+            "        ▼",
+            "  read-only store",
+            "        │",
+            "        ▼",
+            "  small LM routes the question",
+            "        │",
+            "        ▼",
+            "  verified tool calls",
+            "        │",
+            "        ▼",
+            "  answer"
+          ],
+          "caption": "A CAN tap in listen-only mode and the VSS catalogue feed a read-only store. A small language model routes each question to one tool call, which is verified before it runs. The reply is written from the rows the call returns."
+        }
+      ]
+    },
+    {
+      "id": "results",
+      "command": "cat results.tsv",
+      "blocks": [
+        {
+          "type": "h3",
+          "text": "model benchmark, CPU"
+        },
+        {
+          "type": "table",
+          "head": [
+            "metric",
+            "result",
+            "setup"
+          ],
+          "rows": [
+            [
+              "quantized model variants",
+              "12",
+              "2,400 checksum-audited results"
+            ],
+            [
+              "MiniCPM5-1B Q8_0 accuracy",
+              "82%",
+              "first 50 questions, hybrid pipeline"
+            ],
+            [
+              "median latency",
+              "1.74 s",
+              "same run"
+            ],
+            [
+              "peak memory",
+              "1,437 MiB",
+              "same run"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "text": "x86-64 CPU (AMD Ryzen AI 7 350), 2 cores, 2 threads, 2 GiB container memory, no swap. The hybrid pipeline is the rule router plus the model."
+        },
+        {
+          "type": "h3",
+          "text": "system, hybrid rules and model"
+        },
+        {
+          "type": "table",
+          "head": [
+            "metric",
+            "result",
+            "setup"
+          ],
+          "rows": [
+            [
+              "rules only",
+              "29.5%",
+              "200 questions, GPU"
+            ],
+            [
+              "rules and small model",
+              "up to 95.5%",
+              "200 questions, GPU; 72.0% to 95.5% across seven models"
+            ],
+            [
+              "schema-valid replies",
+              "all",
+              "every model in the hybrid run"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "text": "The 200 questions run against a synthetic 21-day vehicle store, with gold answers from the gold tool calls."
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "command": "cat limits.md",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "The CPU accuracy, latency and memory figures come from the first 50 questions, not all 200. Each configuration was run once, deterministically.",
+            "The data is synthetic. The CPU runs used an x86 proxy, not the ARM target board.",
+            "The rule router misroutes 4 of 50 questions, which caps tool choice at 92% for every model in the hybrid arm.",
+            "The in-car architecture (read-only tap, safety partition, privacy controls) is a design. The measured parts are the model routing and the tool calls."
+          ]
+        }
+      ]
+    }
+  ],
+  "codeNote": "Code is private while the competition runs."
+}

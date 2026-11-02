@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VehicleGPT — case study · Maadhav V H</title>
+  <meta name="description" content="VehicleGPT: an offline assistant design for a car&#39;s own signal data. A small model answers through verified tool calls; a 2-core CPU benchmark reached 82% accuracy at 1.74 s median.">
+  <meta name="author" content="Maadhav V H">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://vhmaadhav.com/work/vehiclegpt/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Maadhav V H">
+  <meta property="og:title" content="VehicleGPT — case study · Maadhav V H">
+  <meta property="og:description" content="VehicleGPT: an offline assistant design for a car&#39;s own signal data. A small model answers through verified tool calls; a 2-core CPU benchmark reached 82% accuracy at 1.74 s median.">
+  <meta property="og:url" content="https://vhmaadhav.com/work/vehiclegpt/">
+  <meta property="og:image" content="https://vhmaadhav.com/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="VehicleGPT, case study by Maadhav V H">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VehicleGPT — case study · Maadhav V H">
+  <meta name="twitter:description" content="VehicleGPT: an offline assistant design for a car&#39;s own signal data. A small model answers through verified tool calls; a 2-core CPU benchmark reached 82% accuracy at 1.74 s median.">
+  <meta name="twitter:image" content="https://vhmaadhav.com/og.png">
+  <meta name="theme-color" content="#0c0c0d">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Doto:wght@400..900&display=swap">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "https://vhmaadhav.com/work/vehiclegpt/#work",
+      "url": "https://vhmaadhav.com/work/vehiclegpt/",
+      "name": "VehicleGPT",
+      "description": "VehicleGPT: an offline assistant design for a car's own signal data. A small model answers through verified tool calls; a 2-core CPU benchmark reached 82% accuracy at 1.74 s median.",
+      "inLanguage": "en",
+      "keywords": [
+        "Teliport S4 · Case 5",
+        "offline",
+        "CAN · COVESA VSS",
+        "private code"
+      ],
+      "author": {
+        "@id": "https://vhmaadhav.com/#person"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://vhmaadhav.com/work/vehiclegpt/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Maadhav V H",
+          "item": "https://vhmaadhav.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Work",
+          "item": "https://vhmaadhav.com/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "VehicleGPT",
+          "item": "https://vhmaadhav.com/work/vehiclegpt/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main id="top" class="wp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <span><a href="/">~/vhmaadhav</a> / <a href="/#work">work</a> / <span class="here">vehiclegpt</span></span>
+      <a href="/#work">← all work</a>
+    </nav>
+    <header class="wp-head">
+      <ul class="wp-tags"><li class="pill hl">Teliport S4 · Case 5</li><li class="pill">offline</li><li class="pill">CAN · COVESA VSS</li><li class="pill">private code</li></ul>
+      <h1>VehicleGPT</h1>
+      <p class="wp-lede">An offline assistant for a car&#39;s own logged signals. A small language model turns each question into one verified tool call on a read-only store, so the model never reads raw data.</p>
+      <dl class="wp-facts"><div><dt>my role</dt><dd>team lead · team of 3</dd></div><div><dt>stack</dt><dd>Python · llama.cpp · CAN · COVESA VSS</dd></div><div><dt>when</dt><dd>oct 2026</dd></div></dl>
+    </header>
+    <section class="wp-section" aria-labelledby="wp-problem">
+      <div class="sec-head"><h2 id="wp-problem"><span class="prompt" aria-hidden="true">$</span> cat problem.md</h2></div>
+      <p class="wp-p">Team entry to Tata Elxsi Teliport Season 4, Case 5. The proposal is an in-vehicle assistant that answers natural-language questions about the vehicle&#39;s own data, with no cloud connection.</p>
+      <p class="wp-p">Deterministic code ingests and stores the signals and detects events. A small language model, 2B parameters or fewer, only turns a question into one tool call, constrained to a flat JSON schema. Code checks the call against the signal catalogue, runs parameterised SQL, and checks that every number in the reply matches a query result.</p>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-pipeline">
+      <div class="sec-head"><h2 id="wp-pipeline"><span class="prompt" aria-hidden="true">$</span> tree pipeline/</h2></div>
+      <figure class="wp-figure"><pre class="wp-diagram" aria-hidden="true">  CAN tap (SocketCAN, listen-only)
+  VSS catalogue
+        │
+        ▼
+  read-only store
+        │
+        ▼
+  small LM routes the question
+        │
+        ▼
+  verified tool calls
+        │
+        ▼
+  answer</pre><figcaption>A CAN tap in listen-only mode and the VSS catalogue feed a read-only store. A small language model routes each question to one tool call, which is verified before it runs. The reply is written from the rows the call returns.</figcaption></figure>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-results">
+      <div class="sec-head"><h2 id="wp-results"><span class="prompt" aria-hidden="true">$</span> cat results.tsv</h2></div>
+      <h3 class="wp-sub">model benchmark, CPU</h3>
+      <div class="wp-table-wrap"><table class="wp-table"><thead><tr><th scope="col">metric</th><th scope="col">result</th><th scope="col">setup</th></tr></thead><tbody><tr><th scope="row">quantized model variants</th><td class="wp-val">12</td><td>2,400 checksum-audited results</td></tr><tr><th scope="row">MiniCPM5-1B Q8_0 accuracy</th><td class="wp-val">82%</td><td>first 50 questions, hybrid pipeline</td></tr><tr><th scope="row">median latency</th><td class="wp-val">1.74 s</td><td>same run</td></tr><tr><th scope="row">peak memory</th><td class="wp-val">1,437 MiB</td><td>same run</td></tr></tbody></table></div>
+      <p class="wp-note">x86-64 CPU (AMD Ryzen AI 7 350), 2 cores, 2 threads, 2 GiB container memory, no swap. The hybrid pipeline is the rule router plus the model.</p>
+      <h3 class="wp-sub">system, hybrid rules and model</h3>
+      <div class="wp-table-wrap"><table class="wp-table"><thead><tr><th scope="col">metric</th><th scope="col">result</th><th scope="col">setup</th></tr></thead><tbody><tr><th scope="row">rules only</th><td class="wp-val">29.5%</td><td>200 questions, GPU</td></tr><tr><th scope="row">rules and small model</th><td class="wp-val">up to 95.5%</td><td>200 questions, GPU; 72.0% to 95.5% across seven models</td></tr><tr><th scope="row">schema-valid replies</th><td class="wp-val">all</td><td>every model in the hybrid run</td></tr></tbody></table></div>
+      <p class="wp-note">The 200 questions run against a synthetic 21-day vehicle store, with gold answers from the gold tool calls.</p>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-limits">
+      <div class="sec-head"><h2 id="wp-limits"><span class="prompt" aria-hidden="true">$</span> cat limits.md</h2></div>
+      <ul class="wp-list"><li>The CPU accuracy, latency and memory figures come from the first 50 questions, not all 200. Each configuration was run once, deterministically.</li><li>The data is synthetic. The CPU runs used an x86 proxy, not the ARM target board.</li><li>The rule router misroutes 4 of 50 questions, which caps tool choice at 92% for every model in the hybrid arm.</li><li>The in-car architecture (read-only tap, safety partition, privacy controls) is a design. The measured parts are the model routing and the tool calls.</li></ul>
+    </section>
+    <section class="wp-evidence" aria-label="Evidence">
+      
+      <p class="wp-note">Code is private while the competition runs.</p>
+    </section>
+    <nav class="wp-nav" aria-label="More work">
+      <a href="/">← back home</a>
+      <span class="wp-pn"><a href="/work/driftsense/" rel="prev">← prev: driftsense</a><a href="/work/dt-guardian/" rel="next">next: dt-guardian →</a></span>
+    </nav>
+  </main>
+</body>
+</html>

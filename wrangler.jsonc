@@ -6,7 +6,7 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "not_found_handling": "none",
+    "not_found_handling": "404-page",
     // Run the Worker before static assets so the www redirect also covers "/".
     "run_worker_first": true
   },

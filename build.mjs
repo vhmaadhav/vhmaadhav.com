@@ -15,6 +15,7 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchLeetcode } from './lib/leetcode.mjs';
+import { buildWork } from './lib/work.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(here, 'dist');
@@ -170,12 +171,15 @@ const robots = [
   ''
 ].join('\n');
 
+// Case-study pages and the 404 page (lib/work.mjs). Their URLs join the sitemap.
+const workUrls = buildWork({ distDir, base, esc, ogImage, ogType, profile });
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${esc(home)}</loc>
+${[home, ...workUrls].map((loc) => `  <url>
+    <loc>${esc(loc)}</loc>
     <lastmod>${today}</lastmod>
-  </url>
+  </url>`).join('\n')}
 </urlset>
 `;
 

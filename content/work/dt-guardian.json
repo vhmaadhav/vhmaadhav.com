@@ -1,0 +1,126 @@
+{
+  "order": 3,
+  "slug": "dt-guardian",
+  "title": "DT Guardian",
+  "description": "DT Guardian: a simulated, offline-first edge controller for a 200 kVA distribution transformer. In a simulated 6-hour outage it cut unserved essential energy from 121.2 to 56.7 kWh.",
+  "lede": "A simulated, offline-first edge controller for a 200 kVA distribution transformer. An IS 2026-7 thermal model drives MILP dispatch of battery storage, EV charging and pump loads, with a fail-safe fallback when the forecast or solver fails.",
+  "tags": [
+    {
+      "text": "simulated",
+      "accent": true
+    },
+    "edge controller",
+    "MILP dispatch",
+    "private code"
+  ],
+  "facts": [
+    [
+      "my role",
+      "co-developer · team of 2"
+    ],
+    [
+      "stack",
+      "Python · MILP (PuLP / HiGHS)"
+    ],
+    [
+      "when",
+      "oct 2026"
+    ]
+  ],
+  "sections": [
+    {
+      "id": "problem",
+      "command": "cat problem.md",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Schneider Electric Yuva Yodha Energy Tech Hackathon, Challenge 3 (grid reliability and renewable intermittency), prototype round. The project aims to turn a distribution transformer's thermal headroom into neighbourhood flexibility: EV and pump demand shifts toward renewable-rich hours, and critical loads stay on during supply gaps."
+        },
+        {
+          "type": "p",
+          "text": "The prototype is a Python simulator with a thermal twin, a load forecaster, a rolling-horizon dispatcher, baselines and an experiment pipeline. It is an offline-first edge controller."
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "command": "tree pipeline/",
+      "blocks": [
+        {
+          "type": "diagram",
+          "art": [
+            "  load forecast (conformal)─────────┐",
+            "  IS 2026-7 thermal model───────────┴─▶ MILP dispatch",
+            "                                    │",
+            "                    ┌───────────────┼───────────────┐",
+            "                    ▼               ▼               ▼",
+            "             battery storage  EV charging    pump loads",
+            "",
+            "  forecast or solver fails ──▶ fail-safe fallback"
+          ],
+          "caption": "A conformal load forecast and the IS 2026-7 thermal model feed a MILP dispatcher, which schedules battery storage, EV charging and pump loads. If the forecast or the solver fails, a fail-safe fallback takes over."
+        }
+      ]
+    },
+    {
+      "id": "results",
+      "command": "cat results.tsv",
+      "blocks": [
+        {
+          "type": "table",
+          "head": [
+            "metric",
+            "result",
+            "setup"
+          ],
+          "rows": [
+            [
+              "essential energy not served",
+              "121.2 → 56.7 kWh",
+              "simulated 6-hour, battery-stressed outage"
+            ],
+            [
+              "change vs no control",
+              "−53%",
+              "same outage"
+            ],
+            [
+              "change vs battery-only",
+              "−31%",
+              "same outage"
+            ],
+            [
+              "load forecast coverage",
+              "80.2%",
+              "80% nominal"
+            ],
+            [
+              "automated tests",
+              "365",
+              "repository test suite"
+            ]
+          ]
+        },
+        {
+          "type": "note",
+          "text": "All results are simulated. Neighbourhood loads and control experiments are synthetic; the weather input is real Lucknow reanalysis data."
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "command": "cat limits.md",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "No field deployment and no utility integration. This is a prototype-round entry.",
+            "The electrical model uses a voltage proxy. OpenDSS integration and the dashboard are unfinished.",
+            "The outage result covers a simulated 6-hour, battery-stressed outage only."
+          ]
+        }
+      ]
+    }
+  ],
+  "codeNote": "Code is private until the competition ends."
+}
