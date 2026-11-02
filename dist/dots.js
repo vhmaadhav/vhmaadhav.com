@@ -267,7 +267,7 @@
     function layout() {
       const dpr = dprNow();
       const N = Math.max(...labels.map((l) => bits(l).length)) + 2;
-      const P = Math.max(2, Math.min(Math.round(4 * dpr), Math.floor(((window.innerWidth - 24) * dpr) / (N + 3))));
+      const P = Math.max(2, Math.min(Math.round(4 * dpr), Math.floor(((window.innerWidth - 24 - (phone() ? 96 : 0)) * dpr) / (N + 3))));
       M = new Matrix(cv, N, 7, P);
       cv.style.width = `${cv.width / dpr}px`;
       cv.style.height = `${cv.height / dpr}px`;

@@ -95,7 +95,7 @@
       '<a href="#awards">awards</a>',
       '<a href="#experience">experience</a>'
     ];
-    if (resume) items.push(`<a href="${esc(resume.url)}"${linkAttrs(resume.url)}>résumé</a>`);
+    if (resume) items.push(`<a class="nav-cv" href="${esc(resume.url)}"${linkAttrs(resume.url)}>résumé</a>`);
     return `
       <header class="topbar">
         <a class="brand" href="#top">~/${esc(profile.handle)}</a>
@@ -108,7 +108,7 @@
   const BUTTON_TEXT = { email: 'email me', resume: 'résumé ↓', github: 'github', linkedin: 'linkedin', leetcode: 'leetcode' };
   const BUTTON_CLASS = { email: 'btn btn-primary', resume: 'btn btn-outline' };
 
-  // The dot panel (dots.js) sits above the intro. Its fallback text shows only without JavaScript.
+  // The dot panel (dots.js) types the name above the intro; the h1 shows only until the panel is ready (CSS), so the name is never doubled and never missing.
   function hero(profile) {
     const buttons = BUTTONS
       .map((label) => profile.links.find((l) => l.label === label))
@@ -120,18 +120,18 @@
     return `
       <section id="top" class="hero" aria-labelledby="hero-name">
         <div class="panel" data-panel data-name="${esc(profile.name)}" data-facts="${esc(facts.join('|'))}">
-          <p class="panel-fb" aria-hidden="true">${esc([profile.name, ...facts].join(' · '))}</p>
+          <p class="panel-fb" aria-hidden="true">${esc(facts.join(' · '))}</p>
           <canvas aria-hidden="true"></canvas>
         </div>
         <div class="intro">
+          <h1 id="hero-name">${esc(profile.name)}<span class="vh"> — ${esc(profile.role)}</span></h1>
+          <p class="role-line">${esc(profile.role)}</p>
+          ${bio}
+          <nav class="buttons" aria-label="contact and links">${buttons}</nav>
           <p class="status-row">
             <span class="status"><span class="dot" aria-hidden="true"></span>${esc(profile.status)}</span>
             <span class="meta">${esc(profile.meta)}</span>
           </p>
-          <h1 id="hero-name">${esc(profile.name)}</h1>
-          <p class="role-line">${esc(profile.role)}</p>
-          ${bio}
-          <nav class="buttons" aria-label="contact and links">${buttons}</nav>
         </div>
       </section>`;
   }
