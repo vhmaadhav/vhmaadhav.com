@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DriftSense — case study · Maadhav V H</title>
+  <meta name="description" content="DriftSense: a CPU-only pipeline that finds a reference pattern in SEM frames under unknown 8–12× zoom and ±5° rotation, or reports it absent. F1 0.91 and AUC 0.99 on 2,250 pairs.">
+  <meta name="author" content="Maadhav V H">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://vhmaadhav.com/work/driftsense/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Maadhav V H">
+  <meta property="og:title" content="DriftSense — case study · Maadhav V H">
+  <meta property="og:description" content="DriftSense: a CPU-only pipeline that finds a reference pattern in SEM frames under unknown 8–12× zoom and ±5° rotation, or reports it absent. F1 0.91 and AUC 0.99 on 2,250 pairs.">
+  <meta property="og:url" content="https://vhmaadhav.com/work/driftsense/">
+  <meta property="og:image" content="https://vhmaadhav.com/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DriftSense, case study by Maadhav V H">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DriftSense — case study · Maadhav V H">
+  <meta name="twitter:description" content="DriftSense: a CPU-only pipeline that finds a reference pattern in SEM frames under unknown 8–12× zoom and ±5° rotation, or reports it absent. F1 0.91 and AUC 0.99 on 2,250 pairs.">
+  <meta name="twitter:image" content="https://vhmaadhav.com/og.png">
+  <meta name="theme-color" content="#0c0c0d">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Doto:wght@400..900&display=swap">
+  <link rel="stylesheet" href="/style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "https://vhmaadhav.com/work/driftsense/#work",
+      "url": "https://vhmaadhav.com/work/driftsense/",
+      "name": "DriftSense",
+      "description": "DriftSense: a CPU-only pipeline that finds a reference pattern in SEM frames under unknown 8–12× zoom and ±5° rotation, or reports it absent. F1 0.91 and AUC 0.99 on 2,250 pairs.",
+      "inLanguage": "en",
+      "keywords": [
+        "runner-up · SEMICON India 2026",
+        "computer vision",
+        "CPU-only",
+        "public code"
+      ],
+      "author": {
+        "@id": "https://vhmaadhav.com/#person"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://vhmaadhav.com/work/driftsense/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Maadhav V H",
+          "item": "https://vhmaadhav.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Work",
+          "item": "https://vhmaadhav.com/#work"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DriftSense",
+          "item": "https://vhmaadhav.com/work/driftsense/"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <main id="top" class="wp">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <span><a href="/">~/vhmaadhav</a> / <a href="/#work">work</a> / <span class="here">driftsense</span></span>
+      <a href="/#work">← all work</a>
+    </nav>
+    <header class="wp-head">
+      <ul class="wp-tags"><li class="pill hl">runner-up · SEMICON India 2026</li><li class="pill">computer vision</li><li class="pill">CPU-only</li><li class="pill">public code</li></ul>
+      <h1>DriftSense</h1>
+      <p class="wp-lede">A wafer-inspection microscope loses track of where it is. DriftSense finds a reference pattern inside the SEM frame under unknown 8–12× zoom and ±5° rotation, or reports that it isn&#39;t there.</p>
+      <dl class="wp-facts"><div><dt>my role</dt><dd>team lead · team of 4</dd></div><div><dt>stack</dt><dd>Python · PyTorch · OpenCV</dd></div><div><dt>when</dt><dd>sep 2026</dd></div></dl>
+    </header>
+    <section class="wp-section" aria-labelledby="wp-problem">
+      <div class="sec-head"><h2 id="wp-problem"><span class="prompt" aria-hidden="true">$</span> cat problem.md</h2></div>
+      <p class="wp-p">This is Applied Materials&#39; Navigation-Error Recovery problem, Phase 2. Given a high-resolution reference patch and a low-resolution SEM search frame of a repeating semiconductor layout, locate the patch and report its position, rotation and scale, or report that it is not there. The zoom is unknown, between 8× and 12×, and the rotation is unknown within ±5°. About 20% of pairs contain no true instance.</p>
+      <p class="wp-p">The layout repeats, so a patch correlates well at many positions and local appearance alone cannot identify the site. The pipeline keeps the top few pose hypotheses from a coarse scale sweep, verifies each at full resolution with ZNCC, and keeps the best one.</p>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-pipeline">
+      <div class="sec-head"><h2 id="wp-pipeline"><span class="prompt" aria-hidden="true">$</span> tree pipeline/</h2></div>
+      <figure class="wp-figure"><pre class="wp-diagram" aria-hidden="true">  SEM frame ─┐
+             ├─▶ multi-scale sweep (8–12×, ±5°) ─▶ siamese correlation CNN ─▶ top-k peaks
+ reference ──┘                                      1.02 M params                 │
+                                                                                  ▼
+                                                    ZNCC verification ◀───────────┘
+                                                         │
+                                       ┌─────────────────┴──────────────────┐
+                                       ▼                                    ▼
+                                <span class="wp-hit">found: x, y, scale, θ</span>              <span class="wp-hit">reject: not present</span>
+
+  CAD layout ──▶ Fourier-domain registration ──▶ sub-pixel offset  (separate path)</pre><figcaption>Two paths. Matching: a sweep over scale and rotation feeds a siamese correlation network; the top candidates are verified by ZNCC at full resolution, and a pair that fails the score is reported as not present. Registration: CAD-to-SEM alignment in the Fourier domain.</figcaption></figure>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-results">
+      <div class="sec-head"><h2 id="wp-results"><span class="prompt" aria-hidden="true">$</span> cat results.tsv</h2></div>
+      <div class="wp-table-wrap"><table class="wp-table"><thead><tr><th scope="col">metric</th><th scope="col">driftsense</th><th scope="col">n</th></tr></thead><tbody><tr><th scope="row">match / reject F1</th><td class="wp-val">0.91</td><td>2,250 pairs</td></tr><tr><th scope="row">AUC</th><td class="wp-val">0.99</td><td>2,250 pairs</td></tr><tr><th scope="row">CAD-to-SEM error</th><td class="wp-val">all ≤ 1 px · median &lt; 0.03 px</td><td>600 pairs</td></tr><tr><th scope="row">runtime</th><td class="wp-val">median ≤ 5 s / pair · 20 s hard timeout</td><td>reference machine: 4-core x86, 8 GB RAM, no GPU, Python 3.11</td></tr></tbody></table></div>
+      <p class="wp-note">The F1 and AUC pairs are self-generated. The 600 registration pairs come from the organisers&#39; own CAD pipeline and were scored locally on their published rubric.</p>
+    </section>
+    <section class="wp-section" aria-labelledby="wp-limits">
+      <div class="sec-head"><h2 id="wp-limits"><span class="prompt" aria-hidden="true">$</span> cat limits.md</h2></div>
+      <ul class="wp-list"><li>An earlier 81.45 / 81.93 result was withdrawn after a generator defect was found: a severity pinned to one value produced pairs at severity 0.0. It is not reported here.</li><li>The organisers&#39; blind set is 200 pairs and is not reproduced here, so the F1 margin may not carry over.</li><li>Periodic layouts produce plausible wrong-scale and wrong-rotation matches. Sub-pixel refinement cannot recover a pair whose candidates never include the correct pose.</li><li>Some confidently wrong predictions score above the threshold, and no confidence cut catches all of them.</li><li>CAD-to-SEM registration assumes a whole-canvas search design file. Without it, the fallback scored 45.32 / 85 on the harsh tier, against 85.00 with it.</li><li>Runtime rows are local emulations of the 4-core, 8 GB reference box, not measurements on it.</li></ul>
+    </section>
+    <section class="wp-evidence" aria-label="Evidence">
+      <div class="wp-links"><a class="btn btn-primary" href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener">read the code ↗</a><a class="btn btn-outline" href="https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ" target="_blank" rel="noopener">organiser&#39;s announcement ↗</a></div>
+      
+    </section>
+    <nav class="wp-nav" aria-label="More work">
+      <a href="/">← back home</a>
+      <span class="wp-pn"><a href="/work/vehiclegpt/" rel="next">next: vehiclegpt →</a></span>
+    </nav>
+  </main>
+</body>
+</html>

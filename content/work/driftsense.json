@@ -1,0 +1,98 @@
+{
+  "order": 1,
+  "slug": "driftsense",
+  "title": "DriftSense",
+  "description": "DriftSense: a CPU-only pipeline that finds a reference pattern in SEM frames under unknown 8–12× zoom and ±5° rotation, or reports it absent. F1 0.91 and AUC 0.99 on 2,250 pairs.",
+  "lede": "A wafer-inspection microscope loses track of where it is. DriftSense finds a reference pattern inside the SEM frame under unknown 8–12× zoom and ±5° rotation, or reports that it isn't there.",
+  "tags": [
+    { "text": "runner-up · SEMICON India 2026", "accent": true },
+    "computer vision",
+    "CPU-only",
+    "public code"
+  ],
+  "facts": [
+    ["my role", "team lead · team of 4"],
+    ["stack", "Python · PyTorch · OpenCV"],
+    ["when", "sep 2026"]
+  ],
+  "sections": [
+    {
+      "id": "problem",
+      "command": "cat problem.md",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "This is Applied Materials' Navigation-Error Recovery problem, Phase 2. Given a high-resolution reference patch and a low-resolution SEM search frame of a repeating semiconductor layout, locate the patch and report its position, rotation and scale, or report that it is not there. The zoom is unknown, between 8× and 12×, and the rotation is unknown within ±5°. About 20% of pairs contain no true instance."
+        },
+        {
+          "type": "p",
+          "text": "The layout repeats, so a patch correlates well at many positions and local appearance alone cannot identify the site. The pipeline keeps the top few pose hypotheses from a coarse scale sweep, verifies each at full resolution with ZNCC, and keeps the best one."
+        }
+      ]
+    },
+    {
+      "id": "pipeline",
+      "command": "tree pipeline/",
+      "blocks": [
+        {
+          "type": "diagram",
+          "art": [
+            "  SEM frame ─┐",
+            "             ├─▶ multi-scale sweep (8–12×, ±5°) ─▶ siamese correlation CNN ─▶ top-k peaks",
+            " reference ──┘                                      1.02 M params                 │",
+            "                                                                                  ▼",
+            "                                                    ZNCC verification ◀───────────┘",
+            "                                                         │",
+            "                                       ┌─────────────────┴──────────────────┐",
+            "                                       ▼                                    ▼",
+            "                                «found: x, y, scale, θ»              «reject: not present»",
+            "",
+            "  CAD layout ──▶ Fourier-domain registration ──▶ sub-pixel offset  (separate path)"
+          ],
+          "caption": "Two paths. Matching: a sweep over scale and rotation feeds a siamese correlation network; the top candidates are verified by ZNCC at full resolution, and a pair that fails the score is reported as not present. Registration: CAD-to-SEM alignment in the Fourier domain."
+        }
+      ]
+    },
+    {
+      "id": "results",
+      "command": "cat results.tsv",
+      "blocks": [
+        {
+          "type": "table",
+          "head": ["metric", "driftsense", "n"],
+          "rows": [
+            ["match / reject F1", "0.91", "2,250 pairs"],
+            ["AUC", "0.99", "2,250 pairs"],
+            ["CAD-to-SEM error", "all ≤ 1 px · median < 0.03 px", "600 pairs"],
+            ["runtime", "median ≤ 5 s / pair · 20 s hard timeout", "reference machine: 4-core x86, 8 GB RAM, no GPU, Python 3.11"]
+          ]
+        },
+        {
+          "type": "note",
+          "text": "The F1 and AUC pairs are self-generated. The 600 registration pairs come from the organisers' own CAD pipeline and were scored locally on their published rubric."
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "command": "cat limits.md",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "An earlier 81.45 / 81.93 result was withdrawn after a generator defect was found: a severity pinned to one value produced pairs at severity 0.0. It is not reported here.",
+            "The organisers' blind set is 200 pairs and is not reproduced here, so the F1 margin may not carry over.",
+            "Periodic layouts produce plausible wrong-scale and wrong-rotation matches. Sub-pixel refinement cannot recover a pair whose candidates never include the correct pose.",
+            "Some confidently wrong predictions score above the threshold, and no confidence cut catches all of them.",
+            "CAD-to-SEM registration assumes a whole-canvas search design file. Without it, the fallback scored 45.32 / 85 on the harsh tier, against 85.00 with it.",
+            "Runtime rows are local emulations of the 4-core, 8 GB reference box, not measurements on it."
+          ]
+        }
+      ]
+    }
+  ],
+  "links": [
+    { "label": "read the code ↗", "url": "https://github.com/vhmaadhav/semicon-driftsense", "primary": true },
+    { "label": "organiser's announcement ↗", "url": "https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ" }
+  ]
+}
