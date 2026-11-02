@@ -1,40 +1,53 @@
 # Maadhav V H
 
-> AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up. ECE undergraduate (2028), open to internships.
+> AI/ML engineer focused on on-device AI · ECE undergraduate at KPRIET, graduating 2028 · open to AI/ML and on-device AI internships
 
-I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals.
+I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals. Based in Coimbatore, Tamil Nadu, India.
 
-Role: ai / ml engineer · on-device ai. Location: Coimbatore, Tamil Nadu. Site: https://vhmaadhav.com/
+## Work
+- [DriftSense](https://vhmaadhav.com/work/driftsense/): Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there. Result: match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600.
+- [VehicleGPT](https://vhmaadhav.com/work/vehiclegpt/): Ask a car about its own data: a small LLM answering from CAN logs, fully offline. Result: hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB.
+- [Mouna](https://vhmaadhav.com/#work): Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet. Result: false utterances 23% → 7% · Kannada top-1 75.3%.
+- [Rakshak-Edge](https://vhmaadhav.com/#work): Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up. Result: offline on Arm · phase 1 due nov 2026.
+- [DT Guardian](https://vhmaadhav.com/work/dt-guardian/): Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads. Result: energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)
+- [Axiom Trace](https://vhmaadhav.com/#work): A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Result: Next.js web + Kotlin app · 176 tests.
+- Also public on GitHub: [embeddinggemma-mobile-benchmark](https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark), [hiver-email-suggested-response](https://github.com/vhmaadhav/hiver-email-suggested-response).
 
-## Projects
-- [DriftSense](https://github.com/vhmaadhav/semicon-driftsense): Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there. Proof: match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600.
-- VehicleGPT: Ask a car about its own data: a small LLM answering from CAN logs, fully offline. Proof: hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB.
-- Mouna: Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet. Proof: false utterances 23% → 7% · Kannada top-1 75.3%.
-- Rakshak-Edge: Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up. Proof: offline on Arm · phase 1 due nov 2026.
-- DT Guardian: Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads. Proof: energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%).
-- Axiom Trace: A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Proof: Next.js web + Kotlin app · 176 tests.
-- Also on GitHub: [embeddinggemma-mobile-benchmark](https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark), [hiver-email-suggested-response](https://github.com/vhmaadhav/hiver-email-suggested-response)
+## Awards
+- Sep 2026: SEMICON India Hackathon 2026, Applied Materials track. Runner-up · ₹75,000. ([source](https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ))
+- Jun 2026: Caterpillar Tech Challenge 2026. Top 10 of ~1,500 teams · Grand Finale, Chennai.
+- 2026: Schneider Electric Yuva Yodha, Challenge 3. selected for Phase 2, with DT Guardian.
+- Oct 2026: Arm × Bharat AI-SoC Challenge 2026–27. shortlisted for on-device scam detection, as team lead.
+- Oct 2026: iQOO Hackathon 2026. Grand Finale, 48-h build, Bengaluru.
+- Oct 2026: Health-a-thon 2026. top 150 of 450+, build sprint.
+- Aug 2026: ISRO Bharatiya Antariksh Hackathon. Grand Finale shortlist.
+- Jul 2026: Qualcomm Snapdragon Multiverse Hackathon. selected for on-site build.
+- 2026: Atomic Hacks (IIT Bombay × Rosatom). finalist.
+- Mar 2025: Ossomehacks 2.0, SRM IST. top 3, Web3 track.
 
 ## Experience
 - Machine Learning Intern, PhobosQ (2025-08 to 2025-10, 3 months): Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware.
 - Software Engineering Intern, Embedded Systems, Enthu Technology Solutions (2025-12 to 2026-01, 2 months): Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks.
 
-## Awards
-- Sep 2026: SEMICON India Hackathon 2026, Applied Materials track. Runner-up · ₹75,000
-- Jun 2026: Caterpillar Tech Challenge 2026. Top 10 of ~1,500 teams · Grand Finale, Chennai
-- 2026: Schneider Electric Yuva Yodha, Challenge 3. selected for Phase 2, with DT Guardian
-- Oct 2026: Arm × Bharat AI-SoC Challenge 2026–27. shortlisted for on-device scam detection, as team lead
-- Oct 2026: iQOO Hackathon 2026. Grand Finale, 48-h build, Bengaluru
-- Oct 2026: Health-a-thon 2026. top 150 of 450+, build sprint
-- Aug 2026: ISRO Bharatiya Antariksh Hackathon. Grand Finale shortlist
-- Jul 2026: Qualcomm Snapdragon Multiverse Hackathon. selected for on-site build
-- 2026: Atomic Hacks (IIT Bombay × Rosatom). finalist
-- Mar 2025: Ossomehacks 2.0, SRM IST. top 3, Web3 track
-
 ## Links
 - site: https://vhmaadhav.com/
-- github: https://github.com/vhmaadhav
-- leetcode: https://leetcode.com/u/vhmaadhav/
-- linkedin: https://linkedin.com/in/vhmaadhav
+- résumé (PDF): https://vhmaadhav.com/Maadhav_VH_Resume.pdf
+- GitHub: https://github.com/vhmaadhav
+- LinkedIn: https://linkedin.com/in/vhmaadhav
+- LeetCode: https://leetcode.com/u/vhmaadhav/
 - email: sid.maadhav@gmail.com
-- resume: https://vhmaadhav.com/Maadhav_VH_Resume.pdf
+- JSON Resume: https://vhmaadhav.com/resume.json
+- agent facts: https://vhmaadhav.com/for-agents.txt
+- full text: https://vhmaadhav.com/llms-full.txt
+
+## Optional
+- Education: KPR Institute of Engineering and Technology, Coimbatore. B.E. ECE · Honours in IoT for Smart Systems · CGPA 8.43. 2024 – 2028.
+- Skills, ml · vision: PyTorch, scikit-learn, LightGBM, OpenCV, pandas
+- Skills, edge ai: ONNX Runtime, llama.cpp / GGUF, Qualcomm AI Hub / QNN, quantization
+- Skills, llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation
+- Skills, languages: Python, C, Java, TypeScript, Kotlin, SQL
+- Skills, optimisation: MILP (PuLP / HiGHS), forecasting
+- Skills, web · apps: FastAPI, Django, React, Next.js, Jetpack Compose
+- Skills, embedded: CAN / SocketCAN, UART / SPI / I²C, LoRaWAN, Linux
+- Skills, tooling: Docker, GitHub Actions, pytest, Git
+- Credentials: Bosch EMS & Vehicle Networking; NPTEL Industry 4.0 & IIoT; NPTEL · Electronic Systems for Cancer Diagnosis (IIT Madras, 2026); AWS AI & ML Scholars 2026; IEEE member.
