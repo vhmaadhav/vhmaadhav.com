@@ -245,6 +245,26 @@
     return section('stack', 'stack', `<dl class="stack">${rows}</dl>`);
   }
 
+  // Degree rows, shaped like the experience items.
+  function education(list) {
+    const items = list.map((edu) => `
+          <li class="item">
+            <div class="item-head">
+              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(edu.title)}</span></p>
+              <p class="dates">${esc(edu.dates)}</p>
+            </div>
+            <p class="item-body">${esc(edu.subtitle)}</p>
+          </li>`).join('');
+    return section('education', 'education', `<ul class="list">${items}</ul>`);
+  }
+
+  // Certificates and memberships, one compact line each.
+  function credentials(list) {
+    const items = list.map((cred) => `
+            <li><span class="marker" aria-hidden="true">&gt;</span><span>${esc(cred)}</span></li>`).join('');
+    return section('credentials', 'credentials', `<ul class="creds">${items}</ul>`);
+  }
+
   // The heatmaps are the only parts filled in by app.js. Without JavaScript the
   // link below is what a reader gets instead.
   function activity(username, leetcodeHandle) {
@@ -294,6 +314,7 @@
       projects(data.projects, data.moreProjects),
       awards(data.wins),
       `<div class="duo">${experience(data.experience, now)}${stack(data.skills)}</div>`,
+      `<div class="duo">${education(data.education || [])}${credentials(data.credentials || [])}</div>`,
       activity(handle, data.profile.leetcodeHandle || handle),
       offHours(data.offHours),
       footer(data.profile.name, now)
