@@ -1,0 +1,229 @@
+{
+  "site": {
+    "url": "https://vhmaadhav.com",
+    "title": "Maadhav V H — AI/ML Engineer · On-Device AI",
+    "description": "AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up."
+  },
+  "profile": {
+    "name": "Maadhav V H",
+    "handle": "vhmaadhav",
+    "leetcodeHandle": "vhmaadhav",
+    "role": "ai / ml engineer · on-device ai",
+    "location": "Coimbatore, Tamil Nadu",
+    "bio": [
+      "hey, i'm maadhav. i build ml systems — small llms, vision models, rag — and get them running on real hardware: phone npus, arm boards, a car's own signals.",
+      "studying ece at kpriet, coimbatore. when i'm not in class, i'm usually at a hackathon finale somewhere in india."
+    ],
+    "links": [
+      { "label": "github", "url": "https://github.com/vhmaadhav" },
+      { "label": "leetcode", "url": "https://leetcode.com/u/vhmaadhav/" },
+      { "label": "linkedin", "url": "https://linkedin.com/in/vhmaadhav" },
+      { "label": "email", "url": "mailto:sid.maadhav@gmail.com" },
+      { "label": "resume", "url": "Maadhav_VH_Resume.pdf" }
+    ],
+    "quip": "favourite kind of plot: someone solves an impossible problem with whatever's on hand — the martian, project hail mary. same reason i fit llms into 2 gb."
+  },
+  "experience": [
+    {
+      "role": "Machine Learning Intern",
+      "company": "PhobosQ",
+      "start": "2025-08",
+      "end": "2025-10",
+      "description": "Built scikit-learn pipelines on clinical sensor data and compressed the models to run inference on resource-constrained hardware."
+    },
+    {
+      "role": "Software Engineering Intern, Embedded Systems",
+      "company": "Enthu Technology Solutions",
+      "start": "2025-12",
+      "end": "2026-01",
+      "description": "Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks."
+    }
+  ],
+  "wins": [
+    {
+      "date": "Sep 2026",
+      "event": "SEMICON India Hackathon 2026, Applied Materials track",
+      "result": "Runner-up · ₹75,000",
+      "highlight": true
+    },
+    {
+      "date": "Jun 2026",
+      "event": "Caterpillar Tech Challenge 2026",
+      "result": "Top 10 of ~1,500 teams · Grand Finale, Chennai",
+      "highlight": true
+    },
+    {
+      "date": "2026",
+      "event": "Schneider Electric Yuva Yodha, Challenge 3",
+      "result": "selected for Phase 2, with DT Guardian"
+    },
+    {
+      "date": "Oct 2026",
+      "event": "Arm × Bharat AI-SoC Challenge 2026–27",
+      "result": "shortlisted for on-device scam detection, as team lead"
+    },
+    {
+      "date": "Oct 2026",
+      "event": "iQOO Hackathon 2026",
+      "result": "Grand Finale, 48-h build, Bengaluru"
+    },
+    {
+      "date": "Oct 2026",
+      "event": "Health-a-thon 2026",
+      "result": "top 150 of 450+, build sprint"
+    },
+    {
+      "date": "Aug 2026",
+      "event": "ISRO Bharatiya Antariksh Hackathon",
+      "result": "Grand Finale shortlist"
+    },
+    {
+      "date": "Jul 2026",
+      "event": "Qualcomm Snapdragon Multiverse Hackathon",
+      "result": "selected for on-site build"
+    },
+    {
+      "date": "2026",
+      "event": "Atomic Hacks (IIT Bombay × Rosatom)",
+      "result": "finalist"
+    },
+    {
+      "date": "Mar 2025",
+      "event": "Ossomehacks 2.0, SRM IST",
+      "result": "top 3, Web3 track"
+    }
+  ],
+  "projects": [
+    {
+      "title": "VehicleGPT",
+      "what": "Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline.",
+      "proof": "accuracy 29.5% → 95.5% · 1.7 s on 2 cores / 2 GiB",
+      "tag": "Tata Elxsi Teliport S4"
+    },
+    {
+      "title": "Rakshak-Edge",
+      "what": "Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up.",
+      "proof": "on-device · adversarially tested",
+      "tag": "shortlisted · Arm × Bharat AI-SoC"
+    },
+    {
+      "title": "Mouna",
+      "what": "Speak by mouthing words — silent lip-reading turned into voice on a phone's NPU, no internet.",
+      "proof": "false utterances 23% → 7% · Kannada top-1 75.3%",
+      "tag": "grand finale · iQOO Hackathon 2026"
+    },
+    {
+      "title": "DriftSense",
+      "what": "Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there.",
+      "proof": "F1 0.91 · sub-pixel CAD-to-SEM registration",
+      "tag": "runner-up · SEMICON India 2026",
+      "url": "https://github.com/vhmaadhav/semicon-driftsense"
+    },
+    {
+      "title": "Axiom Trace",
+      "what": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
+      "proof": "Next.js + Kotlin · 176 tests",
+      "tag": "personal project"
+    },
+    {
+      "title": "DT Guardian",
+      "what": "Keeps a neighbourhood transformer from overheating by scheduling batteries, EV chargers and pumps at the edge.",
+      "proof": "−53% essential energy lost in an outage simulation",
+      "tag": "phase 2 · Schneider Yuva Yodha"
+    }
+  ],
+  "moreProjects": [
+    { "name": "embeddinggemma-mobile-benchmark", "url": "https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" },
+    { "name": "hiver-email-suggested-response", "url": "https://github.com/vhmaadhav/hiver-email-suggested-response" }
+  ],
+  "education": [
+    {
+      "title": "KPR Institute of Engineering and Technology, Coimbatore",
+      "subtitle": "B.E. ECE · Honours in IoT for Smart Systems · CGPA 8.43",
+      "dates": "2024 – 2028"
+    }
+  ],
+  "skills": [
+    {
+      "group": "ml & vision",
+      "items": [
+        ["PyTorch", "devicon-pytorch-original"],
+        ["scikit-learn", "devicon-scikitlearn-plain"],
+        ["LightGBM", ""],
+        ["OpenCV", "devicon-opencv-plain"],
+        ["pandas", ""]
+      ]
+    },
+    {
+      "group": "llm & agents",
+      "items": [
+        ["RAG", ""],
+        ["knowledge graphs", ""],
+        ["sentence-transformers", ""],
+        ["LLM evaluation", ""]
+      ]
+    },
+    {
+      "group": "edge ai",
+      "items": [
+        ["ONNX Runtime", ""],
+        ["llama.cpp / GGUF", ""],
+        ["Qualcomm AI Hub / QNN", ""],
+        ["quantization", ""]
+      ]
+    },
+    {
+      "group": "languages",
+      "items": [
+        ["Python", "devicon-python-plain"],
+        ["C", "devicon-c-plain"],
+        ["Java", "devicon-java-plain"],
+        ["TypeScript", "devicon-typescript-plain"],
+        ["Kotlin", "devicon-kotlin-plain"],
+        ["SQL", ""]
+      ]
+    },
+    {
+      "group": "optimisation",
+      "items": [
+        ["MILP (PuLP / HiGHS)", ""],
+        ["forecasting", ""]
+      ]
+    },
+    {
+      "group": "web & apps",
+      "items": [
+        ["FastAPI", "devicon-fastapi-plain"],
+        ["Django", "devicon-django-plain"],
+        ["React", "devicon-react-original"],
+        ["Next.js", "devicon-nextjs-plain"],
+        ["Jetpack Compose", ""]
+      ]
+    },
+    {
+      "group": "embedded",
+      "items": [
+        ["CAN / SocketCAN", ""],
+        ["UART / SPI / I²C", ""],
+        ["LoRaWAN", ""],
+        ["Linux", "devicon-linux-plain"]
+      ]
+    },
+    {
+      "group": "tooling",
+      "items": [
+        ["Docker", "devicon-docker-plain"],
+        ["GitHub Actions", "devicon-githubactions-plain"],
+        ["pytest", "devicon-pytest-plain"],
+        ["Git", "devicon-git-plain"]
+      ]
+    }
+  ],
+  "credentials": [
+    "Bosch EMS & Vehicle Networking",
+    "NPTEL Industry 4.0 & IIoT",
+    "NPTEL · Electronic Systems for Cancer Diagnosis (IIT Madras, 2026)",
+    "AWS AI & ML Scholars 2026",
+    "IEEE member"
+  ]
+}
