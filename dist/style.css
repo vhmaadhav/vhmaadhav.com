@@ -43,8 +43,14 @@ h1, h2, h3 {
   font-weight: 700;
   color: var(--white);
 }
-h1, h2 { font-family: var(--pixel); }
-h1 { font-size: clamp(2.4rem, 11vw, 5.5rem); line-height: 0.95; letter-spacing: -0.01em; font-weight: 800; }
+/* Doto's roundness axis. Headings run square -> round as they enter view (dots.js adds .in). */
+@property --r { syntax: "<number>"; inherits: true; initial-value: 100; }
+h1, h2 { font-family: var(--pixel); font-variation-settings: "ROND" var(--r); }
+@media (prefers-reduced-motion: no-preference) {
+  .sec-head, h1 { --r: 0; transition: --r 1.4s cubic-bezier(0.22, 0.7, 0.2, 1); }
+  .sec-head.in, h1.in { --r: 100; }
+}
+h1 { font-size: clamp(2.2rem, 9vw, 3.75rem); line-height: 0.95; letter-spacing: -0.01em; font-weight: 800; }
 h2 { font-size: clamp(1.6rem, 4vw, 2rem); line-height: 1.1; font-weight: 800; }
 h3 { font-size: 1.3rem; line-height: 1.3; }
 
@@ -104,10 +110,10 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
 
 /* hero */
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-top: -1.5rem;
 }
 .intro {
   display: flex;
@@ -177,38 +183,105 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
 .btn-quiet:hover { padding: 0 0.875rem; color: var(--muted); }
 .btn-quiet:hover { color: var(--text); }
 
-/* braille point cloud (app.js). Height is reserved in em, so it cannot shift the layout. */
-.cloud {
-  display: block;
+/* dot panel (dots.js). Size is reserved here, so the canvas cannot shift the layout. */
+.panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  min-width: 0;
-  margin: 0;
+  height: 200px;
   overflow: hidden;
-  font: 12px / 1 var(--mono);
-  letter-spacing: 0;
-  white-space: pre;
-  color: var(--accent);
-  opacity: 0.9;
-  user-select: none;
+  border-radius: 16px;
+  background: #0c0c0d;
+  box-shadow: 0 0 0 1px var(--line-strong), 0 30px 70px -30px #000, 0 0 90px -36px rgba(242, 165, 65, 0.28);
 }
-/* phones: a short strip above the name */
-#hero-cloud { height: 9em; font-size: 10px; touch-action: pan-y; cursor: grab; }
-@media (min-width: 860px) {
-  .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 3.5rem; }
-  .intro { grid-column: 1; grid-row: 1; }
-  #hero-cloud { grid-column: 2; grid-row: 1; height: 18em; font-size: 12px; }
+.panel.tall { height: 240px; }
+.panel canvas { display: block; flex: none; }
+/* shown only until the panel is ready, so without JavaScript the same words are still there */
+.panel-fb {
+  padding: 1rem;
+  font: 800 clamp(1.3rem, 5vw, 2.2rem) / 1.2 var(--pixel);
+  color: var(--accent);
+  text-align: center;
+}
+.panel.ready .panel-fb {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 639px) {
+  .panel { height: auto; aspect-ratio: 51 / 33; border-radius: 14px; }
+  .panel.tall { aspect-ratio: 51 / 30; }
+}
+
+/* docked display: top left once the panel (or the page title) has scrolled away */
+/* a fade behind the docked display, so page text does not run under it */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 18;
+  height: 80px;
+  background: linear-gradient(var(--bg) 60%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.docked body::before { opacity: 1; }
+.dock {
+  position: fixed;
+  top: 6px;
+  left: var(--dl, 1rem);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.6);
+  transform-origin: 0 50%;
+  transition: opacity 0.3s, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s 0.35s;
+}
+.dock canvas { display: block; border-radius: 8px; box-shadow: 0 0 0 1px var(--line-strong); }
+.docked .dock { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+@media (min-width: 640px) {
+  .topbar { position: sticky; top: 0; z-index: 19; }
+  .docked .brand { visibility: hidden; }
 }
 
 /* section heads: "$ name" over a dotted rule */
 .section { display: flex; flex-direction: column; gap: 1.25rem; min-width: 0; }
 .sec-head {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   gap: 0.4rem 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px dotted var(--line-strong);
+  padding-bottom: 1.1rem;
+}
+/* the rule is a row of dots on the panel's 8px pitch; the first five light up as the heading arrives */
+.sec-head::before, .sec-head::after, .footer::before, .wp-nav::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 8px;
+  background: radial-gradient(circle at 4px 4px, var(--line-strong) 1.3px, transparent 1.9px) 0 0 / 8px 8px repeat-x;
+}
+.sec-head::after {
+  width: 40px;
+  background: radial-gradient(circle at 4px 4px, var(--accent) 1.5px, transparent 2.1px) 0 0 / 8px 8px repeat-x;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sec-head::after { width: 0; transition: width 0.5s steps(5) 0.2s; }
+  .sec-head.in::after { width: 40px; }
 }
 .prompt { color: var(--accent); margin-right: 0.45rem; }
 .aside {
@@ -397,7 +470,7 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
 }
 .heat { display: flex; gap: 3px; width: max-content; }
 .week { display: flex; flex-direction: column; gap: 3px; }
-.cell { width: 10px; height: 10px; border-radius: 2px; background: var(--c0); }
+.cell { width: 10px; height: 10px; border-radius: 50%; background: var(--c0); }
 .cell.none { background: transparent; }
 .cell.l1 { background: var(--c1); }
 .cell.l2 { background: var(--c2); }
@@ -438,12 +511,13 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.6rem 1rem;
-  padding: 1.5rem 0 0;
-  border-top: 1px dotted var(--line-strong);
+  position: relative;
+  padding: 1.75rem 0 0;
   font-family: var(--mono);
   font-size: 0.875rem;
   color: var(--muted);
 }
+.footer::before, .wp-nav::before { top: 0; bottom: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   a { transition: none; }
@@ -582,8 +656,8 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.25rem 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px dotted var(--line-strong);
+  position: relative;
+  padding-top: 1.75rem;
   font-family: var(--mono);
   font-size: 0.875rem;
 }
@@ -633,12 +707,4 @@ a:focus-visible, .heat-scroll:focus-visible { outline: 2px solid var(--accent); 
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-}
-.nf-art {
-  margin: 0;
-  font: 12px / 1 var(--mono);
-  color: var(--line-strong);
-  white-space: pre;
-  overflow: hidden;
-  user-select: none;
 }

@@ -77,7 +77,7 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 - runner-up: SEMICON India Hackathon 2026 · Applied Materials track · ₹75,000. Link: https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ
 - top 10 / ~1,500: Caterpillar Tech Challenge 2026 · grand finale, Chennai (interview shortlist).
-- 29.5% → 95.5%: VehicleGPT · hybrid rules + small LLM on 200 car-signal questions. Link: https://vhmaadhav.com/work/vehiclegpt
+- 29.5% → 95.5%: VehicleGPT · hybrid rules + small LLM on 200 car-signal questions. Link: https://vhmaadhav.com/work/vehiclegpt/
 
 ## Awards
 

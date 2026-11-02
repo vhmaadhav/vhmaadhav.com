@@ -78,7 +78,7 @@
   // A section: "$ name" heading, optional mono aside, then the body.
   function section(id, title, body, aside = '') {
     return `
-        <section id="${id}" class="section" aria-labelledby="${id}-title">
+        <section id="${id}" class="section" data-dot="${esc(id.toUpperCase())}" aria-labelledby="${id}-title">
           <header class="sec-head">
             <h2 id="${id}-title"><span class="prompt" aria-hidden="true">$</span> ${esc(title)}</h2>
             ${aside ? `<p class="aside">${esc(aside)}</p>` : ''}
@@ -108,7 +108,7 @@
   const BUTTON_TEXT = { email: 'email me', resume: 'résumé ↓', github: 'github', linkedin: 'linkedin', leetcode: 'leetcode' };
   const BUTTON_CLASS = { email: 'btn btn-primary', resume: 'btn btn-outline' };
 
-  // The braille cloud sits in the right column (first in the DOM, so it is on top on phones).
+  // The dot panel (dots.js) sits above the intro. Its fallback text shows only without JavaScript.
   function hero(profile) {
     const buttons = BUTTONS
       .map((label) => profile.links.find((l) => l.label === label))
@@ -116,9 +116,13 @@
       .map((link) => `<a class="${BUTTON_CLASS[link.label] || 'btn btn-quiet'}" href="${esc(link.url)}"${linkAttrs(link.url)}>${esc(BUTTON_TEXT[link.label] || link.label)}</a>`)
       .join('');
     const bio = profile.bio.map((line) => `<p class="lede">${esc(line)}</p>`).join('');
+    const facts = (profile.panel && profile.panel.facts) || [];
     return `
       <section id="top" class="hero" aria-labelledby="hero-name">
-        <pre id="hero-cloud" class="cloud" aria-hidden="true"></pre>
+        <div class="panel" data-panel data-name="${esc(profile.name)}" data-facts="${esc(facts.join('|'))}">
+          <p class="panel-fb" aria-hidden="true">${esc([profile.name, ...facts].join(' · '))}</p>
+          <canvas aria-hidden="true"></canvas>
+        </div>
         <div class="intro">
           <p class="status-row">
             <span class="status"><span class="dot" aria-hidden="true"></span>${esc(profile.status)}</span>
@@ -147,7 +151,7 @@
           </li>`;
     }).join('');
     return `
-      <section class="proofs" aria-label="Strongest proof">
+      <section class="proofs" data-dot="PROOF" aria-label="Strongest proof">
         <ul class="proof-list">${items}</ul>
       </section>`;
   }

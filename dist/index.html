@@ -29,7 +29,7 @@
   <link rel="alternate" type="application/json" href="/resume.json" title="JSON Resume">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Doto:wght@400..900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Doto:ROND,wght@0..100,100..900&display=swap">
   <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
 {
@@ -167,6 +167,7 @@
 }
   </script>
   <script src="render.js" defer></script>
+  <script src="dots.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -177,7 +178,10 @@
         <nav class="topnav" aria-label="Primary"><a href="#work">work</a><a href="#awards">awards</a><a href="#experience">experience</a><a href="Maadhav_VH_Resume.pdf" target="_blank" rel="noopener noreferrer">résumé</a></nav>
       </header>
       <section id="top" class="hero" aria-labelledby="hero-name">
-        <pre id="hero-cloud" class="cloud" aria-hidden="true"></pre>
+        <div class="panel" data-panel data-name="Maadhav V H" data-facts="ON-DEVICE AI|NPU · ARM · CAN|SEMICON RUNNER-UP &#39;26|GRAD 2028 · OPEN TO WORK">
+          <p class="panel-fb" aria-hidden="true">Maadhav V H · ON-DEVICE AI · NPU · ARM · CAN · SEMICON RUNNER-UP &#39;26 · GRAD 2028 · OPEN TO WORK</p>
+          <canvas aria-hidden="true"></canvas>
+        </div>
         <div class="intro">
           <p class="status-row">
             <span class="status"><span class="dot" aria-hidden="true"></span>open to ai/ml &amp; on-device ai internships</span>
@@ -189,7 +193,7 @@
           <nav class="buttons" aria-label="contact and links"><a class="btn btn-primary" href="mailto:sid.maadhav@gmail.com">email me</a><a class="btn btn-outline" href="Maadhav_VH_Resume.pdf" target="_blank" rel="noopener noreferrer">résumé ↓</a><a class="btn btn-quiet" href="https://github.com/vhmaadhav" target="_blank" rel="noopener noreferrer">github</a><a class="btn btn-quiet" href="https://linkedin.com/in/vhmaadhav" target="_blank" rel="noopener noreferrer">linkedin</a><a class="btn btn-quiet" href="https://leetcode.com/u/vhmaadhav/" target="_blank" rel="noopener noreferrer">leetcode</a></nav>
         </div>
       </section>
-      <section class="proofs" aria-label="Strongest proof">
+      <section class="proofs" data-dot="PROOF" aria-label="Strongest proof">
         <ul class="proof-list">
           <li class="proof">
             <p class="proof-value">runner-up</p>
@@ -207,10 +211,10 @@
             <p class="proof-value">29.5% → 95.5%</p>
             <p class="proof-text">VehicleGPT · hybrid rules + small LLM on 200 car-signal questions</p>
             
-            <p class="proof-link"><a href="/work/vehiclegpt">how →</a></p>
+            <p class="proof-link"><a href="/work/vehiclegpt/">how →</a></p>
           </li></ul>
       </section>
-        <section id="work" class="section" aria-labelledby="work-title">
+        <section id="work" class="section" data-dot="WORK" aria-labelledby="work-title">
           <header class="sec-head">
             <h2 id="work-title"><span class="prompt" aria-hidden="true">$</span> ls work/</h2>
             <p class="aside">6 projects · 1 with public code</p>
@@ -225,7 +229,7 @@
               <p class="what">Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.</p>
               <p class="my-role"><span class="k">my role · </span>team lead</p>
               <p class="card-proof">match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600</p>
-              <div class="card-foot"><a href="/work/driftsense">read case study →</a><a href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener noreferrer">public code ↗</a></div>
+              <div class="card-foot"><a href="/work/driftsense/">read case study →</a><a href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener noreferrer">public code ↗</a></div>
             </article>
           </li>
           <li>
@@ -237,7 +241,7 @@
               <p class="what">Ask a car about its own data: a small LLM answering from CAN logs, fully offline.</p>
               <p class="my-role"><span class="k">my role · </span>team lead · benchmark harness</p>
               <p class="card-proof">hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB</p>
-              <div class="card-foot"><a href="/work/vehiclegpt">read case study →</a><span class="code">code private (competition)</span></div>
+              <div class="card-foot"><a href="/work/vehiclegpt/">read case study →</a><span class="code">code private (competition)</span></div>
             </article>
           </li>
           <li>
@@ -273,7 +277,7 @@
               <p class="what">Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.</p>
               <p class="my-role"><span class="k">my role · </span>co-developer (2-person team)</p>
               <p class="card-proof">energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)</p>
-              <div class="card-foot"><a href="/work/dt-guardian">read case study →</a><span class="code">code private (competition)</span></div>
+              <div class="card-foot"><a href="/work/dt-guardian/">read case study →</a><span class="code">code private (competition)</span></div>
             </article>
           </li>
           <li>
@@ -289,7 +293,7 @@
             </article>
           </li></ul><p class="also"><span class="muted">also on github:</span> <a href="https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" target="_blank" rel="noopener noreferrer">embeddinggemma-mobile-benchmark</a> · <a href="https://github.com/vhmaadhav/hiver-email-suggested-response" target="_blank" rel="noopener noreferrer">hiver-email-suggested-response</a></p>
         </section>
-        <section id="awards" class="section" aria-labelledby="awards-title">
+        <section id="awards" class="section" data-dot="AWARDS" aria-labelledby="awards-title">
           <header class="sec-head">
             <h2 id="awards-title"><span class="prompt" aria-hidden="true">$</span> awards</h2>
             <p class="aside">&amp; selections</p>
@@ -324,7 +328,7 @@
             <li>Atomic Hacks (IIT Bombay × Rosatom) — finalist · <time datetime="2026">2026</time></li>
             <li>Ossomehacks 2.0, SRM IST — top 3, Web3 track · <time datetime="2025-03">Mar 2025</time></li></ul></div>
         </section><div class="duo">
-        <section id="experience" class="section" aria-labelledby="experience-title">
+        <section id="experience" class="section" data-dot="EXPERIENCE" aria-labelledby="experience-title">
           <header class="sec-head">
             <h2 id="experience-title"><span class="prompt" aria-hidden="true">$</span> experience</h2>
             
@@ -347,7 +351,7 @@
             <p class="item-body">Sensor data acquisition over UART/SPI/I²C with Wi-Fi, Bluetooth and LoRaWAN uplinks.</p>
           </li></ul>
         </section>
-        <section id="stack" class="section" aria-labelledby="stack-title">
+        <section id="stack" class="section" data-dot="STACK" aria-labelledby="stack-title">
           <header class="sec-head">
             <h2 id="stack-title"><span class="prompt" aria-hidden="true">$</span> stack</h2>
             
@@ -386,7 +390,7 @@
               <dd>Docker · GitHub Actions · pytest · Git</dd>
             </div></dl>
         </section></div><div class="duo">
-        <section id="education" class="section" aria-labelledby="education-title">
+        <section id="education" class="section" data-dot="EDUCATION" aria-labelledby="education-title">
           <header class="sec-head">
             <h2 id="education-title"><span class="prompt" aria-hidden="true">$</span> education</h2>
             
@@ -400,7 +404,7 @@
             <p class="item-body">B.E. ECE · Honours in IoT for Smart Systems · CGPA 8.43</p>
           </li></ul>
         </section>
-        <section id="credentials" class="section" aria-labelledby="credentials-title">
+        <section id="credentials" class="section" data-dot="CREDENTIALS" aria-labelledby="credentials-title">
           <header class="sec-head">
             <h2 id="credentials-title"><span class="prompt" aria-hidden="true">$</span> credentials</h2>
             
@@ -412,7 +416,7 @@
             <li><span class="marker" aria-hidden="true">&gt;</span><span>AWS AI &amp; ML Scholars 2026</span></li>
             <li><span class="marker" aria-hidden="true">&gt;</span><span>IEEE member</span></li></ul>
         </section></div>
-        <section id="activity" class="section" aria-labelledby="activity-title">
+        <section id="activity" class="section" data-dot="ACTIVITY" aria-labelledby="activity-title">
           <header class="sec-head">
             <h2 id="activity-title"><span class="prompt" aria-hidden="true">$</span> activity</h2>
             
@@ -429,7 +433,7 @@
             </div>
           </div>
         </section>
-        <section id="off-hours" class="section" aria-labelledby="off-hours-title">
+        <section id="off-hours" class="section" data-dot="OFF-HOURS" aria-labelledby="off-hours-title">
           <header class="sec-head">
             <h2 id="off-hours-title"><span class="prompt" aria-hidden="true">$</span> off-hours</h2>
             

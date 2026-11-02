@@ -1,6 +1,6 @@
 # maadhav-site
 
-Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page with a braille hero, GitHub and LeetCode contribution heatmaps, and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Worker (`worker/index.js`) serves the LeetCode snapshot and the static files in `dist/`.
+Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page with a dot-matrix display hero and docked section label, GitHub and LeetCode contribution heatmaps, and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Worker (`worker/index.js`) serves the LeetCode snapshot and the static files in `dist/`.
 
 ## Build
 
@@ -45,7 +45,7 @@ All content lives in `dist/content.json`:
 - `education`, `credentials`: plain entries.
 - `skills`: `label` plus an optional `icon`, a devicon class from the pinned devicon v2.16.0 stylesheet. Entries without an icon show as text-only chips.
 
-Markup lives in `dist/render.js`, which both `build.mjs` and the browser use, so the static page and any client refresh always match. Behaviour (braille point cloud, section dividers, GitHub heatmap, experience durations) is in `dist/app.js`, and layout is in `dist/style.css`. The page template is `src/index.template.html`. The resume is `dist/Maadhav_VH_Resume.pdf`.
+Markup lives in `dist/render.js`, which both `build.mjs` and the browser use, so the static page and any client refresh always match. The dot-matrix engine (hero panel, docked section label, case-study and 404 displays, heading roundness) is `dist/dots.js`; the heatmaps and experience durations are in `dist/app.js`, and layout is in `dist/style.css`. The page template is `src/index.template.html`. The resume is `dist/Maadhav_VH_Resume.pdf`.
 
 ## License
 

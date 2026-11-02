@@ -12,6 +12,9 @@
     "meta": "ece undergrad · graduating 2028 · coimbatore, india",
     "role": "ai / ml engineer · on-device ai",
     "location": "Coimbatore, Tamil Nadu",
+    "panel": {
+      "facts": ["ON-DEVICE AI", "NPU · ARM · CAN", "SEMICON RUNNER-UP '26", "GRAD 2028 · OPEN TO WORK"]
+    },
     "bio": [
       "I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals."
     ],
@@ -37,7 +40,7 @@
     {
       "value": "29.5% → 95.5%",
       "text": "VehicleGPT · hybrid rules + small LLM on 200 car-signal questions",
-      "link": { "label": "how →", "url": "/work/vehiclegpt" }
+      "link": { "label": "how →", "url": "/work/vehiclegpt/" }
     }
   ],
   "experience": [
@@ -119,7 +122,7 @@
       "tag": "runner-up · SEMICON India 2026",
       "role": "team lead",
       "code": "public code ↗",
-      "caseStudy": "/work/driftsense",
+      "caseStudy": "/work/driftsense/",
       "url": "https://github.com/vhmaadhav/semicon-driftsense"
     },
     {
@@ -129,7 +132,7 @@
       "tag": "Tata Elxsi Teliport S4",
       "role": "team lead · benchmark harness",
       "code": "code private (competition)",
-      "caseStudy": "/work/vehiclegpt"
+      "caseStudy": "/work/vehiclegpt/"
     },
     {
       "title": "Mouna",
@@ -153,7 +156,7 @@
       "tag": "phase 2 · Schneider Yuva Yodha",
       "role": "co-developer (2-person team)",
       "code": "code private (competition)",
-      "caseStudy": "/work/dt-guardian"
+      "caseStudy": "/work/dt-guardian/"
     },
     {
       "title": "Axiom Trace",
