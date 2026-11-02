@@ -8,11 +8,12 @@
     "name": "Maadhav V H",
     "handle": "vhmaadhav",
     "leetcodeHandle": "vhmaadhav",
-    "role": "ai / ml engineer · on-device ai · ece undergrad, graduating 2028",
+    "status": "open to ai/ml & on-device ai internships",
+    "meta": "ece undergrad · graduating 2028 · coimbatore, india",
+    "role": "ai / ml engineer · on-device ai",
     "location": "Coimbatore, Tamil Nadu",
     "bio": [
-      "hey, i'm maadhav. i build ml systems — small llms, vision models, rag — and get them running on real hardware: phone npus, arm boards, a car's own signals.",
-      "studying ece at kpriet, coimbatore — open to ai/ml and on-device ai internships. most weekends i'm at a hackathon finale somewhere in india."
+      "I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals."
     ],
     "links": [
       { "label": "github", "url": "https://github.com/vhmaadhav" },
@@ -20,9 +21,25 @@
       { "label": "linkedin", "url": "https://linkedin.com/in/vhmaadhav" },
       { "label": "email", "url": "mailto:sid.maadhav@gmail.com" },
       { "label": "resume", "url": "Maadhav_VH_Resume.pdf" }
-    ],
-    "quip": "favourite kind of plot: someone solves an impossible problem with whatever's on hand — the martian, project hail mary. same reason i fit llms into 2 gb."
+    ]
   },
+  "proofs": [
+    {
+      "value": "runner-up",
+      "text": "SEMICON India Hackathon 2026 · Applied Materials track · ₹75,000",
+      "link": { "label": "source ↗", "url": "https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ" }
+    },
+    {
+      "value": "top 10 / ~1,500",
+      "text": "Caterpillar Tech Challenge 2026 · grand finale, Chennai",
+      "note": "interview shortlist"
+    },
+    {
+      "value": "29.5% → 95.5%",
+      "text": "VehicleGPT · hybrid rules + small LLM on 200 car-signal questions",
+      "link": { "label": "how →", "url": "/work/vehiclegpt" }
+    }
+  ],
   "experience": [
     {
       "role": "Machine Learning Intern",
@@ -97,40 +114,54 @@
   "projects": [
     {
       "title": "DriftSense",
-      "what": "Finds where a wafer-inspection microscope actually is — even when zoom and rotation are unknown, or the pattern isn't there.",
-      "proof": "match F1 0.91 on 2,250 pairs · CAD-to-SEM registration within 1 px on 600 pairs",
+      "what": "Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.",
+      "proof": "match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600",
       "tag": "runner-up · SEMICON India 2026",
+      "role": "team lead",
+      "code": "public code ↗",
+      "caseStudy": "/work/driftsense",
       "url": "https://github.com/vhmaadhav/semicon-driftsense"
     },
     {
       "title": "VehicleGPT",
-      "what": "Ask a car about its own data: a 1B-parameter model answering from CAN logs, fully offline.",
-      "proof": "hybrid rules + model: 29.5% → 95.5% on 200 questions · best single model 82% at 1.74 s (2 cores, 2 GiB)",
-      "tag": "Tata Elxsi Teliport S4"
+      "what": "Ask a car about its own data: a small LLM answering from CAN logs, fully offline.",
+      "proof": "hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB",
+      "tag": "Tata Elxsi Teliport S4",
+      "role": "team lead · benchmark harness",
+      "code": "code private (competition)",
+      "caseStudy": "/work/vehiclegpt"
     },
     {
       "title": "Mouna",
-      "what": "Speak by mouthing words — silent lip-reading turned into voice on a phone's NPU, no internet.",
+      "what": "Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.",
       "proof": "false utterances 23% → 7% · Kannada top-1 75.3%",
-      "tag": "grand finale · iQOO Hackathon 2026"
+      "tag": "grand finale · iQOO 2026",
+      "code": "code private"
     },
     {
       "title": "Rakshak-Edge",
-      "what": "Catches scam SMS and links on an Arm device, offline — and refuses to give explanations it can't back up.",
+      "what": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
       "proof": "offline on Arm · phase 1 due nov 2026",
-      "tag": "in progress · Arm × Bharat AI-SoC shortlist"
+      "tag": "in progress · Arm × Bharat AI-SoC",
+      "role": "team lead",
+      "code": "code private until phase 1"
     },
     {
       "title": "DT Guardian",
-      "what": "Simulated edge controller for a 200 kVA distribution transformer: schedules battery, EV charging and pump loads with MILP.",
-      "proof": "energy not served in a 6 h outage: 121.2 → 56.7 kWh (−53% vs no control, −31% vs battery-only)",
-      "tag": "phase 2 · Schneider Yuva Yodha"
+      "what": "Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.",
+      "proof": "energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)",
+      "tag": "phase 2 · Schneider Yuva Yodha",
+      "role": "co-developer (2-person team)",
+      "code": "code private (competition)",
+      "caseStudy": "/work/dt-guardian"
     },
     {
       "title": "Axiom Trace",
       "what": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
-      "proof": "Next.js web + Kotlin app · knowledge-graph RAG · 176 tests",
-      "tag": "personal project"
+      "proof": "Next.js web + Kotlin app · 176 tests",
+      "tag": "personal project",
+      "role": "solo",
+      "code": "code private for now"
     }
   ],
   "moreProjects": [
@@ -145,81 +176,19 @@
     }
   ],
   "skills": [
-    {
-      "group": "ml & vision",
-      "items": [
-        ["PyTorch", "devicon-pytorch-original"],
-        ["scikit-learn", "devicon-scikitlearn-plain"],
-        ["LightGBM", ""],
-        ["OpenCV", "devicon-opencv-plain"],
-        ["pandas", ""]
-      ]
-    },
-    {
-      "group": "llm & agents",
-      "items": [
-        ["RAG", ""],
-        ["knowledge graphs", ""],
-        ["sentence-transformers", ""],
-        ["LLM evaluation", ""]
-      ]
-    },
-    {
-      "group": "edge ai",
-      "items": [
-        ["ONNX Runtime", ""],
-        ["llama.cpp / GGUF", ""],
-        ["Qualcomm AI Hub / QNN", ""],
-        ["quantization", ""]
-      ]
-    },
-    {
-      "group": "languages",
-      "items": [
-        ["Python", "devicon-python-plain"],
-        ["C", "devicon-c-plain"],
-        ["Java", "devicon-java-plain"],
-        ["TypeScript", "devicon-typescript-plain"],
-        ["Kotlin", "devicon-kotlin-plain"],
-        ["SQL", ""]
-      ]
-    },
-    {
-      "group": "optimisation",
-      "items": [
-        ["MILP (PuLP / HiGHS)", ""],
-        ["forecasting", ""]
-      ]
-    },
-    {
-      "group": "web & apps",
-      "items": [
-        ["FastAPI", "devicon-fastapi-plain"],
-        ["Django", "devicon-django-plain"],
-        ["React", "devicon-react-original"],
-        ["Next.js", "devicon-nextjs-plain"],
-        ["Jetpack Compose", ""]
-      ]
-    },
-    {
-      "group": "embedded",
-      "items": [
-        ["CAN / SocketCAN", ""],
-        ["UART / SPI / I²C", ""],
-        ["LoRaWAN", ""],
-        ["Linux", "devicon-linux-plain"]
-      ]
-    },
-    {
-      "group": "tooling",
-      "items": [
-        ["Docker", "devicon-docker-plain"],
-        ["GitHub Actions", "devicon-githubactions-plain"],
-        ["pytest", "devicon-pytest-plain"],
-        ["Git", "devicon-git-plain"]
-      ]
-    }
+    { "group": "ml · vision", "items": ["PyTorch", "scikit-learn", "LightGBM", "OpenCV", "pandas"] },
+    { "group": "edge ai", "items": ["ONNX Runtime", "llama.cpp / GGUF", "Qualcomm AI Hub / QNN", "quantization"] },
+    { "group": "llm · agents", "items": ["RAG", "knowledge graphs", "sentence-transformers", "LLM evaluation"] },
+    { "group": "languages", "items": ["Python", "C", "Java", "TypeScript", "Kotlin", "SQL"] },
+    { "group": "optimisation", "items": ["MILP (PuLP / HiGHS)", "forecasting"] },
+    { "group": "web · apps", "items": ["FastAPI", "Django", "React", "Next.js", "Jetpack Compose"] },
+    { "group": "embedded", "items": ["CAN / SocketCAN", "UART / SPI / I²C", "LoRaWAN", "Linux"] },
+    { "group": "tooling", "items": ["Docker", "GitHub Actions", "pytest", "Git"] }
   ],
+  "offHours": {
+    "films": "interstellar · tenet · mystic river · premam · the martian",
+    "quip": "favourite kind of plot: someone solves an impossible problem with whatever's on hand. same reason i fit llms into 2 gb."
+  },
   "credentials": [
     "Bosch EMS & Vehicle Networking",
     "NPTEL Industry 4.0 & IIoT",

@@ -2,8 +2,8 @@
 
 /*
  * Progressive enhancement only: build.mjs prerenders the page and this script
- * never replaces it. It runs the braille clouds (hero, footer), reveals the
- * section dividers once, fills the GitHub and LeetCode heatmaps and refreshes durations.
+ * never replaces it. It runs the hero braille cloud, fills the GitHub and
+ * LeetCode heatmaps and refreshes durations.
  */
 (function () {
   const SR = window.SiteRender;
@@ -323,21 +323,6 @@
     schedule();
   }
 
-  // Each divider clips in from the left once, the first time it scrolls into view.
-  function revealRules() {
-    if (reduced || !('IntersectionObserver' in window)) return;
-    const rules = document.querySelectorAll('.rule');
-    rules.forEach((el) => el.classList.add('is-hidden'));
-    const io = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        entry.target.classList.remove('is-hidden');
-        io.unobserve(entry.target);
-      }
-    }, { rootMargin: '0px 0px -10% 0px' });
-    rules.forEach((el) => io.observe(el));
-  }
-
   // ---- heatmaps (GitHub and LeetCode share the calendar, stats row and styles) ----
 
   function level(day) {
@@ -524,14 +509,6 @@
         gap: 33, morph: 6, drag: true
       }));
     }
-    const foot = document.getElementById('footer-cloud');
-    if (foot) {
-      clouds.push(cloud(foot, {
-        n: 120, shapes: [sphere], spin: 0.5, yaw: 0, pitch: 0.35, gap: 66, morph: 0
-      }));
-    }
-
-    revealRules();
     schedule();
     loadContributions();
     loadLeetcode();

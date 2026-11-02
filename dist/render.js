@@ -26,8 +26,11 @@
     })[c]);
   }
 
+  // New tab for external links and PDFs. In-site pages, fragments and mailto stay in the tab.
   function linkAttrs(url) {
-    return url.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener noreferrer"';
+    return /^https?:\/\//.test(url) || /\.pdf$/i.test(url)
+      ? ' target="_blank" rel="noopener noreferrer"'
+      : '';
   }
 
   function monthLabel(ym) {
@@ -72,61 +75,114 @@
     return parts.join(', ') || 'under a month';
   }
 
-  // Braille dotted hairline (U+2824 = dots 3 and 6, the middle row). Wide enough
-  // for any column; CSS clips it. Pure text, so it works without JavaScript.
-  const RULE_CHARS = 180;
-  function rule() {
-    return `<div class="rule" aria-hidden="true">${'⠤'.repeat(RULE_CHARS)}</div>`;
-  }
-
+  // A section: "$ name" heading, optional mono aside, then the body.
   function section(id, title, body, aside = '') {
     return `
-      <section class="section" aria-labelledby="${id}-title">
-        <header class="section-head">
-          <h2 id="${id}-title"><span class="prompt" aria-hidden="true">$</span> ${esc(title)}</h2>
-          ${aside ? `<span class="aside">${esc(aside)}</span>` : ''}
-        </header>
-        ${rule()}
-        ${body}
-      </section>`;
+        <section id="${id}" class="section" aria-labelledby="${id}-title">
+          <header class="sec-head">
+            <h2 id="${id}-title"><span class="prompt" aria-hidden="true">$</span> ${esc(title)}</h2>
+            ${aside ? `<p class="aside">${esc(aside)}</p>` : ''}
+          </header>
+          ${body}
+        </section>`;
   }
 
-  function hero(profile) {
-    const links = profile.links
-      .map((link) => `<a href="${esc(link.url)}"${linkAttrs(link.url)}>${esc(link.label)}</a>`)
-      .join('');
+  // Top bar: handle on the left, four landmarks on the right.
+  function topbar(profile) {
+    const resume = profile.links.find((l) => l.label === 'resume');
+    const items = [
+      '<a href="#work">work</a>',
+      '<a href="#awards">awards</a>',
+      '<a href="#experience">experience</a>'
+    ];
+    if (resume) items.push(`<a href="${esc(resume.url)}"${linkAttrs(resume.url)}>résumé</a>`);
     return `
-      <header class="hero">
-        <pre id="hero-cloud" class="cloud" aria-hidden="true"></pre>
-        <div>
-          <h1>${esc(profile.name)}</h1>
-          <p class="role">${esc(profile.role)}</p>
-        </div>
-        <div class="bio">${profile.bio.map((line) => `<p>${esc(line)}</p>`).join('')}</div>
-        <p class="location">${esc(profile.location)}</p>
-        <nav class="links" aria-label="links">${links}</nav>
+      <header class="topbar">
+        <a class="brand" href="#top">~/${esc(profile.handle)}</a>
+        <nav class="topnav" aria-label="Primary">${items.join('')}</nav>
       </header>`;
   }
 
-  function experience(list, now) {
-    const earliest = list.map((job) => job.start).sort()[0];
-    const items = list.map((job) => {
-      const dates = `${time(job.start, monthLabel(job.start))} – ${job.end ? time(job.end, monthLabel(job.end)) : 'now'}`;
-      const endAttr = job.end ? ` data-end="${esc(job.end)}"` : '';
-      const duration = `<span data-start="${esc(job.start)}"${endAttr}>${esc(durationLabel(job.start, job.end, now))}</span>`;
-      return `
-      <li class="item">
-        <div class="item-head">
-          <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(job.role)}</span></p>
-          <p class="dates">${dates}</p>
+  // Hero buttons, in this order. Email is the filled one, the résumé the outlined one.
+  const BUTTONS = ['email', 'resume', 'github', 'linkedin', 'leetcode'];
+  const BUTTON_TEXT = { email: 'email me', resume: 'résumé ↓', github: 'github', linkedin: 'linkedin', leetcode: 'leetcode' };
+  const BUTTON_CLASS = { email: 'btn btn-primary', resume: 'btn btn-outline' };
+
+  // The braille cloud sits in the right column (first in the DOM, so it is on top on phones).
+  function hero(profile) {
+    const buttons = BUTTONS
+      .map((label) => profile.links.find((l) => l.label === label))
+      .filter(Boolean)
+      .map((link) => `<a class="${BUTTON_CLASS[link.label] || 'btn btn-quiet'}" href="${esc(link.url)}"${linkAttrs(link.url)}>${esc(BUTTON_TEXT[link.label] || link.label)}</a>`)
+      .join('');
+    const bio = profile.bio.map((line) => `<p class="lede">${esc(line)}</p>`).join('');
+    return `
+      <section id="top" class="hero" aria-labelledby="hero-name">
+        <pre id="hero-cloud" class="cloud" aria-hidden="true"></pre>
+        <div class="intro">
+          <p class="status-row">
+            <span class="status"><span class="dot" aria-hidden="true"></span>${esc(profile.status)}</span>
+            <span class="meta">${esc(profile.meta)}</span>
+          </p>
+          <h1 id="hero-name">${esc(profile.name)}</h1>
+          <p class="role-line">${esc(profile.role)}</p>
+          ${bio}
+          <nav class="buttons" aria-label="contact and links">${buttons}</nav>
         </div>
-        <p class="item-body">${esc(job.company)} · ${duration}</p>
-        ${job.description ? `<p class="item-body">${esc(job.description)}</p>` : ''}
-      </li>`;
+      </section>`;
+  }
+
+  // Three strongest proofs, one card each.
+  function proofs(list) {
+    const items = list.map((item) => {
+      const link = item.link
+        ? `<p class="proof-link"><a href="${esc(item.link.url)}"${linkAttrs(item.link.url)}>${esc(item.link.label)}</a></p>`
+        : '';
+      return `
+          <li class="proof">
+            <p class="proof-value">${esc(item.value)}</p>
+            <p class="proof-text">${esc(item.text)}</p>
+            ${item.note ? `<p class="proof-note">${esc(item.note)}</p>` : ''}
+            ${link}
+          </li>`;
     }).join('');
-    return section('experience', 'experience',
-      `<ul class="list">${items}</ul>`,
-      `${list.length} roles · since ${earliest.split('-')[0]}`);
+    return `
+      <section class="proofs" aria-label="Strongest proof">
+        <ul class="proof-list">${items}</ul>
+      </section>`;
+  }
+
+  function projects(list, more = []) {
+    const withCode = list.filter((p) => p.url).length;
+    const cards = list.map((p) => {
+      const role = p.role
+        ? `<p class="my-role"><span class="k">my role · </span>${esc(p.role)}</p>`
+        : '';
+      const code = p.code
+        ? (p.url
+          ? `<a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
+          : `<span class="code">${esc(p.code)}</span>`)
+        : '';
+      const study = p.caseStudy ? `<a href="${esc(p.caseStudy)}">read case study →</a>` : '';
+      const foot = study || code ? `<div class="card-foot">${study}${code}</div>` : '';
+      return `
+          <li>
+            <article class="card">
+              <div class="card-head">
+                <h3><span class="marker" aria-hidden="true">&gt;</span> ${esc(p.title)}</h3>
+                ${p.tag ? `<span class="pill">${esc(p.tag)}</span>` : ''}
+              </div>
+              <p class="what">${esc(p.what)}</p>
+              ${role}
+              <p class="card-proof">${esc(p.proof)}</p>
+              ${foot}
+            </article>
+          </li>`;
+    }).join('');
+    const repos = more.map((r) => `<a href="${esc(r.url)}"${linkAttrs(r.url)}>${esc(r.name)}</a>`).join(' · ');
+    const also = repos ? `<p class="also"><span class="muted">also on github:</span> ${repos}</p>` : '';
+    return section('work', 'ls work/', `<ul class="cards">${cards}</ul>${also}`,
+      `${list.length} projects · ${withCode} with public code`);
   }
 
   // The first FEATURED_WINS entries (in content.json order) get full entries;
@@ -142,114 +198,85 @@
     };
     const items = featured.map((win) => {
       const source = win.source
-        ? ` <a class="link source" href="${esc(win.source)}"${linkAttrs(win.source)}>source ↗</a>`
+        ? ` <a class="source" href="${esc(win.source)}"${linkAttrs(win.source)}>source ↗</a>`
         : '';
       return `
-      <li class="item">
-        <div class="item-head">
-          <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="event">${esc(win.event)}</span></p>
-          <p class="dates">${dateOf(win)}</p>
-        </div>
-        <p class="item-body result${win.highlight ? ' hl' : ''}">${esc(win.result)}${source}</p>
-      </li>`;
+          <li class="item">
+            <div class="item-head">
+              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="event">${esc(win.event)}</span></p>
+              <p class="dates">${dateOf(win)}</p>
+            </div>
+            <p class="item-body result${win.highlight ? ' hl' : ''}">${esc(win.result)}${source}</p>
+          </li>`;
     }).join('');
     const more = rest.map((win) => `
-        <li>${esc(win.event)} — ${esc(win.result)} · ${dateOf(win)}</li>`).join('');
+            <li>${esc(win.event)} — ${esc(win.result)} · ${dateOf(win)}</li>`).join('');
     const moreList = more ? `<ul class="more-awards">${more}</ul>` : '';
-    return section('awards', 'awards', `<ul class="list">${items}</ul>${moreList}`, '& selections');
+    return section('awards', 'awards',
+      `<div class="awards-grid"><ul class="list">${items}</ul>${moreList}</div>`,
+      '& selections');
   }
 
-  function projects(list, more = []) {
-    const items = list.map((project) => {
-      const repo = project.url
-        ? `<span class="sep" aria-hidden="true"> · </span><a class="link" href="${esc(project.url)}"${linkAttrs(project.url)}>view repo →</a>`
-        : '';
+  function experience(list, now) {
+    const items = list.map((job) => {
+      const dates = `${time(job.start, monthLabel(job.start))} – ${job.end ? time(job.end, monthLabel(job.end)) : 'now'}`;
+      const endAttr = job.end ? ` data-end="${esc(job.end)}"` : '';
+      const duration = `<span data-start="${esc(job.start)}"${endAttr}>${esc(durationLabel(job.start, job.end, now))}</span>`;
       return `
-        <li class="item">
-          <article>
+          <li class="item">
             <div class="item-head">
-              <h3 class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(project.title)}</span></h3>
-              ${project.tag ? `<span class="pill">${esc(project.tag)}</span>` : ''}
+              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(job.role)}</span></p>
+              <p class="dates">${dates}</p>
             </div>
-            <p class="item-body what">${esc(project.what)}</p>
-            <p class="item-body proof">${esc(project.proof)}${repo}</p>
-          </article>
-        </li>`;
+            <p class="item-body">${esc(job.company)} · ${duration}</p>
+            ${job.description ? `<p class="item-body">${esc(job.description)}</p>` : ''}
+          </li>`;
     }).join('');
-    const moreLinks = (more || []).map((repo) =>
-      `<a href="${esc(repo.url)}"${linkAttrs(repo.url)}>${esc(repo.name)}</a>`).join(' · ');
-    const moreLine = moreLinks
-      ? `<p class="more-projects"><span class="muted">also on github:</span> ${moreLinks}</p>`
-      : '';
-    return section('projects', 'projects', `<ul class="list">${items}</ul>${moreLine}`);
+    return section('experience', 'experience', `<ul class="list">${items}</ul>`);
   }
 
-  function education(list) {
-    const items = list.map((entry) => {
-      const dates = entry.dates
-        ? entry.dates.split(' – ').map((part) => {
-          const iso = isoFromDate(part);
-          return iso ? time(iso, part.trim()) : esc(part);
-        }).join(' – ')
-        : '';
-      return `
-      <li class="item">
-        <div class="item-head">
-          <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(entry.title)}</span></p>
-          ${entry.dates ? `<p class="dates">${dates}</p>` : ''}
-        </div>
-        ${entry.subtitle ? `<p class="item-body">${esc(entry.subtitle)}</p>` : ''}
-      </li>`;
-    }).join('');
-    return section('education', 'education', `<ul class="list">${items}</ul>`);
-  }
-
-  function skills(groups) {
-    const body = groups.map((group) => {
-      const chips = group.items.map(([label, icon]) => `
-        <li class="chip">${icon ? `<i class="${esc(icon)}" aria-hidden="true"></i>` : ''}<span>${esc(label)}</span></li>`).join('');
-      return `
-        <div class="skill-group">
-          <p class="skill-label">${esc(group.group)}</p>
-          <ul class="chips">${chips}</ul>
-        </div>`;
-    }).join('');
-    return section('skills', 'skills', `<div class="skill-groups">${body}</div>`);
-  }
-
-  function credentials(list) {
-    const items = list.map((text) => `
-      <li class="item"><p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(text)}</span></p></li>`).join('');
-    return section('credentials', 'credentials', `<ul class="list">${items}</ul>`);
+  // Text-only rows: a label in the left column, the items in the right.
+  function stack(groups) {
+    const rows = groups.map((group) => `
+            <div class="stack-row">
+              <dt>${esc(group.group)}</dt>
+              <dd>${group.items.map((item) => esc(item)).join(' · ')}</dd>
+            </div>`).join('');
+    return section('stack', 'stack', `<dl class="stack">${rows}</dl>`);
   }
 
   // The heatmaps are the only parts filled in by app.js. Without JavaScript the
   // link below is what a reader gets instead.
-  function githubSection(username) {
-    const profileUrl = `https://github.com/${encodeURIComponent(username)}`;
-    return section('github', 'github',
-      `<div id="contributions" data-handle="${esc(username)}"><p class="muted">contribution heatmap needs javascript. <a class="link" href="${esc(profileUrl)}"${linkAttrs(profileUrl)}>view activity on github →</a></p></div>`,
-      `@${username}`);
+  function activity(username, leetcodeHandle) {
+    const ghUrl = `https://github.com/${encodeURIComponent(username)}`;
+    const lcUrl = `https://leetcode.com/u/${encodeURIComponent(leetcodeHandle)}/`;
+    const body = `
+          <div class="heat-pair">
+            <div class="heat-block">
+              <h3 class="caption">github</h3>
+              <div id="contributions" data-handle="${esc(username)}"><p class="muted">contribution heatmap needs javascript. <a href="${esc(ghUrl)}"${linkAttrs(ghUrl)}>view activity on github →</a></p></div>
+            </div>
+            <div class="heat-block">
+              <h3 class="caption">leetcode</h3>
+              <div id="leetcode" data-handle="${esc(leetcodeHandle)}"><p class="muted">leetcode heatmap needs javascript. <a href="${esc(lcUrl)}"${linkAttrs(lcUrl)}>view on leetcode →</a></p></div>
+            </div>
+          </div>`;
+    return section('activity', 'activity', body);
   }
 
-  function leetcodeSection(username) {
-    const profileUrl = `https://leetcode.com/u/${encodeURIComponent(username)}/`;
-    return section('leetcode', 'leetcode',
-      `<div id="leetcode" data-handle="${esc(username)}"><p class="muted">leetcode heatmap needs javascript. <a class="link" href="${esc(profileUrl)}"${linkAttrs(profileUrl)}>view on leetcode →</a></p></div>`,
-      `@${username}`);
-  }
-
-  // One quiet line above the footer. Not a section: no heading and no rule.
-  function quip(text) {
-    return `
-      <p class="quip"><span class="marker" aria-hidden="true">&gt;</span><span>${esc(text)}</span></p>`;
+  function offHours(item) {
+    return section('off-hours', 'off-hours', `
+          <div class="off-body">
+            <p class="films">fav films · ${esc(item.films)}</p>
+            <p class="quip-text">${esc(item.quip)}</p>
+          </div>`);
   }
 
   function footer(name, now) {
     return `
       <footer class="footer">
-        <pre id="footer-cloud" class="footer-cloud" aria-hidden="true"></pre>
         <p>© ${now.getFullYear()} ${esc(name)} · built by hand, no framework</p>
+        <p>for agents → <a href="/for-agents.txt">/for-agents.txt</a> · <a href="/resume.json">/resume.json</a></p>
       </footer>`;
   }
 
@@ -259,17 +286,16 @@
    */
   function content(data, options = {}) {
     const now = options.now || new Date();
+    const handle = data.profile.handle;
     return [
+      topbar(data.profile),
       hero(data.profile),
+      proofs(data.proofs || []),
       projects(data.projects, data.moreProjects),
-      experience(data.experience, now),
       awards(data.wins),
-      education(data.education),
-      skills(data.skills),
-      credentials(data.credentials),
-      githubSection(data.profile.handle),
-      leetcodeSection(data.profile.leetcodeHandle || data.profile.handle),
-      data.profile.quip ? quip(data.profile.quip) : '',
+      `<div class="duo">${experience(data.experience, now)}${stack(data.skills)}</div>`,
+      activity(handle, data.profile.leetcodeHandle || handle),
+      offHours(data.offHours),
       footer(data.profile.name, now)
     ].join('');
   }
