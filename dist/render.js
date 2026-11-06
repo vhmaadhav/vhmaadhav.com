@@ -189,6 +189,30 @@
       `${list.length} projects · ${withCode} with public code`);
   }
 
+  // Work in progress: one row each, shaped like the experience items.
+  function building(list) {
+    if (!list.length) return '';
+    const withCode = list.filter((p) => p.url).length;
+    const items = list.map((p) => {
+      const code = p.code
+        ? (p.url
+          ? `<a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
+          : `<span class="muted">${esc(p.code)}</span>`)
+        : '';
+      return `
+          <li class="item">
+            <div class="item-head">
+              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(p.title)}</span></p>
+              <p class="dates">${code}</p>
+            </div>
+            <p class="item-body">${esc(p.what)}</p>
+            <p class="item-body result">${esc(p.status)}</p>
+          </li>`;
+    }).join('');
+    const aside = `${list.length} in progress` + (withCode ? ` · ${withCode} with public code` : '');
+    return section('now', 'currently working', `<ul class="list">${items}</ul>`, aside);
+  }
+
   // The first FEATURED_WINS entries (in content.json order) get full entries;
   // the rest follow as a compact list, one line each.
   const FEATURED_WINS = 3;
@@ -316,6 +340,7 @@
       hero(data.profile),
       proofs(data.proofs || []),
       projects(data.projects, data.moreProjects),
+      building(data.building || []),
       awards(data.wins),
       `<div class="duo">${experience(data.experience, now)}${stack(data.skills)}</div>`,
       `<div class="duo">${education(data.education || [])}${credentials(data.credentials || [])}</div>`,

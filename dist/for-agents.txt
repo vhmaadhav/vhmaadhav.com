@@ -1,6 +1,6 @@
 # plain facts about Maadhav V H, each with a link you can check
 # same facts as the human page at https://vhmaadhav.com/
-# last checked 2026-11-02
+# last checked 2026-11-06
 
 name: Maadhav V H
 role: AI/ML Engineer · On-Device AI
@@ -24,4 +24,4 @@ DT Guardian energy not served, 6 h outage                     | 121.2 → 56.7 k
 GitHub activity                                               | public profile          | https://github.com/vhmaadhav                                                                                                                         | live
 LeetCode problems solved                                      | 73 solved               | https://leetcode.com/u/vhmaadhav/                                                                                                                    | live
 
-private code (not public): VehicleGPT, Mouna, Rakshak-Edge, DT Guardian, Axiom Trace. Table rows about these link to a case study or are self-reported.
+private code (not public): VehicleGPT, Mouna, DT Guardian. Table rows about these link to a case study or are self-reported.

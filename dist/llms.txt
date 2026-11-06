@@ -8,10 +8,17 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - [DriftSense](https://vhmaadhav.com/work/driftsense/): Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there. Result: match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600.
 - [VehicleGPT](https://vhmaadhav.com/work/vehiclegpt/): Ask a car about its own data: a small LLM answering from CAN logs, fully offline. Result: hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB.
 - [Mouna](https://vhmaadhav.com/#work): Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet. Result: false utterances 23% → 7% · Kannada top-1 75.3%.
-- [Rakshak-Edge](https://vhmaadhav.com/#work): Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up. Result: offline on Arm · phase 1 due nov 2026.
 - [DT Guardian](https://vhmaadhav.com/work/dt-guardian/): Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads. Result: energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)
-- [Axiom Trace](https://vhmaadhav.com/#work): A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Result: Next.js web + Kotlin app · 176 tests.
 - Also public on GitHub: [embeddinggemma-mobile-benchmark](https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark), [hiver-email-suggested-response](https://github.com/vhmaadhav/hiver-email-suggested-response).
+
+## Currently working
+- [Rakshak-Edge](https://vhmaadhav.com/#now): Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up. Status: phase 1 due nov 2026 · Arm × Bharat AI-SoC · team lead.
+- [Interfacial Heat Transport Prediction](https://vhmaadhav.com/#now): A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen. Status: planning · benchmark first · Discovered Materials Grand Challenge.
+- [Low-Cost Axial-Flow Ventricular Assist Device](https://vhmaadhav.com/#now): A cheap, magnetically coupled axial-flow blood pump with a see-through housing, so clots can be seen forming. A benchtop research prototype, built with a mechanical engineering student and a doctor as clinical advisor. Status: phase 0 · CAD + CFD · water and blood-analogue tests only.
+- [One-Pass Neural Network Repair](https://vhmaadhav.com/#now): Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining? Status: phase 0 · benchmark and tuned baselines.
+- [Adaptive Recurrent Depth in Looped LLMs](https://vhmaadhav.com/#now): Which questions an extra recurrent loop fixes, leaves alone or breaks in looped language models, and whether that can be predicted when the data shifts. Status: setup · Ouro-1.4B · GSM8K → MATH-500 / BBH / GPQA.
+- [LLM Quantization & Inference Lab](https://github.com/vhmaadhav/quantization-lab): Hands-on quantization and serving experiments, starting with FP8 inference for a 27B Qwen model. Status: learning log.
+- [Axiom Trace](https://vhmaadhav.com/#now): A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations. Status: personal project · solo · Next.js web + Kotlin app.
 
 ## Awards
 - Sep 2026: SEMICON India Hackathon 2026, Applied Materials track. Runner-up · ₹75,000. ([source](https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ))

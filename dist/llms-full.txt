@@ -43,14 +43,6 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - Tag: grand finale · iQOO 2026
 - Code: code private
 
-### Rakshak-Edge
-
-- What: Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.
-- Role: team lead
-- Result: offline on Arm · phase 1 due nov 2026
-- Tag: in progress · Arm × Bharat AI-SoC
-- Code: code private until phase 1
-
 ### DT Guardian
 
 - What: Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.
@@ -60,12 +52,49 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - Code: code private (competition)
 - Case study: https://vhmaadhav.com/work/dt-guardian/
 
+## Currently working
+
+### Rakshak-Edge
+
+- What: Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.
+- Status: phase 1 due nov 2026 · Arm × Bharat AI-SoC · team lead
+- Code: code private until phase 1
+
+### Interfacial Heat Transport Prediction
+
+- What: A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen.
+- Status: planning · benchmark first · Discovered Materials Grand Challenge
+- Code: code private
+
+### Low-Cost Axial-Flow Ventricular Assist Device
+
+- What: A cheap, magnetically coupled axial-flow blood pump with a see-through housing, so clots can be seen forming. A benchtop research prototype, built with a mechanical engineering student and a doctor as clinical advisor.
+- Status: phase 0 · CAD + CFD · water and blood-analogue tests only
+- Code: code private
+
+### One-Pass Neural Network Repair
+
+- What: Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining?
+- Status: phase 0 · benchmark and tuned baselines
+- Code: code private
+
+### Adaptive Recurrent Depth in Looped LLMs
+
+- What: Which questions an extra recurrent loop fixes, leaves alone or breaks in looped language models, and whether that can be predicted when the data shifts.
+- Status: setup · Ouro-1.4B · GSM8K → MATH-500 / BBH / GPQA
+- Code: code private
+
+### LLM Quantization & Inference Lab
+
+- What: Hands-on quantization and serving experiments, starting with FP8 inference for a 27B Qwen model.
+- Status: learning log
+- Code: public code
+- Public repository: https://github.com/vhmaadhav/quantization-lab
+
 ### Axiom Trace
 
 - What: A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.
-- Role: solo
-- Result: Next.js web + Kotlin app · 176 tests
-- Tag: personal project
+- Status: personal project · solo · Next.js web + Kotlin app
 - Code: code private for now
 
 ## More public repositories
@@ -142,6 +171,7 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - DriftSense public code: https://github.com/vhmaadhav/semicon-driftsense
 - VehicleGPT case study: https://vhmaadhav.com/work/vehiclegpt/
 - DT Guardian case study: https://vhmaadhav.com/work/dt-guardian/
+- LLM Quantization & Inference Lab public code: https://github.com/vhmaadhav/quantization-lab
 - embeddinggemma-mobile-benchmark (public code): https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark
 - hiver-email-suggested-response (public code): https://github.com/vhmaadhav/hiver-email-suggested-response
 - github: https://github.com/vhmaadhav

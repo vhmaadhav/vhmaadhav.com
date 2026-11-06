@@ -142,14 +142,6 @@
       "code": "code private"
     },
     {
-      "title": "Rakshak-Edge",
-      "what": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
-      "proof": "offline on Arm · phase 1 due nov 2026",
-      "tag": "in progress · Arm × Bharat AI-SoC",
-      "role": "team lead",
-      "code": "code private until phase 1"
-    },
-    {
       "title": "DT Guardian",
       "what": "Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.",
       "proof": "energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)",
@@ -157,13 +149,50 @@
       "role": "co-developer (2-person team)",
       "code": "code private (competition)",
       "caseStudy": "/work/dt-guardian/"
+    }
+  ],
+  "building": [
+    {
+      "title": "Rakshak-Edge",
+      "what": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
+      "status": "phase 1 due nov 2026 · Arm × Bharat AI-SoC · team lead",
+      "code": "code private until phase 1"
+    },
+    {
+      "title": "Interfacial Heat Transport Prediction",
+      "what": "A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen.",
+      "status": "planning · benchmark first · Discovered Materials Grand Challenge",
+      "code": "code private"
+    },
+    {
+      "title": "Low-Cost Axial-Flow Ventricular Assist Device",
+      "what": "A cheap, magnetically coupled axial-flow blood pump with a see-through housing, so clots can be seen forming. A benchtop research prototype, built with a mechanical engineering student and a doctor as clinical advisor.",
+      "status": "phase 0 · CAD + CFD · water and blood-analogue tests only",
+      "code": "code private"
+    },
+    {
+      "title": "One-Pass Neural Network Repair",
+      "what": "Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining?",
+      "status": "phase 0 · benchmark and tuned baselines",
+      "code": "code private"
+    },
+    {
+      "title": "Adaptive Recurrent Depth in Looped LLMs",
+      "what": "Which questions an extra recurrent loop fixes, leaves alone or breaks in looped language models, and whether that can be predicted when the data shifts.",
+      "status": "setup · Ouro-1.4B · GSM8K → MATH-500 / BBH / GPQA",
+      "code": "code private"
+    },
+    {
+      "title": "LLM Quantization & Inference Lab",
+      "what": "Hands-on quantization and serving experiments, starting with FP8 inference for a 27B Qwen model.",
+      "status": "learning log",
+      "code": "public code ↗",
+      "url": "https://github.com/vhmaadhav/quantization-lab"
     },
     {
       "title": "Axiom Trace",
       "what": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
-      "proof": "Next.js web + Kotlin app · 176 tests",
-      "tag": "personal project",
-      "role": "solo",
+      "status": "personal project · solo · Next.js web + Kotlin app",
       "code": "code private for now"
     }
   ],

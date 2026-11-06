@@ -153,20 +153,6 @@
       ]
     },
     {
-      "name": "Rakshak-Edge",
-      "description": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
-      "highlights": [
-        "offline on Arm · phase 1 due nov 2026",
-        "code private until phase 1"
-      ],
-      "keywords": [
-        "in progress · Arm × Bharat AI-SoC"
-      ],
-      "roles": [
-        "team lead"
-      ]
-    },
-    {
       "name": "DT Guardian",
       "description": "Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.",
       "highlights": [
@@ -179,20 +165,6 @@
       "url": "https://vhmaadhav.com/work/dt-guardian/",
       "roles": [
         "co-developer (2-person team)"
-      ]
-    },
-    {
-      "name": "Axiom Trace",
-      "description": "A tutor that knows what you know: knowledge-graph RAG with mastery tracking and animated ECE explanations.",
-      "highlights": [
-        "Next.js web + Kotlin app · 176 tests",
-        "code private for now"
-      ],
-      "keywords": [
-        "personal project"
-      ],
-      "roles": [
-        "solo"
       ]
     }
   ],
@@ -291,6 +263,6 @@
   ],
   "meta": {
     "canonical": "https://vhmaadhav.com/resume.json",
-    "lastModified": "2026-11-02T08:46:00.236Z"
+    "lastModified": "2026-11-06T08:15:58.467Z"
   }
 }
