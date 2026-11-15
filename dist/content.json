@@ -126,6 +126,21 @@
       "url": "https://github.com/vhmaadhav/semicon-driftsense"
     },
     {
+      "title": "CoronarySafe",
+      "what": "Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.",
+      "proof": "sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered",
+      "tag": "research · pre-registered",
+      "code": "public code ↗",
+      "url": "https://github.com/vhmaadhav/coronarysafe"
+    },
+    {
+      "title": "redline",
+      "what": "An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B.",
+      "proof": "token-identical to Hugging Face · speculative decode bit-identical to sequential · 1k-token prompt: 4.69 vs vLLM’s best 6.38 ms/token",
+      "tag": "AMD MI300X · Rust + HIP",
+      "code": "code private"
+    },
+    {
       "title": "VehicleGPT",
       "what": "Ask a car about its own data: a small LLM answering from CAN logs, fully offline.",
       "proof": "hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB",
@@ -155,13 +170,19 @@
     {
       "title": "Rakshak-Edge",
       "what": "Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.",
-      "status": "phase 1 due nov 2026 · Arm × Bharat AI-SoC · team lead",
+      "status": "system v1 frozen · phase 1 due 23 nov 2026 · Arm × Bharat AI-SoC · team lead",
       "code": "code private until phase 1"
+    },
+    {
+      "title": "Nitō",
+      "what": "A chip-tuned build tool: finds the fastest build of a program for one exact machine, and compiles separate code for a hybrid CPU’s fast and dense cores.",
+      "status": "phase 0 done · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)",
+      "code": "code private"
     },
     {
       "title": "Interfacial Heat Transport Prediction",
       "what": "A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen.",
-      "status": "planning · benchmark first · Discovered Materials Grand Challenge",
+      "status": "benchmark · physics baseline vs ML on leave-one-material-out splits · Discovered Materials Grand Challenge",
       "code": "code private"
     },
     {
@@ -173,7 +194,7 @@
     {
       "title": "One-Pass Neural Network Repair",
       "what": "Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining?",
-      "status": "phase 0 · benchmark and tuned baselines",
+      "status": "phase 0 done · tuned baselines set the bar · next: one-pass patch predictor",
       "code": "code private"
     },
     {
@@ -198,7 +219,9 @@
   ],
   "moreProjects": [
     { "name": "embeddinggemma-mobile-benchmark", "url": "https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" },
-    { "name": "hiver-email-suggested-response", "url": "https://github.com/vhmaadhav/hiver-email-suggested-response" }
+    { "name": "hiver-email-suggested-response", "url": "https://github.com/vhmaadhav/hiver-email-suggested-response" },
+    { "name": "invoiceguard", "url": "https://github.com/vhmaadhav/invoiceguard" },
+    { "name": "claimdesk", "url": "https://github.com/vhmaadhav/claimdesk" }
   ],
   "education": [
     {

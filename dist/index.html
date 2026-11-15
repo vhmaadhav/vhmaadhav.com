@@ -42,7 +42,7 @@
       "name": "Maadhav V H — AI/ML Engineer · On-Device AI",
       "description": "AI/ML engineer from Coimbatore building small LLMs, vision and RAG systems that run on-device, on phone NPUs and Arm boards. SEMICON India 2026 runner-up.",
       "inLanguage": "en",
-      "dateModified": "2026-11-06",
+      "dateModified": "2026-11-16",
       "mainEntity": {
         "@id": "https://vhmaadhav.com/#person"
       }
@@ -109,6 +109,27 @@
       "description": "Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.",
       "url": "https://vhmaadhav.com/work/driftsense/",
       "codeRepository": "https://github.com/vhmaadhav/semicon-driftsense",
+      "author": {
+        "@id": "https://vhmaadhav.com/#person"
+      }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://vhmaadhav.com/#project-coronarysafe",
+      "name": "CoronarySafe",
+      "description": "Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.",
+      "url": "https://vhmaadhav.com/#work",
+      "codeRepository": "https://github.com/vhmaadhav/coronarysafe",
+      "author": {
+        "@id": "https://vhmaadhav.com/#person"
+      }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://vhmaadhav.com/#project-redline",
+      "name": "redline",
+      "description": "An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B.",
+      "url": "https://vhmaadhav.com/#work",
       "author": {
         "@id": "https://vhmaadhav.com/#person"
       }
@@ -197,7 +218,7 @@
         <section id="work" class="section" data-dot="WORK" aria-labelledby="work-title">
           <header class="sec-head">
             <h2 id="work-title"><span class="prompt" aria-hidden="true">$</span> ls work/</h2>
-            <p class="aside">4 projects · 1 with public code</p>
+            <p class="aside">6 projects · 2 with public code</p>
           </header>
           <ul class="cards">
           <li>
@@ -210,6 +231,30 @@
               <p class="my-role"><span class="k">my role · </span>team lead</p>
               <p class="card-proof">match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600</p>
               <div class="card-foot"><a href="/work/driftsense/">read case study →</a><a href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener noreferrer">public code ↗</a></div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="card-head">
+                <h3><span class="marker" aria-hidden="true">&gt;</span> CoronarySafe</h3>
+                <span class="pill">research · pre-registered</span>
+              </div>
+              <p class="what">Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.</p>
+              
+              <p class="card-proof">sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered</p>
+              <div class="card-foot"><a href="https://github.com/vhmaadhav/coronarysafe" target="_blank" rel="noopener noreferrer">public code ↗</a></div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="card-head">
+                <h3><span class="marker" aria-hidden="true">&gt;</span> redline</h3>
+                <span class="pill">AMD MI300X · Rust + HIP</span>
+              </div>
+              <p class="what">An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B.</p>
+              
+              <p class="card-proof">token-identical to Hugging Face · speculative decode bit-identical to sequential · 1k-token prompt: 4.69 vs vLLM’s best 6.38 ms/token</p>
+              <div class="card-foot"><span class="code">code private</span></div>
             </article>
           </li>
           <li>
@@ -247,12 +292,12 @@
               <p class="card-proof">energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)</p>
               <div class="card-foot"><a href="/work/dt-guardian/">read case study →</a><span class="code">code private (competition)</span></div>
             </article>
-          </li></ul><p class="also"><span class="muted">also on github:</span> <a href="https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" target="_blank" rel="noopener noreferrer">embeddinggemma-mobile-benchmark</a> · <a href="https://github.com/vhmaadhav/hiver-email-suggested-response" target="_blank" rel="noopener noreferrer">hiver-email-suggested-response</a></p>
+          </li></ul><p class="also"><span class="muted">also on github:</span> <a href="https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" target="_blank" rel="noopener noreferrer">embeddinggemma-mobile-benchmark</a> · <a href="https://github.com/vhmaadhav/hiver-email-suggested-response" target="_blank" rel="noopener noreferrer">hiver-email-suggested-response</a> · <a href="https://github.com/vhmaadhav/invoiceguard" target="_blank" rel="noopener noreferrer">invoiceguard</a> · <a href="https://github.com/vhmaadhav/claimdesk" target="_blank" rel="noopener noreferrer">claimdesk</a></p>
         </section>
         <section id="now" class="section" data-dot="NOW" aria-labelledby="now-title">
           <header class="sec-head">
             <h2 id="now-title"><span class="prompt" aria-hidden="true">$</span> currently working</h2>
-            <p class="aside">7 in progress · 1 with public code</p>
+            <p class="aside">8 in progress · 1 with public code</p>
           </header>
           <ul class="list">
           <li class="item">
@@ -261,7 +306,15 @@
               <p class="dates"><span class="muted">code private until phase 1</span></p>
             </div>
             <p class="item-body">Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up.</p>
-            <p class="item-body result">phase 1 due nov 2026 · Arm × Bharat AI-SoC · team lead</p>
+            <p class="item-body result">system v1 frozen · phase 1 due 23 nov 2026 · Arm × Bharat AI-SoC · team lead</p>
+          </li>
+          <li class="item">
+            <div class="item-head">
+              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">Nitō</span></p>
+              <p class="dates"><span class="muted">code private</span></p>
+            </div>
+            <p class="item-body">A chip-tuned build tool: finds the fastest build of a program for one exact machine, and compiles separate code for a hybrid CPU’s fast and dense cores.</p>
+            <p class="item-body result">phase 0 done · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)</p>
           </li>
           <li class="item">
             <div class="item-head">
@@ -269,7 +322,7 @@
               <p class="dates"><span class="muted">code private</span></p>
             </div>
             <p class="item-body">A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen.</p>
-            <p class="item-body result">planning · benchmark first · Discovered Materials Grand Challenge</p>
+            <p class="item-body result">benchmark · physics baseline vs ML on leave-one-material-out splits · Discovered Materials Grand Challenge</p>
           </li>
           <li class="item">
             <div class="item-head">
@@ -285,7 +338,7 @@
               <p class="dates"><span class="muted">code private</span></p>
             </div>
             <p class="item-body">Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining?</p>
-            <p class="item-body result">phase 0 · benchmark and tuned baselines</p>
+            <p class="item-body result">phase 0 done · tuned baselines set the bar · next: one-pass patch predictor</p>
           </li>
           <li class="item">
             <div class="item-head">
