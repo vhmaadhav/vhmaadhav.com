@@ -134,7 +134,7 @@
         "public code"
       ],
       "keywords": [
-        "research · pre-registered"
+        "preprint · pre-registered"
       ],
       "url": "https://github.com/vhmaadhav/coronarysafe"
     },
@@ -189,6 +189,15 @@
       "roles": [
         "co-developer (2-person team)"
       ]
+    }
+  ],
+  "publications": [
+    {
+      "name": "Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation",
+      "publisher": "Zenodo",
+      "releaseDate": "2026-11-16",
+      "url": "https://doi.org/10.5281/zenodo.24269057",
+      "summary": "Preprint for CoronarySafe. DOI 10.5281/zenodo.24269057."
     }
   ],
   "skills": [
@@ -286,6 +295,6 @@
   ],
   "meta": {
     "canonical": "https://vhmaadhav.com/resume.json",
-    "lastModified": "2026-11-15T19:22:12.076Z"
+    "lastModified": "2026-11-16T03:53:43.710Z"
   }
 }

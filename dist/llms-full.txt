@@ -31,8 +31,9 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 - What: Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.
 - Result: sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered
-- Tag: research · pre-registered
+- Tag: preprint · pre-registered
 - Code: public code
+- Preprint: Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation (Zenodo, 2026-11-16), DOI 10.5281/zenodo.24269057, https://doi.org/10.5281/zenodo.24269057
 - Public repository: https://github.com/vhmaadhav/coronarysafe
 
 ### redline
@@ -192,6 +193,7 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - SEMICON India Hackathon 2026, Applied Materials track (Sep 2026): https://www.linkedin.com/posts/i4c-inter-institutional-inclusive-innovations-center_semicon-india-hackathon-winner-activity-7508135340235460610-f7fZ
 - DriftSense case study: https://vhmaadhav.com/work/driftsense/
 - DriftSense public code: https://github.com/vhmaadhav/semicon-driftsense
+- CoronarySafe preprint (DOI 10.5281/zenodo.24269057): https://doi.org/10.5281/zenodo.24269057
 - CoronarySafe public code: https://github.com/vhmaadhav/coronarysafe
 - VehicleGPT case study: https://vhmaadhav.com/work/vehiclegpt/
 - DT Guardian case study: https://vhmaadhav.com/work/dt-guardian/

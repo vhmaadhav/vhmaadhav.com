@@ -168,7 +168,10 @@
           : `<span class="code">${esc(p.code)}</span>`)
         : '';
       const study = p.caseStudy ? `<a href="${esc(p.caseStudy)}">read case study →</a>` : '';
-      const foot = study || code ? `<div class="card-foot">${study}${code}</div>` : '';
+      const paper = p.paper
+        ? `<a href="${esc(p.paper.url)}"${linkAttrs(p.paper.url)} title="${esc(p.paper.title)}">preprint ↗</a>`
+        : '';
+      const foot = study || paper || code ? `<div class="card-foot">${study}${paper}${code}</div>` : '';
       return `
           <li>
             <article class="card">
