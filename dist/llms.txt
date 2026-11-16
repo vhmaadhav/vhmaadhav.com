@@ -7,7 +7,8 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 ## Work
 - [DriftSense](https://vhmaadhav.com/work/driftsense/): Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there. Result: match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600.
 - [CoronarySafe](https://github.com/vhmaadhav/coronarysafe): Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides. Result: sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered. Preprint: [Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation](https://doi.org/10.5281/zenodo.24269057).
-- [redline](https://vhmaadhav.com/#work): An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B. Result: token-identical to Hugging Face · speculative decode bit-identical to sequential · 1k-token prompt: 4.69 vs vLLM’s best 6.38 ms/token.
+- [AortaMix](https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata): To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use. Result: 3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support.
+- [redline](https://github.com/vhmaadhav/redline): A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime. Result: 1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding.
 - [VehicleGPT](https://vhmaadhav.com/work/vehiclegpt/): Ask a car about its own data: a small LLM answering from CAN logs, fully offline. Result: hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB.
 - [Mouna](https://vhmaadhav.com/#work): Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet. Result: false utterances 23% → 7% · Kannada top-1 75.3%.
 - [DT Guardian](https://vhmaadhav.com/work/dt-guardian/): Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads. Result: energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)
@@ -15,7 +16,7 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 ## Currently working
 - [Rakshak-Edge](https://vhmaadhav.com/#now): Catches scam SMS and links on an Arm device, offline — and refuses explanations it can’t back up. Status: system v1 frozen · phase 1 due 23 nov 2026 · Arm × Bharat AI-SoC · team lead.
-- [Nitō](https://vhmaadhav.com/#now): A chip-tuned build tool: finds the fastest build of a program for one exact machine, and compiles separate code for a hybrid CPU’s fast and dense cores. Status: phase 0 done · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)
+- [Nitō](https://vhmaadhav.com/#now): A measurement-driven code optimizer for one exact chip: it measures what each instruction costs on a hybrid CPU’s fast and dense cores, then searches for the fastest machine code for each. Status: phase 0 done · per-core instruction cost table · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)
 - [Interfacial Heat Transport Prediction](https://vhmaadhav.com/#now): A model for how well heat crosses the boundary between two solids, which has to beat the standard mismatch models on interfaces it has never seen. Status: benchmark · physics baseline vs ML on leave-one-material-out splits · Discovered Materials Grand Challenge.
 - [Low-Cost Axial-Flow Ventricular Assist Device](https://vhmaadhav.com/#now): A cheap, magnetically coupled axial-flow blood pump with a see-through housing, so clots can be seen forming. A benchtop research prototype, built with a mechanical engineering student and a doctor as clinical advisor. Status: phase 0 · CAD + CFD · water and blood-analogue tests only.
 - [One-Pass Neural Network Repair](https://vhmaadhav.com/#now): Can a small network look at a corrupted, pruned or forgetful model and predict the weight patch that fixes it, with no retraining? Status: phase 0 done · tuned baselines set the bar · next: one-pass patch predictor.
@@ -54,8 +55,9 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - Education: KPR Institute of Engineering and Technology, Coimbatore. B.E. ECE · Honours in IoT for Smart Systems · CGPA 8.43. 2024 – 2028.
 - Skills, ml · vision: PyTorch, scikit-learn, LightGBM, OpenCV, pandas
 - Skills, edge ai: ONNX Runtime, llama.cpp / GGUF, Qualcomm AI Hub / QNN, quantization
-- Skills, llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation
-- Skills, languages: Python, C, Java, TypeScript, Kotlin, SQL
+- Skills, gpu inference: HIP / ROCm, AMD MI300X, speculative decoding, vLLM / SGLang benchmarking
+- Skills, llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation, pre-registered evaluation
+- Skills, languages: Python, C, Rust, Java, TypeScript, Kotlin, SQL / PL-SQL
 - Skills, optimisation: MILP (PuLP / HiGHS), forecasting
 - Skills, web · apps: FastAPI, Django, React, Next.js, Jetpack Compose
 - Skills, embedded: CAN / SocketCAN, UART / SPI / I²C, LoRaWAN, Linux

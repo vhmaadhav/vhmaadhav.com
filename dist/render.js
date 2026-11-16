@@ -171,7 +171,10 @@
       const paper = p.paper
         ? `<a href="${esc(p.paper.url)}"${linkAttrs(p.paper.url)} title="${esc(p.paper.title)}">preprint ↗</a>`
         : '';
-      const foot = study || paper || code ? `<div class="card-foot">${study}${paper}${code}</div>` : '';
+      const extra = (p.links || [])
+        .map((l) => `<a href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)}</a>`).join('');
+      const foot = study || paper || extra || code
+        ? `<div class="card-foot">${study}${paper}${extra}${code}</div>` : '';
       return `
           <li>
             <article class="card">

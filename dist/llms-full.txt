@@ -36,12 +36,24 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - Preprint: Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation (Zenodo, 2026-11-16), DOI 10.5281/zenodo.24269057, https://doi.org/10.5281/zenodo.24269057
 - Public repository: https://github.com/vhmaadhav/coronarysafe
 
+### AortaMix
+
+- What: To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use.
+- Result: 3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support
+- Tag: open dataset · CC BY 4.0
+- Code: dataset
+- viewer: https://huggingface.co/spaces/vhmaadhav/aortamix-viewer
+- 2-page report: https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata/resolve/main/report/AortaMix_technical_report_v1.pdf
+- Public dataset: https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata
+
 ### redline
 
-- What: An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B.
-- Result: token-identical to Hugging Face · speculative decode bit-identical to sequential · 1k-token prompt: 4.69 vs vLLM’s best 6.38 ms/token
-- Tag: AMD MI300X · Rust + HIP
-- Code: code private
+- What: A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime.
+- Role: co-developer (2-person team)
+- Result: 1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding
+- Tag: release 1 · AMD MI300X
+- Code: public code
+- Public repository: https://github.com/vhmaadhav/redline
 
 ### VehicleGPT
 
@@ -78,8 +90,8 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 ### Nitō
 
-- What: A chip-tuned build tool: finds the fastest build of a program for one exact machine, and compiles separate code for a hybrid CPU’s fast and dense cores.
-- Status: phase 0 done · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)
+- What: A measurement-driven code optimizer for one exact chip: it measures what each instruction costs on a hybrid CPU’s fast and dense cores, then searches for the fastest machine code for each.
+- Status: phase 0 done · per-core instruction cost table · Rust · Ryzen AI 7 350 (Zen 5 + Zen 5c)
 - Code: code private
 
 ### Interfacial Heat Transport Prediction
@@ -168,8 +180,9 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 - ml · vision: PyTorch, scikit-learn, LightGBM, OpenCV, pandas
 - edge ai: ONNX Runtime, llama.cpp / GGUF, Qualcomm AI Hub / QNN, quantization
-- llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation
-- languages: Python, C, Java, TypeScript, Kotlin, SQL
+- gpu inference: HIP / ROCm, AMD MI300X, speculative decoding, vLLM / SGLang benchmarking
+- llm · agents: RAG, knowledge graphs, sentence-transformers, LLM evaluation, pre-registered evaluation
+- languages: Python, C, Rust, Java, TypeScript, Kotlin, SQL / PL-SQL
 - optimisation: MILP (PuLP / HiGHS), forecasting
 - web · apps: FastAPI, Django, React, Next.js, Jetpack Compose
 - embedded: CAN / SocketCAN, UART / SPI / I²C, LoRaWAN, Linux
@@ -195,6 +208,10 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 - DriftSense public code: https://github.com/vhmaadhav/semicon-driftsense
 - CoronarySafe preprint (DOI 10.5281/zenodo.24269057): https://doi.org/10.5281/zenodo.24269057
 - CoronarySafe public code: https://github.com/vhmaadhav/coronarysafe
+- AortaMix viewer: https://huggingface.co/spaces/vhmaadhav/aortamix-viewer
+- AortaMix 2-page report: https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata/resolve/main/report/AortaMix_technical_report_v1.pdf
+- AortaMix public dataset: https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata
+- redline public code: https://github.com/vhmaadhav/redline
 - VehicleGPT case study: https://vhmaadhav.com/work/vehiclegpt/
 - DT Guardian case study: https://vhmaadhav.com/work/dt-guardian/
 - LLM Quantization & Inference Lab public code: https://github.com/vhmaadhav/quantization-lab

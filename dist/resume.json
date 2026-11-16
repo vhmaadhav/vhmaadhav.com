@@ -139,14 +139,30 @@
       "url": "https://github.com/vhmaadhav/coronarysafe"
     },
     {
-      "name": "redline",
-      "description": "An exact batch-1 LLM inference engine for one AMD MI300X, in Rust with hand-written HIP kernels, built for Qwen3.8-27B.",
+      "name": "AortaMix",
+      "description": "To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use.",
       "highlights": [
-        "token-identical to Hugging Face · speculative decode bit-identical to sequential · 1k-token prompt: 4.69 vs vLLM’s best 6.38 ms/token",
-        "code private"
+        "3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support",
+        "dataset"
       ],
       "keywords": [
-        "AMD MI300X · Rust + HIP"
+        "open dataset · CC BY 4.0"
+      ],
+      "url": "https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata"
+    },
+    {
+      "name": "redline",
+      "description": "A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime.",
+      "highlights": [
+        "1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding",
+        "public code"
+      ],
+      "keywords": [
+        "release 1 · AMD MI300X"
+      ],
+      "url": "https://github.com/vhmaadhav/redline",
+      "roles": [
+        "co-developer (2-person team)"
       ]
     },
     {
@@ -221,12 +237,22 @@
       ]
     },
     {
+      "name": "gpu inference",
+      "keywords": [
+        "HIP / ROCm",
+        "AMD MI300X",
+        "speculative decoding",
+        "vLLM / SGLang benchmarking"
+      ]
+    },
+    {
       "name": "llm · agents",
       "keywords": [
         "RAG",
         "knowledge graphs",
         "sentence-transformers",
-        "LLM evaluation"
+        "LLM evaluation",
+        "pre-registered evaluation"
       ]
     },
     {
@@ -234,10 +260,11 @@
       "keywords": [
         "Python",
         "C",
+        "Rust",
         "Java",
         "TypeScript",
         "Kotlin",
-        "SQL"
+        "SQL / PL-SQL"
       ]
     },
     {
@@ -295,6 +322,6 @@
   ],
   "meta": {
     "canonical": "https://vhmaadhav.com/resume.json",
-    "lastModified": "2026-11-16T03:53:43.710Z"
+    "lastModified": "2026-11-16T13:56:46.690Z"
   }
 }

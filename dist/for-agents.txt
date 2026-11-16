@@ -26,4 +26,4 @@ DT Guardian energy not served, 6 h outage                                 | 121.
 GitHub activity                                                           | public profile                                    | https://github.com/vhmaadhav                                                                                                                         | live
 LeetCode problems solved                                                  | 73 solved                                         | https://leetcode.com/u/vhmaadhav/                                                                                                                    | live
 
-private code (not public): redline, VehicleGPT, Mouna, DT Guardian. Table rows about these link to a case study or are self-reported.
+private code (not public): VehicleGPT, Mouna, DT Guardian. Table rows about these link to a case study or are self-reported.
