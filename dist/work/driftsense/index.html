@@ -25,10 +25,10 @@
   <meta name="theme-color" content="#120e0c">
   <meta name="color-scheme" content="dark">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/paint.css">
+  <link rel="stylesheet" href="/motion.css">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -78,10 +78,11 @@
 }
   </script>
   <script src="/paint.js" defer></script>
+  <script src="/app.js" defer></script>
 </head>
 <body>
   <div class="wp-banner">
-    <div class="paint p-umber" data-paint="umber" data-comp="banner" data-seed="0.21" data-light><canvas aria-hidden="true"></canvas></div>
+    <div class="wp-art vt-p-driftsense"><div class="paint p-umber" data-paint="umber" data-comp="banner" data-seed="0.21" data-light><canvas aria-hidden="true"></canvas></div></div>
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb">
       <span><a href="/">Maadhav V H</a> &nbsp;/&nbsp; <a href="/#work">Work</a> &nbsp;/&nbsp; <span class="here">DriftSense</span></span>
@@ -90,20 +91,27 @@
     </div>
   </div>
   <main id="top" class="wrap wp">
+    <div class="runhead">
+      <a class="mark serif" href="/" aria-label="Maadhav V H, home">mvh</a>
+      <span class="rh-title serif">DriftSense</span>
+      <span class="rh-kind mono">case study</span>
+      <i class="rh-bar" aria-hidden="true"></i>
+    </div>
     <header class="wp-head">
       <ul class="wp-tags"><li class="pill hl">runner-up · SEMICON India 2026</li><li class="pill">computer vision</li><li class="pill">CPU-only</li><li class="pill">public code</li></ul>
-      <h1>DriftSense</h1>
+      <h1 class="vt-t-driftsense" data-axes>DriftSense</h1>
       <p class="wp-lede">A wafer-inspection microscope loses track of where it is. DriftSense finds a reference pattern inside the SEM frame under unknown 8–12× zoom and ±5° rotation, or reports that it isn&#39;t there.</p>
+      <p class="wp-key"><span class="v">F1 0.91</span><span class="l">match / reject on 2,250 pairs</span></p>
       <dl class="wp-facts"><div><dt>my role</dt><dd>team lead · team of 4</dd></div><div><dt>stack</dt><dd>Python · PyTorch · OpenCV</dd></div><div><dt>when</dt><dd>sep 2026</dd></div></dl>
     </header>
     <div class="wp-body">
       <section class="wp-section" aria-labelledby="wp-problem">
-        <h2 id="wp-problem">The <em>problem</em></h2>
+        <h2 id="wp-problem"><span class="rn mono" aria-hidden="true">I.</span> The <em>problem</em></h2>
         <p class="wp-p">This is Applied Materials&#39; Navigation-Error Recovery problem, Phase 2. Given a high-resolution reference patch and a low-resolution SEM search frame of a repeating semiconductor layout, locate the patch and report its position, rotation and scale, or report that it is not there. The zoom is unknown, between 8× and 12×, and the rotation is unknown within ±5°. About 20% of pairs contain no true instance.</p>
         <p class="wp-p">The layout repeats, so a patch correlates well at many positions and local appearance alone cannot identify the site. The pipeline keeps the top few pose hypotheses from a coarse scale sweep, verifies each at full resolution with ZNCC, and keeps the best one.</p>
       </section>
       <section class="wp-section" aria-labelledby="wp-pipeline">
-        <h2 id="wp-pipeline">How it <em>works</em></h2>
+        <h2 id="wp-pipeline"><span class="rn mono" aria-hidden="true">II.</span> How it <em>works</em></h2>
         <figure class="wp-figure"><pre class="wp-diagram" aria-hidden="true">  SEM frame ─┐
              ├─▶ multi-scale sweep (8–12×, ±5°) ─▶ siamese correlation CNN ─▶ top-k peaks
  reference ──┘                                      1.02 M params                 │
@@ -114,15 +122,15 @@
                                        ▼                                    ▼
                                 <span class="wp-hit">found: x, y, scale, θ</span>              <span class="wp-hit">reject: not present</span>
 
-  CAD layout ──▶ Fourier-domain registration ──▶ sub-pixel offset  (separate path)</pre><figcaption>Two paths. Matching: a sweep over scale and rotation feeds a siamese correlation network; the top candidates are verified by ZNCC at full resolution, and a pair that fails the score is reported as not present. Registration: CAD-to-SEM alignment in the Fourier domain.</figcaption></figure>
+  CAD layout ──▶ Fourier-domain registration ──▶ sub-pixel offset  (separate path)</pre><figcaption><span class="fig-no mono">Fig. 1</span> Two paths. Matching: a sweep over scale and rotation feeds a siamese correlation network; the top candidates are verified by ZNCC at full resolution, and a pair that fails the score is reported as not present. Registration: CAD-to-SEM alignment in the Fourier domain.</figcaption></figure>
       </section>
       <section class="wp-section" aria-labelledby="wp-results">
-        <h2 id="wp-results"><em>Results</em></h2>
+        <h2 id="wp-results"><span class="rn mono" aria-hidden="true">III.</span> <em>Results</em></h2>
         <div class="wp-table-wrap"><table class="wp-table"><thead><tr><th scope="col">metric</th><th scope="col">driftsense</th><th scope="col">n</th></tr></thead><tbody><tr><th scope="row">match / reject F1</th><td class="wp-val">0.91</td><td>2,250 pairs</td></tr><tr><th scope="row">AUC</th><td class="wp-val">0.99</td><td>2,250 pairs</td></tr><tr><th scope="row">CAD-to-SEM error</th><td class="wp-val">all ≤ 1 px · median &lt; 0.03 px</td><td>600 pairs</td></tr><tr><th scope="row">runtime</th><td class="wp-val">median ≤ 5 s / pair · 20 s hard timeout</td><td>reference machine: 4-core x86, 8 GB RAM, no GPU, Python 3.11</td></tr></tbody></table></div>
         <p class="wp-note">The F1 and AUC pairs are self-generated. The 600 registration pairs come from the organisers&#39; own CAD pipeline and were scored locally on their published rubric.</p>
       </section>
       <section class="wp-section" aria-labelledby="wp-limits">
-        <h2 id="wp-limits">The <em>limits</em></h2>
+        <h2 id="wp-limits"><span class="rn mono" aria-hidden="true">IV.</span> The <em>limits</em></h2>
         <ul class="wp-list"><li>An earlier 81.45 / 81.93 result was withdrawn after a generator defect was found: a severity pinned to one value produced pairs at severity 0.0. It is not reported here.</li><li>The organisers&#39; blind set is 200 pairs and is not reproduced here, so the F1 margin may not carry over.</li><li>Periodic layouts produce plausible wrong-scale and wrong-rotation matches. Sub-pixel refinement cannot recover a pair whose candidates never include the correct pose.</li><li>Some confidently wrong predictions score above the threshold, and no confidence cut catches all of them.</li><li>CAD-to-SEM registration assumes a whole-canvas search design file. Without it, the fallback scored 45.32 / 85 on the harsh tier, against 85.00 with it.</li><li>Runtime rows are local emulations of the 4-core, 8 GB reference box, not measurements on it.</li></ul>
       </section>
       <section class="wp-evidence" aria-label="Evidence">

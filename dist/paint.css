@@ -1,0 +1,13 @@
+/* Paint engine support (paint.js). Loaded after style.css. */
+
+/* With WebGL the flat CSS fallback gives way to the ground colour, so a
+   painting never flashes "finished" before it develops; if the context fails
+   paint.js adds .paint-failed and the fallback returns. */
+html.has-paint .paint:not(.paint-failed)::before { opacity: 0; transition: opacity .5s ease; }
+html.has-paint .paint canvas { transition: opacity .4s ease; }
+html.has-paint .paint { contain: paint; }
+.paint canvas { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.has-paint .paint::before, html.has-paint .paint canvas { transition: none; }
+}

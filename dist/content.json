@@ -128,7 +128,8 @@
       "role": "team lead",
       "code": "public code ↗",
       "caseStudy": "/work/driftsense/",
-      "url": "https://github.com/vhmaadhav/semicon-driftsense"
+      "url": "https://github.com/vhmaadhav/semicon-driftsense",
+      "key": { "value": "F1 0.91", "label": "match / reject on 2,250 pairs" }
     },
     {
       "title": "CoronarySafe",
@@ -177,7 +178,9 @@
       "tag": "Tata Elxsi Teliport S4",
       "role": "team lead · benchmark harness",
       "code": "code private (competition)",
-      "caseStudy": "/work/vehiclegpt/"
+      "caseStudy": "/work/vehiclegpt/",
+      "key": { "value": "29.5% → 95.5%", "label": "hybrid rules + small LLM on 200 questions" },
+      "interlude": true
     },
     {
       "title": "Mouna",
@@ -185,7 +188,9 @@
       "what": "Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.",
       "proof": "false utterances 23% → 7% · Kannada top-1 75.3%",
       "tag": "grand finale · iQOO 2026",
-      "code": "code private"
+      "code": "code private",
+      "key": { "value": "23% → 7%", "label": "false utterances" },
+      "interlude": true
     },
     {
       "title": "DT Guardian",
@@ -195,7 +200,8 @@
       "tag": "phase 2 · Schneider Yuva Yodha",
       "role": "co-developer (2-person team)",
       "code": "code private (competition)",
-      "caseStudy": "/work/dt-guardian/"
+      "caseStudy": "/work/dt-guardian/",
+      "key": { "value": "−53%", "label": "energy not served in a 6 h outage, 121.2 → 56.7 kWh" }
     }
   ],
   "building": [

@@ -7,17 +7,145 @@
   const linkAttrs = SR ? SR.linkAttrs : () => '';
   const fact = () => {};
 
-  // Sections below the fold rise in when they arrive. Anything already on
-  // screen is left alone, so nothing flashes, and without JS nothing is hidden.
+  const root = document.documentElement;
+  root.classList.add('js');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+  // Wrap every word of an element in a span (keeping nested <em> etc.), for staggered reveals.
+  function splitWords(el) {
+    let n = 0;
+    const walk = (node) => {
+      Array.from(node.childNodes).forEach((child) => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach((part) => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            const w = document.createElement('span');
+            w.className = 'w';
+            w.textContent = part;
+            w.style.setProperty('--d', `${Math.min(n++ * 70, 700)}ms`);
+            frag.appendChild(w);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1) walk(child);
+      });
+    };
+    walk(el);
+  }
+
+  // Sfumato: blocks below the fold resolve from a slight blur as they arrive; headings word by word.
+  // Anything already on screen is left alone, and without JS nothing is hidden.
   function reveal() {
-    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window) || reduced) return;
     const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.remove('wait'); io.unobserve(e.target); }
-    }), { threshold: 0.08 });
-    document.querySelectorAll('.rise').forEach((el) => {
-      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('wait'); io.observe(el); }
+      if (!e.isIntersecting) return;
+      e.target.classList.remove('wait');
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.rise, [data-split]').forEach((el) => {
+      if (el.getBoundingClientRect().top <= window.innerHeight) return;
+      if (el.hasAttribute('data-split')) { splitWords(el); el.classList.add('split'); } else el.classList.add('wait');
+      io.observe(el);
     });
   }
+
+  // Quiet navigation, section tone and progress, from one throttled scroll handler.
+  function scrollChrome() {
+    const nav = document.querySelector('[data-snav]');
+    const hero = document.querySelector('.hero');
+    const links = nav ? Array.from(nav.querySelectorAll('a[data-s]')) : [];
+    const sections = links.map((a) => document.getElementById(a.getAttribute('data-s')));
+    const tones = Array.from(document.querySelectorAll('.hero, [data-tone], .foot'));
+    const toneOf = (el) => el.getAttribute('data-tone') || (el.classList.contains('hero') ? 'ember' : el.classList.contains('foot') ? 'maroon' : '');
+    let last = window.scrollY;
+    let shown = false;
+    let tick = false;
+    let current = '';
+    let tone = '';
+    function update() {
+      tick = false;
+      const y = window.scrollY;
+      const vh = window.innerHeight;
+      const dy = y - last;
+      last = y;
+      if (nav) {
+        const past = hero ? y > hero.offsetHeight - 80 : y > vh;
+        if (!past) shown = false;
+        else if (!shown && dy < -3) shown = true;
+        else if (!shown && dy >= 0 && y < hero.offsetHeight + 40) shown = true;
+        else if (shown && dy > 6) shown = false;
+        nav.classList.toggle('is-on', shown);
+        const max = document.documentElement.scrollHeight - vh;
+        nav.style.setProperty('--p', max > 0 ? clamp01(y / max).toFixed(4) : '0');
+        let now = '';
+        sections.forEach((sec, i) => { if (sec && sec.getBoundingClientRect().top < vh * 0.4) now = links[i].getAttribute('data-s'); });
+        if (now !== current) {
+          current = now;
+          links.forEach((a) => (a.getAttribute('data-s') === now ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+        }
+      }
+      let t = '';
+      tones.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.55 && r.bottom > vh * 0.45) t = toneOf(el);
+      });
+      if (t !== tone) { tone = t; if (t) document.body.setAttribute('data-tone', t); else document.body.removeAttribute('data-tone'); }
+    }
+    const onScroll = () => { if (!tick) { tick = true; requestAnimationFrame(update); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  // Headings and the monogram lean toward the pointer through Fraunces' own axes (SOFT, wght).
+  // One rAF loop, running only while something is still easing.
+  function pointerAxes() {
+    if (reduced || !matchMedia('(hover: hover)').matches) return;
+    const els = Array.from(document.querySelectorAll('[data-axes]')).map((el) => ({
+      el, kind: el.getAttribute('data-axes') || 'head', v: 0, target: 0
+    }));
+    if (!els.length) return;
+    const visible = new Set();
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+        const item = els.find((x) => x.el === e.target);
+        if (e.isIntersecting) visible.add(item); else visible.delete(item);
+      }));
+      els.forEach((x) => io.observe(x.el));
+    } else els.forEach((x) => visible.add(x));
+    let px = -1e4;
+    let py = -1e4;
+    let running = false;
+    function frame() {
+      let busy = false;
+      visible.forEach((item) => {
+        const r = item.el.getBoundingClientRect();
+        const cx = Math.max(r.left, Math.min(px, r.right));
+        const cy = Math.max(r.top, Math.min(py, r.bottom));
+        const d = Math.hypot(px - cx, py - cy);
+        item.target = clamp01(1 - d / 360);
+        item.v += (item.target - item.v) * 0.09;
+        if (Math.abs(item.target - item.v) > 0.002) busy = true;
+        const v = item.v;
+        if (item.kind === 'mark') {
+          item.el.style.setProperty('--pw', String(Math.round(360 + 220 * v)));
+        } else {
+          item.el.style.setProperty('--ps', String(Math.round(60 + 40 * v)));
+          item.el.style.setProperty('--pw', String(Math.round(300 + (item.kind === 'name' ? 70 : 50) * v)));
+        }
+      });
+      if (busy) requestAnimationFrame(frame); else running = false;
+    }
+    addEventListener('pointermove', (e) => {
+      px = e.clientX; py = e.clientY;
+      if (!running) { running = true; requestAnimationFrame(frame); }
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => { px = py = -1e4; if (!running) { running = true; requestAnimationFrame(frame); } });
+  }
+
   const fmt = (n) => n.toLocaleString('en-US');
   const num = (v) => Number(v) || 0;
 
@@ -92,9 +220,11 @@
 
   function init() {
     const page = document.getElementById('portfolio');
-    if (!page) return;
-    if (SR) SR.refreshDurations(page, new Date());
     reveal();
+    pointerAxes();
+    if (!page) return;
+    scrollChrome();
+    if (SR) SR.refreshDurations(page, new Date());
     const handle = (id) => (document.getElementById(id) || document.body).getAttribute('data-handle') || '';
     const gh = `https://github.com/${encodeURIComponent(handle('contributions'))}`;
     const lc = `https://leetcode.com/u/${encodeURIComponent(handle('leetcode'))}/`;

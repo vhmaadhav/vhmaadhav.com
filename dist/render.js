@@ -106,10 +106,11 @@
   }
 
   // Chapter heading: a large serif title with an italic word, plus a small mono note.
-  function chapter(id, title, italic, note = '') {
+  function chapter(id, title, italic, note = '', numeral = '') {
     return `
         <header class="chapter">
-          <h2 id="${id}-title" class="serif">${esc(title)}${italic ? ` <em>${esc(italic)}</em>` : ''}</h2>
+          ${numeral ? `<span class="rn mono" aria-hidden="true">${esc(numeral)}</span>` : ''}
+          <h2 id="${id}-title" class="serif" data-axes data-split>${esc(title)}${italic ? ` <em>${esc(italic)}</em>` : ''}</h2>
           ${note ? `<p class="mono note">${esc(note)}</p>` : ''}
         </header>`;
   }
@@ -127,6 +128,20 @@
     return rest.length ? `${esc(first)} <i>${esc(rest.join(' '))}</i>` : esc(first);
   }
 
+  // Quiet sticky navigation: shown by app.js after the hero and when scrolling up.
+  const SNAV = [['work', 'Work'], ['now', 'Easel'], ['awards', 'Awards'], ['experience', 'Experience'], ['stack', 'Tools'], ['activity', 'Practice']];
+  function snav(profile) {
+    const links = SNAV.map(([id, label]) => `<li><a href="#${id}" data-s="${id}">${label}</a></li>`).join('');
+    return `
+      <nav class="snav" aria-label="Sections" data-snav>
+        <div class="wrap snav-in">
+          <a class="mark serif" href="#top" aria-label="${esc(profile.name)}, top of page">mvh</a>
+          <ul>${links}</ul>
+        </div>
+        <i class="snav-bar" aria-hidden="true"></i>
+      </nav>`;
+  }
+
   function hero(profile) {
     const resume = profile.links.find((l) => l.label === 'resume');
     const nav = [
@@ -138,16 +153,16 @@
     const city = String(profile.location || '').split(',')[0];
     return `
       <header class="hero" id="top">
-        ${painting('ember', 'hero', '0.37', ' data-live data-light')}
+        ${painting('ember', 'hero', '0.37', ' data-live data-light data-develop="0"')}
         <div class="wrap hero-bar">
-          <a class="mark serif" href="#top" aria-label="${esc(profile.name)}, top of page">mvh</a>
+          <a class="mark serif" href="#top" data-axes="mark" aria-label="${esc(profile.name)}, top of page">mvh</a>
           <nav class="hero-nav" aria-label="Primary">${nav}</nav>
         </div>
         <div class="wrap hero-plaque-wrap" aria-hidden="true">
           <p class="plaque mono">Untitled (${esc(PAINTINGS.ember)}), 2026<br>painted in your browser, never quite the same twice</p>
         </div>
         <div class="wrap hero-name">
-          <h1 class="serif">${nameMarkup(profile.name)}<span class="sr"> — ${esc(profile.role)}</span></h1>
+          <h1 class="serif" data-axes="name">${nameMarkup(profile.name)}<span class="sr"> — ${esc(profile.role)}</span></h1>
           <div class="hero-under">
             <p class="tagline">${esc(profile.tagline || profile.bio[0])}</p>
             <p class="meta mono">${(profile.heroMeta || [`${city}, India`]).map(esc).join('<br>')}</p>
@@ -200,11 +215,24 @@
       </section>`;
   }
 
+  // The hang: a fixed rhythm of plate layouts, repeated if there are more works.
+  const HANG = [
+    { v: 'wide', comp: 'wide' },
+    { v: 'pair-a', comp: 'tall' },
+    { v: 'pair-b', comp: 'square' },
+    { v: 'off-l', comp: 'tall' },
+    { v: 'off-r', comp: 'square' },
+    { v: 'pair-a', comp: 'tall' },
+    { v: 'pair-b', comp: 'square' }
+  ];
+  const slugOf = (p) => (p.caseStudy ? String(p.caseStudy).replace(/^\/work\/|\/$/g, '') : '');
+
   function projects(list, more = []) {
     const withCode = list.filter((p) => p.url).length;
     const plates = list.map((p, i) => {
       const name = PAINTINGS[p.paint] ? p.paint : PAINT_ORDER[i % PAINT_ORDER.length];
-      const comp = String(i % 4);
+      const hang = HANG[i % HANG.length];
+      const slug = slugOf(p);
       const no = pad(i + 1);
       const acts = [
         p.caseStudy && `<a href="${esc(p.caseStudy)}">Read the case study</a>`,
@@ -214,26 +242,35 @@
           ? `<a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
           : `<span>${esc(p.code)}</span>`)
       ].filter(Boolean).join('');
-      return `
-          <li class="plate rise${i % 2 ? ' flip' : ''}" data-paint-host>
-            <figure class="art">
-              ${painting(name, comp, (0.19 + i * 0.29).toFixed(2))}
-              <figcaption class="cap mono"><span>Pl. ${no}</span><span>${esc(PAINTINGS[name])}</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. ${no}</p>
-              <h3 class="serif">${esc(p.title)}</h3>
-              ${p.tag ? `<p class="tag serif">${esc(p.tag)}</p>` : ''}
-              <p class="what">${esc(p.what)}</p>
-              ${p.role ? `<p class="role">My role: ${esc(p.role)}</p>` : ''}
-              <p class="res mono">${esc(p.proof)}</p>
-              ${acts ? `<p class="acts">${acts}</p>` : ''}
+      const interlude = p.interlude && p.key ? `
+          <li class="interlude rise">
+            <p class="v serif" data-axes data-split>${esc(p.key.value)}</p>
+            <p class="l mono">${esc(p.title)} · ${esc(p.key.label)}</p>
+          </li>` : '';
+      return `${interlude}
+          <li class="plate v-${hang.v} rise" data-paint-host data-tone="${esc(name)}">
+            <article>
+              <figure class="art">
+                <div class="art-frame${slug ? ` vt-p-${esc(slug)}` : ''}">${painting(name, hang.comp, (0.19 + i * 0.29).toFixed(2))}</div>
+                <figcaption class="cap mono"><span>Pl. ${no}</span><span>${esc(PAINTINGS[name])}</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. ${no}</p>
+                <h3 class="serif${slug ? ` vt-t-${esc(slug)}` : ''}" data-axes>${esc(p.title)}</h3>
+                ${p.tag ? `<p class="tag serif">${esc(p.tag)}</p>` : ''}
+              </header>
+              <div class="plate-text">
+                <p class="what">${esc(p.what)}</p>
+                ${p.role ? `<p class="role">My role: ${esc(p.role)}</p>` : ''}
+                <p class="res mono">${esc(p.proof)}</p>
+                ${acts ? `<p class="acts">${acts}</p>` : ''}
+              </div>
             </article>
           </li>`;
     }).join('');
     const repos = more.map((r) => `<a href="${esc(r.url)}"${linkAttrs(r.url)}>${esc(r.name)}</a>`).join('');
     const also = repos ? `<p class="also"><span class="mono">Also on GitHub</span>${repos}</p>` : '';
-    return section('work', chapter('work', 'Selected', 'work', `${list.length} works · ${withCode} public`),
+    return section('work', chapter('work', 'Selected', 'work', `${list.length} works · ${withCode} public`, 'I.'),
       `<ol class="plates">${plates}</ol>${also}`);
   }
 
@@ -255,7 +292,7 @@
             ${code ? `<p class="code">${code}</p>` : ''}
           </li>`;
     }).join('');
-    return section('now', chapter('now', 'On the', 'easel', `${list.length} in progress`),
+    return section('now', chapter('now', 'On the', 'easel', `${list.length} in progress`, 'II.'),
       `<ul class="easel">${items}</ul>`);
   }
 
@@ -280,7 +317,7 @@
     }).join('');
     const rest = list.slice(FEATURED_WINS).map((win) => `
           <li><span class="d mono">${dateOf(win)}</span><span class="e">${esc(win.event)}</span><span class="r">${esc(win.result)}</span></li>`).join('');
-    return section('awards', chapter('awards', '', 'Recognition', 'newest first'),
+    return section('awards', chapter('awards', '', 'Recognition', 'newest first', 'III.'),
       `<ul class="awards-top">${featured}</ul>${rest ? `<ul class="awards-rest rise">${rest}</ul>` : ''}`);
   }
 
@@ -333,7 +370,7 @@
               <dt class="mono">${esc(group.group)}</dt>
               <dd>${group.items.map((item) => esc(item)).join('<span class="sep" aria-hidden="true"> · </span>')}</dd>
             </div>`).join('');
-    return section('stack', chapter('stack', 'Tools &', 'materials', 'what the work is made of'),
+    return section('stack', chapter('stack', 'Tools &', 'materials', 'what the work is made of', 'IV.'),
       `<dl class="tools rise">${rows}</dl>`);
   }
 
@@ -353,7 +390,7 @@
               <div id="leetcode" data-handle="${esc(leetcodeHandle)}"><p class="muted">The LeetCode calendar needs JavaScript. <a href="${esc(lcUrl)}"${linkAttrs(lcUrl)}>See it on LeetCode →</a></p></div>
             </div>
           </div>`;
-    return section('activity', chapter('activity', 'A year of', 'practice', 'last 365 days'), body);
+    return section('activity', chapter('activity', 'A year of', 'practice', 'last 365 days', 'V.'), body);
   }
 
   function offHours(item) {
@@ -362,7 +399,7 @@
     return `
       <section class="off rise" aria-labelledby="off-title">
         <h2 id="off-title" class="mono col-head">Off hours</h2>
-        <p class="quip serif">${esc(item.quip.charAt(0).toUpperCase() + item.quip.slice(1))}</p>
+        <p class="quip serif" data-split>${esc(item.quip.charAt(0).toUpperCase() + item.quip.slice(1))}</p>
         <p class="films"><span class="mono">Films I return to</span>${films.map((f) => `<span class="serif">${esc(f.replace(/\b\w/g, (c) => c.toUpperCase()))}</span>`).join('')}</p>
       </section>`;
   }
@@ -372,6 +409,7 @@
       <footer class="foot">
         ${painting('maroon', 'foot', '0.73')}
         <div class="wrap foot-in">
+          <a class="mark mark-lg serif" href="#top" data-axes="mark" aria-label="Back to the top">mvh</a>
           <p class="big serif">Models that run on the <em>device</em>, not in the cloud.</p>
           <p class="meta mono"><span>© ${now.getFullYear()} ${esc(name)} · built by hand, every painting generated</span><span>For agents: <a href="/for-agents.txt">for-agents.txt</a> · <a href="/resume.json">resume.json</a> · <a href="/llms.txt">llms.txt</a></span></p>
         </div>
@@ -386,6 +424,7 @@
     const now = options.now || new Date();
     const handle = data.profile.handle;
     return [
+      snav(data.profile),
       hero(data.profile),
       '<div class="wrap">',
       intro(data.profile),

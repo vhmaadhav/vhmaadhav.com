@@ -18,14 +18,19 @@ const UPSTREAM_TIMEOUT_MS = 8000;
 
 // Static files whose names are not hashed: a day of caching, then revalidation.
 const DAY_CACHED = new Set(['/og.png', '/favicon.svg', '/Maadhav_VH_Resume.pdf']);
+// Fonts and the hero poster never change under the same name (rename a file to change it): cache for a year.
+const LONG_CACHED = 'public, max-age=31536000, immutable';
+// HTML, CSS and JS are not hashed: HTML revalidates on every load (a cheap 304), CSS and JS may be reused for five minutes.
+const HTML_POLICY = 'public, max-age=0, must-revalidate';
+const CODE_POLICY = 'public, max-age=300, must-revalidate';
 
 // Every external origin the page loads, checked against template, app.js, render.js and style.css.
 // Cloudflare Web Analytics is injected at the edge, hence static.cloudflareinsights.com and cloudflareinsights.com.
 const CSP = [
   "default-src 'self'",
   "script-src 'self' https://static.cloudflareinsights.com",
-  "style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-  "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:",
+  "style-src 'self'",
+  "font-src 'self' data:",
   "img-src 'self' data:",
   "connect-src 'self' https://github-contributions-api.jogruber.de https://cloudflareinsights.com",
   "frame-ancestors 'none'",
@@ -71,12 +76,21 @@ function secure(res) {
 
 async function assets(request, env) {
   const res = await env.ASSETS.fetch(request);
-  if (res.ok && DAY_CACHED.has(new URL(request.url).pathname)) {
-    const out = new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers });
-    out.headers.set('Cache-Control', 'public, max-age=86400');
-    return out;
-  }
-  return res;
+  if (!res.ok) return res;
+  const policy = cacheControl(new URL(request.url).pathname, res.headers.get('Content-Type') || '');
+  if (!policy) return res;
+  const out = new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers });
+  out.headers.set('Cache-Control', policy);
+  return out;
+}
+
+// Returns the Cache-Control for a static file, or null to keep what the assets binding sends.
+function cacheControl(pathname, contentType) {
+  if (pathname.startsWith('/fonts/') || pathname.startsWith('/hero-poster.')) return LONG_CACHED;
+  if (DAY_CACHED.has(pathname)) return 'public, max-age=86400';
+  if (contentType.startsWith('text/html')) return HTML_POLICY;
+  if (/^(text\/css|text\/javascript|application\/javascript)/.test(contentType)) return CODE_POLICY;
+  return null;
 }
 
 function json(body, status, headers = {}) {

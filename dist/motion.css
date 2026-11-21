@@ -1,0 +1,68 @@
+/*
+ * Motion for vhmaadhav.com. Everything here sits behind prefers-reduced-motion: no-preference,
+ * and nothing is ever hidden unless app.js has added a class (.wait, .split), so with
+ * JavaScript off, or this file missing, the page is simply still.
+ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---- continuous navigation between pages (cross-document View Transitions) ---- */
+  @view-transition { navigation: auto; }
+
+  /* one name per project; the plate's painting and title morph into the case study's banner and h1 */
+  .vt-p-driftsense { view-transition-name: p-driftsense; }
+  .vt-t-driftsense { view-transition-name: t-driftsense; }
+  .vt-p-vehiclegpt { view-transition-name: p-vehiclegpt; }
+  .vt-t-vehiclegpt { view-transition-name: t-vehiclegpt; }
+  .vt-p-dt-guardian { view-transition-name: p-dt-guardian; }
+  .vt-t-dt-guardian { view-transition-name: t-dt-guardian; }
+
+  ::view-transition-group(*) { animation-duration: .8s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+  ::view-transition-old(root) { animation: vt-out .45s ease both; }
+  ::view-transition-new(root) { animation: vt-in .8s .12s ease both; }
+  ::view-transition-old(p-driftsense), ::view-transition-new(p-driftsense),
+  ::view-transition-old(p-vehiclegpt), ::view-transition-new(p-vehiclegpt),
+  ::view-transition-old(p-dt-guardian), ::view-transition-new(p-dt-guardian) { height: 100%; object-fit: cover; }
+  @keyframes vt-out { to { opacity: 0; filter: blur(4px); } }
+  @keyframes vt-in { from { opacity: 0; filter: blur(4px); } }
+
+  /* ---- sfumato: things resolve from a slight blur as they arrive ---- */
+  .rise { transition: opacity 1.5s cubic-bezier(.2, .7, .2, 1), transform 1.5s cubic-bezier(.2, .7, .2, 1), filter 1.5s cubic-bezier(.2, .7, .2, 1); }
+  .rise.wait { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+  .split .w { display: inline-block; opacity: 0; filter: blur(6px); transform: translateY(.32em);
+    transition: opacity 1.2s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), transform 1.2s cubic-bezier(.2, .7, .2, 1) var(--d, 0s), filter 1.2s cubic-bezier(.2, .7, .2, 1) var(--d, 0s); }
+  .split.in .w { opacity: 1; filter: none; transform: none; }
+
+  /* ---- links: the underline draws in from the left ---- */
+  .links a, .plate .acts a, .also a, .fig a, .award a, .foot .meta a, .nf-links a, .stats .link, .wp-nav a, .intro-side a {
+    background: linear-gradient(var(--ember), var(--ember)) 0 100% / 0 1px no-repeat;
+    background-origin: border-box;
+    transition: background-size .6s cubic-bezier(.2, .7, .2, 1), color .3s;
+  }
+  .links a:hover, .plate .acts a:hover, .also a:hover, .fig a:hover, .award a:hover, .foot .meta a:hover, .nf-links a:hover, .stats .link:hover, .wp-nav a:hover, .intro-side a:hover,
+  .links a:focus-visible, .plate .acts a:focus-visible, .also a:focus-visible { background-size: 100% 1px; border-color: var(--faint); }
+  .nf-links a:hover, .foot .meta a:hover { border-color: rgba(239, 230, 214, .25); }
+
+  /* ---- scroll-linked, no JavaScript needed (where supported) ---- */
+  @supports (animation-timeline: scroll()) {
+    .runhead { animation: rh-show linear both; animation-timeline: scroll(root); animation-range: 260px 420px; }
+    .rh-bar { animation: rh-grow linear both; animation-timeline: scroll(root); }
+    @keyframes rh-show { from { opacity: 0; visibility: hidden; pointer-events: none; } to { opacity: 1; visibility: visible; pointer-events: auto; } }
+    @keyframes rh-grow { to { transform: scaleX(1); } }
+
+    /* the hero name drifts up and softens as the painting is left behind */
+    .hero-name { animation: hero-leave linear both; animation-timeline: view(); animation-range: exit 0% exit 70%; }
+    @keyframes hero-leave { to { transform: translateY(-9vh); opacity: .2; filter: blur(5px); } }
+  }
+  @supports (animation-timeline: view()) {
+    .wp-section > .wp-p, .wp-section > .wp-list, .wp-section > .wp-table-wrap, .wp-section > .wp-figure, .wp-section > h2 {
+      animation: wp-in linear both; animation-timeline: view(); animation-range: entry 0% entry 42%;
+    }
+    @keyframes wp-in { from { opacity: 0; filter: blur(5px); transform: translateY(18px); } }
+  }
+
+  /* ---- paintings breathe a little under the pointer ---- */
+  .art-frame::before { transition: opacity 1.6s, transform 2.4s cubic-bezier(.2, .7, .2, 1); }
+  .plate:hover .art-frame::before { transform: scale(1.06); }
+  .snav li a[aria-current] { transition: box-shadow .5s; }
+}

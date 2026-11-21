@@ -24,13 +24,16 @@
   <meta name="twitter:image" content="https://vhmaadhav.com/og.png">
   <meta name="theme-color" content="#120e0c">
   <meta name="color-scheme" content="dark">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
   <link rel="alternate" type="application/json" href="/resume.json" title="JSON Resume">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..600,0..100&family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/paint.css">
+  <link rel="stylesheet" href="/motion.css">
+  <link rel="preload" as="image" href="/hero-poster.d6639c80.webp" fetchpriority="high">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-latin-normal.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-latin-italic.woff2" crossorigin>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -207,24 +210,31 @@
   ]
 }
   </script>
-  <script src="render.js" defer></script>
-  <script src="paint.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="/render.js" defer></script>
+  <script src="/paint.js" defer></script>
+  <script src="/app.js" defer></script>
 </head>
 <body>
   <main id="portfolio" class="site">
     
-      <header class="hero" id="top">
-        <div class="paint p-ember" data-paint="ember" data-comp="hero" data-seed="0.37" data-live data-light><canvas aria-hidden="true"></canvas></div>
-        <div class="wrap hero-bar">
+      <nav class="snav" aria-label="Sections" data-snav>
+        <div class="wrap snav-in">
           <a class="mark serif" href="#top" aria-label="Maadhav V H, top of page">mvh</a>
+          <ul><li><a href="#work" data-s="work">Work</a></li><li><a href="#now" data-s="now">Easel</a></li><li><a href="#awards" data-s="awards">Awards</a></li><li><a href="#experience" data-s="experience">Experience</a></li><li><a href="#stack" data-s="stack">Tools</a></li><li><a href="#activity" data-s="activity">Practice</a></li></ul>
+        </div>
+        <i class="snav-bar" aria-hidden="true"></i>
+      </nav>
+      <header class="hero" id="top">
+        <div class="paint p-ember" data-paint="ember" data-comp="hero" data-seed="0.37" data-live data-light data-develop="0"><canvas aria-hidden="true"></canvas></div>
+        <div class="wrap hero-bar">
+          <a class="mark serif" href="#top" data-axes="mark" aria-label="Maadhav V H, top of page">mvh</a>
           <nav class="hero-nav" aria-label="Primary"><a href="#work">Work</a><a href="#now">Now</a><a href="#awards">Awards</a><a class="keep" href="Maadhav_VH_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a></nav>
         </div>
         <div class="wrap hero-plaque-wrap" aria-hidden="true">
           <p class="plaque mono">Untitled (Ember over Umber), 2026<br>painted in your browser, never quite the same twice</p>
         </div>
         <div class="wrap hero-name">
-          <h1 class="serif">Maadhav <i>V H</i><span class="sr"> — ai / ml engineer · on-device ai</span></h1>
+          <h1 class="serif" data-axes="name">Maadhav <i>V H</i><span class="sr"> — ai / ml engineer · on-device ai</span></h1>
           <div class="hero-under">
             <p class="tagline">Machine-learning engineer. I make models small enough, and honest enough, to live on the hardware they were meant for.</p>
             <p class="meta mono">Coimbatore, India<br>ECE, class of 2028</p>
@@ -262,119 +272,157 @@
       </section>
       <section id="work" class="section" aria-labelledby="work-title">
         <header class="chapter">
-          <h2 id="work-title" class="serif">Selected <em>work</em></h2>
+          <span class="rn mono" aria-hidden="true">I.</span>
+          <h2 id="work-title" class="serif" data-axes data-split>Selected <em>work</em></h2>
           <p class="mono note">7 works · 4 public</p>
         </header>
         <ol class="plates">
-          <li class="plate rise" data-paint-host>
-            <figure class="art">
-              <div class="paint p-umber" data-paint="umber" data-comp="0" data-seed="0.19"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 01</span><span>Umber, Black, Ochre</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 01</p>
-              <h3 class="serif">DriftSense</h3>
-              <p class="tag serif">runner-up · SEMICON India 2026</p>
-              <p class="what">Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.</p>
-              <p class="role">My role: team lead</p>
-              <p class="res mono">match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600</p>
-              <p class="acts"><a href="/work/driftsense/">Read the case study</a><a href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+          <li class="plate v-wide rise" data-paint-host data-tone="umber">
+            <article>
+              <figure class="art">
+                <div class="art-frame vt-p-driftsense"><div class="paint p-umber" data-paint="umber" data-comp="wide" data-seed="0.19"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 01</span><span>Umber, Black, Ochre</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 01</p>
+                <h3 class="serif vt-t-driftsense" data-axes>DriftSense</h3>
+                <p class="tag serif">runner-up · SEMICON India 2026</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.</p>
+                <p class="role">My role: team lead</p>
+                <p class="res mono">match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600</p>
+                <p class="acts"><a href="/work/driftsense/">Read the case study</a><a href="https://github.com/vhmaadhav/semicon-driftsense" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise flip" data-paint-host>
-            <figure class="art">
-              <div class="paint p-slate" data-paint="slate" data-comp="1" data-seed="0.48"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 02</span><span>Slate over Rust</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 02</p>
-              <h3 class="serif">CoronarySafe</h3>
-              <p class="tag serif">preprint · pre-registered</p>
-              <p class="what">Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.</p>
-              
-              <p class="res mono">sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered</p>
-              <p class="acts"><a href="https://doi.org/10.5281/zenodo.24269057" target="_blank" rel="noopener noreferrer" title="Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation">Preprint ↗</a><a href="https://github.com/vhmaadhav/coronarysafe" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+          <li class="plate v-pair-a rise" data-paint-host data-tone="slate">
+            <article>
+              <figure class="art">
+                <div class="art-frame"><div class="paint p-slate" data-paint="slate" data-comp="tall" data-seed="0.48"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 02</span><span>Slate over Rust</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 02</p>
+                <h3 class="serif" data-axes>CoronarySafe</h3>
+                <p class="tag serif">preprint · pre-registered</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.</p>
+                
+                <p class="res mono">sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered</p>
+                <p class="acts"><a href="https://doi.org/10.5281/zenodo.24269057" target="_blank" rel="noopener noreferrer" title="Simple topology does most of the work: a pre-registered evaluation of label-free triage for critical failures in coronary CTA segmentation">Preprint ↗</a><a href="https://github.com/vhmaadhav/coronarysafe" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise" data-paint-host>
-            <figure class="art">
-              <div class="paint p-olive" data-paint="olive" data-comp="2" data-seed="0.77"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 03</span><span>Bone and Olive</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 03</p>
-              <h3 class="serif">AortaMix</h3>
-              <p class="tag serif">open dataset · CC BY 4.0</p>
-              <p class="what">To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use.</p>
-              
-              <p class="res mono">3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support</p>
-              <p class="acts"><a href="https://huggingface.co/spaces/vhmaadhav/aortamix-viewer" target="_blank" rel="noopener noreferrer">viewer ↗</a><a href="https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata/resolve/main/report/AortaMix_technical_report_v1.pdf" target="_blank" rel="noopener noreferrer">2-page report ↗</a><a href="https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata" target="_blank" rel="noopener noreferrer">dataset ↗</a></p>
+          <li class="plate v-pair-b rise" data-paint-host data-tone="olive">
+            <article>
+              <figure class="art">
+                <div class="art-frame"><div class="paint p-olive" data-paint="olive" data-comp="square" data-seed="0.77"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 03</span><span>Bone and Olive</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 03</p>
+                <h3 class="serif" data-axes>AortaMix</h3>
+                <p class="tag serif">open dataset · CC BY 4.0</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use.</p>
+                
+                <p class="res mono">3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support</p>
+                <p class="acts"><a href="https://huggingface.co/spaces/vhmaadhav/aortamix-viewer" target="_blank" rel="noopener noreferrer">viewer ↗</a><a href="https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata/resolve/main/report/AortaMix_technical_report_v1.pdf" target="_blank" rel="noopener noreferrer">2-page report ↗</a><a href="https://huggingface.co/datasets/vhmaadhav/aortamix-vaecmo-simdata" target="_blank" rel="noopener noreferrer">dataset ↗</a></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise flip" data-paint-host>
-            <figure class="art">
-              <div class="paint p-ink" data-paint="ink" data-comp="3" data-seed="1.06"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 04</span><span>Indigo, Brick</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 04</p>
-              <h3 class="serif">redline</h3>
-              <p class="tag serif">release 1 · AMD MI300X</p>
-              <p class="what">A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime.</p>
-              <p class="role">My role: co-developer (2-person team)</p>
-              <p class="res mono">1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding</p>
-              <p class="acts"><a href="https://github.com/vhmaadhav/redline" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+          <li class="plate v-off-l rise" data-paint-host data-tone="ink">
+            <article>
+              <figure class="art">
+                <div class="art-frame"><div class="paint p-ink" data-paint="ink" data-comp="tall" data-seed="1.06"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 04</span><span>Indigo, Brick</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 04</p>
+                <h3 class="serif" data-axes>redline</h3>
+                <p class="tag serif">release 1 · AMD MI300X</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime.</p>
+                <p class="role">My role: co-developer (2-person team)</p>
+                <p class="res mono">1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding</p>
+                <p class="acts"><a href="https://github.com/vhmaadhav/redline" target="_blank" rel="noopener noreferrer">public code ↗</a></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise" data-paint-host>
-            <figure class="art">
-              <div class="paint p-tobacco" data-paint="tobacco" data-comp="0" data-seed="1.35"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 05</span><span>Tobacco and Gold</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 05</p>
-              <h3 class="serif">VehicleGPT</h3>
-              <p class="tag serif">Tata Elxsi Teliport S4</p>
-              <p class="what">Ask a car about its own data: a small LLM answering from CAN logs, fully offline.</p>
-              <p class="role">My role: team lead · benchmark harness</p>
-              <p class="res mono">hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB</p>
-              <p class="acts"><a href="/work/vehiclegpt/">Read the case study</a><span>code private (competition)</span></p>
+          <li class="interlude rise">
+            <p class="v serif" data-axes data-split>29.5% → 95.5%</p>
+            <p class="l mono">VehicleGPT · hybrid rules + small LLM on 200 questions</p>
+          </li>
+          <li class="plate v-off-r rise" data-paint-host data-tone="tobacco">
+            <article>
+              <figure class="art">
+                <div class="art-frame vt-p-vehiclegpt"><div class="paint p-tobacco" data-paint="tobacco" data-comp="square" data-seed="1.35"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 05</span><span>Tobacco and Gold</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 05</p>
+                <h3 class="serif vt-t-vehiclegpt" data-axes>VehicleGPT</h3>
+                <p class="tag serif">Tata Elxsi Teliport S4</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">Ask a car about its own data: a small LLM answering from CAN logs, fully offline.</p>
+                <p class="role">My role: team lead · benchmark harness</p>
+                <p class="res mono">hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB</p>
+                <p class="acts"><a href="/work/vehiclegpt/">Read the case study</a><span>code private (competition)</span></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise flip" data-paint-host>
-            <figure class="art">
-              <div class="paint p-plum" data-paint="plum" data-comp="1" data-seed="1.64"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 06</span><span>Plum with an Orange Seam</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 06</p>
-              <h3 class="serif">Mouna</h3>
-              <p class="tag serif">grand finale · iQOO 2026</p>
-              <p class="what">Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.</p>
-              
-              <p class="res mono">false utterances 23% → 7% · Kannada top-1 75.3%</p>
-              <p class="acts"><span>code private</span></p>
+          <li class="interlude rise">
+            <p class="v serif" data-axes data-split>23% → 7%</p>
+            <p class="l mono">Mouna · false utterances</p>
+          </li>
+          <li class="plate v-pair-a rise" data-paint-host data-tone="plum">
+            <article>
+              <figure class="art">
+                <div class="art-frame"><div class="paint p-plum" data-paint="plum" data-comp="tall" data-seed="1.64"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 06</span><span>Plum with an Orange Seam</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 06</p>
+                <h3 class="serif" data-axes>Mouna</h3>
+                <p class="tag serif">grand finale · iQOO 2026</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.</p>
+                
+                <p class="res mono">false utterances 23% → 7% · Kannada top-1 75.3%</p>
+                <p class="acts"><span>code private</span></p>
+              </div>
             </article>
           </li>
-          <li class="plate rise" data-paint-host>
-            <figure class="art">
-              <div class="paint p-maroon" data-paint="maroon" data-comp="2" data-seed="1.93"><canvas aria-hidden="true"></canvas></div>
-              <figcaption class="cap mono"><span>Pl. 07</span><span>Black on Maroon</span></figcaption>
-            </figure>
-            <article class="plate-text">
-              <p class="no mono">No. 07</p>
-              <h3 class="serif">DT Guardian</h3>
-              <p class="tag serif">phase 2 · Schneider Yuva Yodha</p>
-              <p class="what">Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.</p>
-              <p class="role">My role: co-developer (2-person team)</p>
-              <p class="res mono">energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)</p>
-              <p class="acts"><a href="/work/dt-guardian/">Read the case study</a><span>code private (competition)</span></p>
+          <li class="plate v-pair-b rise" data-paint-host data-tone="maroon">
+            <article>
+              <figure class="art">
+                <div class="art-frame vt-p-dt-guardian"><div class="paint p-maroon" data-paint="maroon" data-comp="square" data-seed="1.93"><canvas aria-hidden="true"></canvas></div></div>
+                <figcaption class="cap mono"><span>Pl. 07</span><span>Black on Maroon</span></figcaption>
+              </figure>
+              <header class="plate-head">
+                <p class="no mono">No. 07</p>
+                <h3 class="serif vt-t-dt-guardian" data-axes>DT Guardian</h3>
+                <p class="tag serif">phase 2 · Schneider Yuva Yodha</p>
+              </header>
+              <div class="plate-text">
+                <p class="what">Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.</p>
+                <p class="role">My role: co-developer (2-person team)</p>
+                <p class="res mono">energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)</p>
+                <p class="acts"><a href="/work/dt-guardian/">Read the case study</a><span>code private (competition)</span></p>
+              </div>
             </article>
           </li></ol><p class="also"><span class="mono">Also on GitHub</span><a href="https://github.com/vhmaadhav/embeddinggemma-mobile-benchmark" target="_blank" rel="noopener noreferrer">embeddinggemma-mobile-benchmark</a><a href="https://github.com/vhmaadhav/hiver-email-suggested-response" target="_blank" rel="noopener noreferrer">hiver-email-suggested-response</a><a href="https://github.com/vhmaadhav/invoiceguard" target="_blank" rel="noopener noreferrer">invoiceguard</a><a href="https://github.com/vhmaadhav/claimdesk" target="_blank" rel="noopener noreferrer">claimdesk</a></p>
       </section>
       <section id="now" class="section" aria-labelledby="now-title">
         <header class="chapter">
-          <h2 id="now-title" class="serif">On the <em>easel</em></h2>
+          <span class="rn mono" aria-hidden="true">II.</span>
+          <h2 id="now-title" class="serif" data-axes data-split>On the <em>easel</em></h2>
           <p class="mono note">8 in progress</p>
         </header>
         <ul class="easel">
@@ -437,7 +485,8 @@
       </section>
       <section id="awards" class="section" aria-labelledby="awards-title">
         <header class="chapter">
-          <h2 id="awards-title" class="serif"> <em>Recognition</em></h2>
+          <span class="rn mono" aria-hidden="true">III.</span>
+          <h2 id="awards-title" class="serif" data-axes data-split> <em>Recognition</em></h2>
           <p class="mono note">newest first</p>
         </header>
         <ul class="awards-top">
@@ -501,7 +550,8 @@
         </div></section>
       <section id="stack" class="section" aria-labelledby="stack-title">
         <header class="chapter">
-          <h2 id="stack-title" class="serif">Tools &amp; <em>materials</em></h2>
+          <span class="rn mono" aria-hidden="true">IV.</span>
+          <h2 id="stack-title" class="serif" data-axes data-split>Tools &amp; <em>materials</em></h2>
           <p class="mono note">what the work is made of</p>
         </header>
         <dl class="tools rise">
@@ -544,7 +594,8 @@
       </section>
       <section id="activity" class="section" aria-labelledby="activity-title">
         <header class="chapter">
-          <h2 id="activity-title" class="serif">A year of <em>practice</em></h2>
+          <span class="rn mono" aria-hidden="true">V.</span>
+          <h2 id="activity-title" class="serif" data-axes data-split>A year of <em>practice</em></h2>
           <p class="mono note">last 365 days</p>
         </header>
         
@@ -561,12 +612,13 @@
       </section>
       <section class="off rise" aria-labelledby="off-title">
         <h2 id="off-title" class="mono col-head">Off hours</h2>
-        <p class="quip serif">Favourite kind of plot: someone solves an impossible problem with whatever&#39;s on hand. Same reason I fit LLMs into 2 GB.</p>
+        <p class="quip serif" data-split>Favourite kind of plot: someone solves an impossible problem with whatever&#39;s on hand. Same reason I fit LLMs into 2 GB.</p>
         <p class="films"><span class="mono">Films I return to</span><span class="serif">Interstellar</span><span class="serif">Tenet</span><span class="serif">Mystic River</span><span class="serif">Premam</span><span class="serif">The Martian</span></p>
       </section></div>
       <footer class="foot">
         <div class="paint p-maroon" data-paint="maroon" data-comp="foot" data-seed="0.73"><canvas aria-hidden="true"></canvas></div>
         <div class="wrap foot-in">
+          <a class="mark mark-lg serif" href="#top" data-axes="mark" aria-label="Back to the top">mvh</a>
           <p class="big serif">Models that run on the <em>device</em>, not in the cloud.</p>
           <p class="meta mono"><span>© 2026 Maadhav V H · built by hand, every painting generated</span><span>For agents: <a href="/for-agents.txt">for-agents.txt</a> · <a href="/resume.json">resume.json</a> · <a href="/llms.txt">llms.txt</a></span></p>
         </div>
