@@ -1,11 +1,23 @@
 'use strict';
 
-/* Progressive enhancement only: fills the heatmaps, refreshes durations, feeds live stats to the dot panel (dots.js). */
+/* Progressive enhancement only: fills the heatmaps, refreshes durations, reveals sections as they scroll in. */
 (function () {
   const SR = window.SiteRender;
   const esc = SR ? SR.esc : (value) => String(value ?? '');
   const linkAttrs = SR ? SR.linkAttrs : () => '';
-  const fact = (text) => window.Dots && window.Dots.fact(text);
+  const fact = () => {};
+
+  // Sections below the fold rise in when they arrive. Anything already on
+  // screen is left alone, so nothing flashes, and without JS nothing is hidden.
+  function reveal() {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.remove('wait'); io.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    document.querySelectorAll('.rise').forEach((el) => {
+      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('wait'); io.observe(el); }
+    });
+  }
   const fmt = (n) => n.toLocaleString('en-US');
   const num = (v) => Number(v) || 0;
 
@@ -82,6 +94,7 @@
     const page = document.getElementById('portfolio');
     if (!page) return;
     if (SR) SR.refreshDurations(page, new Date());
+    reveal();
     const handle = (id) => (document.getElementById(id) || document.body).getAttribute('data-handle') || '';
     const gh = `https://github.com/${encodeURIComponent(handle('contributions'))}`;
     const lc = `https://leetcode.com/u/${encodeURIComponent(handle('leetcode'))}/`;

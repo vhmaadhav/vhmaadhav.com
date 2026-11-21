@@ -1,6 +1,6 @@
 # maadhav-site
 
-Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page with a dot-matrix display hero and docked section label, GitHub and LeetCode contribution heatmaps, and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Worker (`worker/index.js`) serves the LeetCode snapshot and the static files in `dist/`.
+Personal portfolio for Maadhav V H, live at [vhmaadhav.com](https://vhmaadhav.com). It is a buildless static page set as an art book around colour-field paintings that are generated in the browser (soft slabs of colour in the manner of Rothko and Turrell, one per project), with GitHub and LeetCode contribution heatmaps and a prerendered HTML copy of the content for search engines and LLM crawlers. `index.html` loads `dist/content.json`, which `dist/app.js` renders with `dist/style.css`. A small Cloudflare Worker (`worker/index.js`) serves the LeetCode snapshot and the static files in `dist/`.
 
 ## Build
 
@@ -41,11 +41,11 @@ All content lives in `dist/content.json`:
 - `profile`: name, role, bio lines, location, header links (`github`, `linkedin`, `email`, `resume`). `handle` is the GitHub username used for the contribution heatmap.
 - `experience`: `start` and `end` as `YYYY-MM`. Omit `end` for a current role. Durations are computed automatically.
 - `wins`: shown as "awards", newest first. The first three are full entries (`highlight: true` colours the result, `source` adds a link); the rest become a compact list.
-- `projects`: add `url` only for public repos. Private projects get a `note` and no link.
+- `projects`: add `url` only for public repos. `paint` picks the painting's palette (ember, umber, slate, plum, olive, ink, maroon, tobacco).
 - `education`, `credentials`: plain entries.
 - `skills`: `label` plus an optional `icon`, a devicon class from the pinned devicon v2.16.0 stylesheet. Entries without an icon show as text-only chips.
 
-Markup lives in `dist/render.js`, which both `build.mjs` and the browser use, so the static page and any client refresh always match. The dot-matrix engine (hero panel, docked section label, case-study and 404 displays, heading roundness) is `dist/dots.js`; the heatmaps and experience durations are in `dist/app.js`, and layout is in `dist/style.css`. The page template is `src/index.template.html`. The resume is `dist/Maadhav_VH_Resume.pdf`.
+Markup lives in `dist/render.js`, which both `build.mjs` and the browser use, so the static page and any client refresh always match. The paintings are `dist/paint.js`: one shared WebGL context paints every `[data-paint]` holder (palette, composition and seed come from data attributes), the hero breathes and follows the pointer with a soft light, and project plates move while hovered. Each palette also has a flat CSS fallback in `dist/style.css`, so the page keeps its colours without JavaScript or WebGL, and nothing uses inline styles (the Worker's CSP forbids them). A project's palette is its `paint` field in `content.json`; case-study banners reuse it. The heatmaps, experience durations and scroll reveals are in `dist/app.js`. Templates are in `src/`; `src/og.html` is the source of `dist/og.png` (render it at 1200×630). The resume is `dist/Maadhav_VH_Resume.pdf`.
 
 ## License
 

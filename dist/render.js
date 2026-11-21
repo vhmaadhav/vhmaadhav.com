@@ -6,6 +6,10 @@
  *   - the browser loads this file before app.js, which only refreshes the
  *     experience durations after the static page is in place.
  *
+ * Paintings are emitted as <div data-paint> holders with a <canvas>; paint.js
+ * paints them, and style.css gives each palette a flat fallback.
+ * The Worker's CSP forbids inline styles, so nothing here writes style="".
+ *
  * UMD: a CommonJS module under Node, a global `SiteRender` in the browser.
  */
 (function (root, factory) {
@@ -19,6 +23,20 @@
   'use strict';
 
   const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // Painting titles, one per palette (paint.js holds the colours).
+  const PAINTINGS = {
+    ember: 'Ember over Umber',
+    umber: 'Umber, Black, Ochre',
+    slate: 'Slate over Rust',
+    plum: 'Plum with an Orange Seam',
+    olive: 'Bone and Olive',
+    ink: 'Indigo, Brick',
+    maroon: 'Black on Maroon',
+    tobacco: 'Tobacco and Gold'
+  };
+  const PAINT_ORDER = ['umber', 'slate', 'olive', 'ink', 'tobacco', 'plum', 'maroon', 'ember'];
 
   function esc(value) {
     return String(value ?? '').replace(/[&<>"']/g, (c) => ({
@@ -36,6 +54,11 @@
   function monthLabel(ym) {
     const [year, month] = ym.split('-');
     return `${MONTHS[Number(month) - 1]} ${year}`;
+  }
+
+  function monthName(ym) {
+    const [year, month] = ym.split('-');
+    return `${MONTH_NAMES[Number(month) - 1]} ${year}`;
   }
 
   // "Sep 2026" -> "2026-09", "2026" -> "2026", anything else -> null.
@@ -75,228 +98,243 @@
     return parts.join(', ') || 'under a month';
   }
 
-  // A section: "$ name" heading, optional mono aside, then the body.
-  function section(id, title, body, aside = '') {
-    return `
-        <section id="${id}" class="section" data-dot="${esc(id.toUpperCase())}" aria-labelledby="${id}-title">
-          <header class="sec-head">
-            <h2 id="${id}-title"><span class="prompt" aria-hidden="true">$</span> ${esc(title)}</h2>
-            ${aside ? `<p class="aside">${esc(aside)}</p>` : ''}
-          </header>
-          ${body}
-        </section>`;
+  const pad = (n) => String(n).padStart(2, '0');
+
+  // A painting holder. paint.js fills the canvas; CSS shows the palette until then.
+  function painting(name, comp, seed, extra = '') {
+    return `<div class="paint p-${esc(name)}" data-paint="${esc(name)}" data-comp="${esc(comp)}" data-seed="${esc(seed)}"${extra}><canvas aria-hidden="true"></canvas></div>`;
   }
 
-  // Top bar: handle on the left, four landmarks on the right.
-  function topbar(profile) {
-    const resume = profile.links.find((l) => l.label === 'resume');
-    const items = [
-      '<a href="#work">work</a>',
-      '<a href="#awards">awards</a>',
-      '<a href="#experience">experience</a>'
-    ];
-    if (resume) items.push(`<a class="nav-cv" href="${esc(resume.url)}"${linkAttrs(resume.url)}>résumé</a>`);
+  // Chapter heading: a large serif title with an italic word, plus a small mono note.
+  function chapter(id, title, italic, note = '') {
     return `
-      <header class="topbar">
-        <a class="brand" href="#top">~/${esc(profile.handle)}</a>
-        <nav class="topnav" aria-label="Primary">${items.join('')}</nav>
+        <header class="chapter">
+          <h2 id="${id}-title" class="serif">${esc(title)}${italic ? ` <em>${esc(italic)}</em>` : ''}</h2>
+          ${note ? `<p class="mono note">${esc(note)}</p>` : ''}
+        </header>`;
+  }
+
+  function section(id, heading, body, cls = '') {
+    return `
+      <section id="${id}" class="section${cls ? ` ${cls}` : ''}" aria-labelledby="${id}-title">${heading}
+        ${body}
+      </section>`;
+  }
+
+  // "Maadhav V H" -> "Maadhav <i>V H</i>"
+  function nameMarkup(name) {
+    const [first, ...rest] = String(name).split(' ');
+    return rest.length ? `${esc(first)} <i>${esc(rest.join(' '))}</i>` : esc(first);
+  }
+
+  function hero(profile) {
+    const resume = profile.links.find((l) => l.label === 'resume');
+    const nav = [
+      '<a href="#work">Work</a>',
+      '<a href="#now">Now</a>',
+      '<a href="#awards">Awards</a>',
+      resume ? `<a class="keep" href="${esc(resume.url)}"${linkAttrs(resume.url)}>Résumé</a>` : ''
+    ].join('');
+    const city = String(profile.location || '').split(',')[0];
+    return `
+      <header class="hero" id="top">
+        ${painting('ember', 'hero', '0.37', ' data-live data-light')}
+        <div class="wrap hero-bar">
+          <a class="mark serif" href="#top" aria-label="${esc(profile.name)}, top of page">mvh</a>
+          <nav class="hero-nav" aria-label="Primary">${nav}</nav>
+        </div>
+        <div class="wrap hero-plaque-wrap" aria-hidden="true">
+          <p class="plaque mono">Untitled (${esc(PAINTINGS.ember)}), 2026<br>painted in your browser, never quite the same twice</p>
+        </div>
+        <div class="wrap hero-name">
+          <h1 class="serif">${nameMarkup(profile.name)}<span class="sr"> — ${esc(profile.role)}</span></h1>
+          <div class="hero-under">
+            <p class="tagline">${esc(profile.tagline || profile.bio[0])}</p>
+            <p class="meta mono">${(profile.heroMeta || [`${city}, India`]).map(esc).join('<br>')}</p>
+          </div>
+        </div>
       </header>`;
   }
 
-  // Hero buttons, in this order. Email is the filled one, the résumé the outlined one.
-  const BUTTONS = ['email', 'resume', 'github', 'linkedin', 'leetcode'];
-  const BUTTON_TEXT = { email: 'email me', resume: 'résumé ↓', github: 'github', linkedin: 'linkedin', leetcode: 'leetcode' };
-  const BUTTON_CLASS = { email: 'btn btn-primary', resume: 'btn btn-outline' };
+  // Order of the contact links in the intro.
+  const LINK_ORDER = ['email', 'github', 'linkedin', 'leetcode', 'resume'];
+  const LINK_TEXT = { email: 'Email', github: 'GitHub', linkedin: 'LinkedIn', leetcode: 'LeetCode', resume: 'Résumé (PDF)' };
 
-  // The dot panel (dots.js) types the name above the intro; the h1 shows only until the panel is ready (CSS), so the name is never doubled and never missing.
-  function hero(profile) {
-    const buttons = BUTTONS
+  function intro(profile) {
+    const links = LINK_ORDER
       .map((label) => profile.links.find((l) => l.label === label))
       .filter(Boolean)
-      .map((link) => `<a class="${BUTTON_CLASS[link.label] || 'btn btn-quiet'}" href="${esc(link.url)}"${linkAttrs(link.url)}>${esc(BUTTON_TEXT[link.label] || link.label)}</a>`)
+      .map((l) => `<a href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(LINK_TEXT[l.label] || l.label)}</a>`)
       .join('');
-    const bio = profile.bio.map((line) => `<p class="lede">${esc(line)}</p>`).join('');
-    const facts = (profile.panel && profile.panel.facts) || [];
+    const lead = profile.lead ? `<p class="lead serif rise">${profile.lead.map((part, i) => (i % 2 ? `<em>${esc(part)}</em>` : esc(part))).join('')}</p>` : '';
+    const notes = (profile.notes || profile.bio).map((line) => `<p>${esc(line)}</p>`).join('');
     return `
-      <section id="top" class="hero" aria-labelledby="hero-name">
-        <div class="panel" data-panel data-name="${esc(profile.name)}" data-facts="${esc(facts.join('|'))}">
-          <p class="panel-fb" aria-hidden="true">${esc(facts.join(' · '))}</p>
-          <canvas aria-hidden="true"></canvas>
-        </div>
-        <div class="intro">
-          <h1 id="hero-name">${esc(profile.name)}<span class="vh"> — ${esc(profile.role)}</span></h1>
-          <p class="role-line">${esc(profile.role)}</p>
-          ${bio}
-          <nav class="buttons" aria-label="contact and links">${buttons}</nav>
-          <p class="status-row">
-            <span class="status"><span class="dot" aria-hidden="true"></span>${esc(profile.status)}</span>
-            <span class="meta">${esc(profile.meta)}</span>
-          </p>
+      <section class="intro" aria-label="About">
+        ${lead}
+        <div class="intro-side rise">
+          ${notes}
+          <p class="status mono"><span class="dot" aria-hidden="true"></span>${esc(profile.status)}</p>
+          <p class="links">${links}</p>
         </div>
       </section>`;
   }
 
-  // Three strongest proofs, one card each.
+  // Three strongest proofs, side by side.
   function proofs(list) {
+    if (!list.length) return '';
     const items = list.map((item) => {
       const link = item.link
-        ? `<p class="proof-link"><a href="${esc(item.link.url)}"${linkAttrs(item.link.url)}>${esc(item.link.label)}</a></p>`
+        ? `<a href="${esc(item.link.url)}"${linkAttrs(item.link.url)}>${esc(item.link.label)}</a>`
         : '';
       return `
-          <li class="proof">
-            <p class="proof-value">${esc(item.value)}</p>
-            <p class="proof-text">${esc(item.text)}</p>
-            ${item.note ? `<p class="proof-note">${esc(item.note)}</p>` : ''}
+          <li class="fig">
+            <p class="v serif">${esc(item.value)}</p>
+            <p class="t">${esc(item.text)}</p>
+            ${item.note ? `<p class="t note">${esc(item.note)}</p>` : ''}
             ${link}
           </li>`;
     }).join('');
     return `
-      <section class="proofs" data-dot="PROOF" aria-label="Strongest proof">
-        <ul class="proof-list">${items}</ul>
+      <section class="figures rise" aria-label="Strongest proof">
+        <ul>${items}</ul>
       </section>`;
   }
 
   function projects(list, more = []) {
     const withCode = list.filter((p) => p.url).length;
-    const cards = list.map((p) => {
-      const role = p.role
-        ? `<p class="my-role"><span class="k">my role · </span>${esc(p.role)}</p>`
-        : '';
-      const code = p.code
-        ? (p.url
+    const plates = list.map((p, i) => {
+      const name = PAINTINGS[p.paint] ? p.paint : PAINT_ORDER[i % PAINT_ORDER.length];
+      const comp = String(i % 4);
+      const no = pad(i + 1);
+      const acts = [
+        p.caseStudy && `<a href="${esc(p.caseStudy)}">Read the case study</a>`,
+        p.paper && `<a href="${esc(p.paper.url)}"${linkAttrs(p.paper.url)} title="${esc(p.paper.title)}">Preprint ↗</a>`,
+        ...(p.links || []).map((l) => `<a href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)}</a>`),
+        p.code && (p.url
           ? `<a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
-          : `<span class="code">${esc(p.code)}</span>`)
-        : '';
-      const study = p.caseStudy ? `<a href="${esc(p.caseStudy)}">read case study →</a>` : '';
-      const paper = p.paper
-        ? `<a href="${esc(p.paper.url)}"${linkAttrs(p.paper.url)} title="${esc(p.paper.title)}">preprint ↗</a>`
-        : '';
-      const extra = (p.links || [])
-        .map((l) => `<a href="${esc(l.url)}"${linkAttrs(l.url)}>${esc(l.label)}</a>`).join('');
-      const foot = study || paper || extra || code
-        ? `<div class="card-foot">${study}${paper}${extra}${code}</div>` : '';
+          : `<span>${esc(p.code)}</span>`)
+      ].filter(Boolean).join('');
       return `
-          <li>
-            <article class="card">
-              <div class="card-head">
-                <h3><span class="marker" aria-hidden="true">&gt;</span> ${esc(p.title)}</h3>
-                ${p.tag ? `<span class="pill">${esc(p.tag)}</span>` : ''}
-              </div>
+          <li class="plate rise${i % 2 ? ' flip' : ''}" data-paint-host>
+            <figure class="art">
+              ${painting(name, comp, (0.19 + i * 0.29).toFixed(2))}
+              <figcaption class="cap mono"><span>Pl. ${no}</span><span>${esc(PAINTINGS[name])}</span></figcaption>
+            </figure>
+            <article class="plate-text">
+              <p class="no mono">No. ${no}</p>
+              <h3 class="serif">${esc(p.title)}</h3>
+              ${p.tag ? `<p class="tag serif">${esc(p.tag)}</p>` : ''}
               <p class="what">${esc(p.what)}</p>
-              ${role}
-              <p class="card-proof">${esc(p.proof)}</p>
-              ${foot}
+              ${p.role ? `<p class="role">My role: ${esc(p.role)}</p>` : ''}
+              <p class="res mono">${esc(p.proof)}</p>
+              ${acts ? `<p class="acts">${acts}</p>` : ''}
             </article>
           </li>`;
     }).join('');
-    const repos = more.map((r) => `<a href="${esc(r.url)}"${linkAttrs(r.url)}>${esc(r.name)}</a>`).join(' · ');
-    const also = repos ? `<p class="also"><span class="muted">also on github:</span> ${repos}</p>` : '';
-    return section('work', 'ls work/', `<ul class="cards">${cards}</ul>${also}`,
-      `${list.length} projects · ${withCode} with public code`);
+    const repos = more.map((r) => `<a href="${esc(r.url)}"${linkAttrs(r.url)}>${esc(r.name)}</a>`).join('');
+    const also = repos ? `<p class="also"><span class="mono">Also on GitHub</span>${repos}</p>` : '';
+    return section('work', chapter('work', 'Selected', 'work', `${list.length} works · ${withCode} public`),
+      `<ol class="plates">${plates}</ol>${also}`);
   }
 
-  // Work in progress: one row each, shaped like the experience items.
+  // Work in progress: a small swatch of colour beside each.
   function building(list) {
     if (!list.length) return '';
-    const withCode = list.filter((p) => p.url).length;
-    const items = list.map((p) => {
+    const items = list.map((p, i) => {
       const code = p.code
         ? (p.url
-          ? `<a href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
-          : `<span class="muted">${esc(p.code)}</span>`)
+          ? `<a class="mono" href="${esc(p.url)}"${linkAttrs(p.url)}>${esc(p.code)}</a>`
+          : `<span class="mono quiet">${esc(p.code)}</span>`)
         : '';
       return `
-          <li class="item">
-            <div class="item-head">
-              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(p.title)}</span></p>
-              <p class="dates">${code}</p>
-            </div>
-            <p class="item-body">${esc(p.what)}</p>
-            <p class="item-body result">${esc(p.status)}</p>
+          <li class="easel-item rise">
+            <span class="swatch s${i % 9}" aria-hidden="true"></span>
+            <h3 class="serif">${esc(p.title)}</h3>
+            <p class="what">${esc(p.what)}</p>
+            <p class="st mono">${esc(p.status)}</p>
+            ${code ? `<p class="code">${code}</p>` : ''}
           </li>`;
     }).join('');
-    const aside = `${list.length} in progress` + (withCode ? ` · ${withCode} with public code` : '');
-    return section('now', 'currently working', `<ul class="list">${items}</ul>`, aside);
+    return section('now', chapter('now', 'On the', 'easel', `${list.length} in progress`),
+      `<ul class="easel">${items}</ul>`);
   }
 
-  // The first FEATURED_WINS entries (in content.json order) get full entries;
-  // the rest follow as a compact list, one line each.
+  // The first FEATURED_WINS entries (in content.json order) are set large;
+  // the rest follow as a list.
   const FEATURED_WINS = 3;
 
   function awards(list) {
-    const featured = list.slice(0, FEATURED_WINS);
-    const rest = list.slice(FEATURED_WINS);
     const dateOf = (win) => {
       const iso = isoFromDate(win.date);
       return iso ? time(iso, win.date) : esc(win.date);
     };
-    const items = featured.map((win) => {
-      const source = win.source
-        ? ` <a class="source" href="${esc(win.source)}"${linkAttrs(win.source)}>source ↗</a>`
-        : '';
+    const featured = list.slice(0, FEATURED_WINS).map((win) => {
+      const source = win.source ? `<a class="mono" href="${esc(win.source)}"${linkAttrs(win.source)}>Source ↗</a>` : '';
       return `
-          <li class="item">
-            <div class="item-head">
-              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="event">${esc(win.event)}</span></p>
-              <p class="dates">${dateOf(win)}</p>
-            </div>
-            <p class="item-body result${win.highlight ? ' hl' : ''}">${esc(win.result)}${source}</p>
+          <li class="award rise${win.highlight ? ' hi' : ''}">
+            <p class="d mono">${dateOf(win)}</p>
+            <h3 class="serif">${esc(win.event)}</h3>
+            <p class="r">${esc(win.result)}</p>
+            ${source}
           </li>`;
     }).join('');
-    const more = rest.map((win) => `
-            <li>${esc(win.event)} — ${esc(win.result)} · ${dateOf(win)}</li>`).join('');
-    const moreList = more ? `<ul class="more-awards">${more}</ul>` : '';
-    return section('awards', 'awards',
-      `<div class="awards-grid"><ul class="list">${items}</ul>${moreList}</div>`,
-      '& selections');
+    const rest = list.slice(FEATURED_WINS).map((win) => `
+          <li><span class="d mono">${dateOf(win)}</span><span class="e">${esc(win.event)}</span><span class="r">${esc(win.result)}</span></li>`).join('');
+    return section('awards', chapter('awards', '', 'Recognition', 'newest first'),
+      `<ul class="awards-top">${featured}</ul>${rest ? `<ul class="awards-rest rise">${rest}</ul>` : ''}`);
   }
 
   function experience(list, now) {
     const items = list.map((job) => {
-      const dates = `${time(job.start, monthLabel(job.start))} – ${job.end ? time(job.end, monthLabel(job.end)) : 'now'}`;
+      const dates = `${time(job.start, monthName(job.start))} – ${job.end ? time(job.end, monthName(job.end)) : 'now'}`;
       const endAttr = job.end ? ` data-end="${esc(job.end)}"` : '';
       const duration = `<span data-start="${esc(job.start)}"${endAttr}>${esc(durationLabel(job.start, job.end, now))}</span>`;
       return `
-          <li class="item">
-            <div class="item-head">
-              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(job.role)}</span></p>
-              <p class="dates">${dates}</p>
+          <li class="row">
+            <p class="d mono">${dates}<br>${duration}</p>
+            <div>
+              <h3 class="serif">${esc(job.role)}</h3>
+              <p class="org">${esc(job.company)}</p>
+              ${job.description ? `<p class="what">${esc(job.description)}</p>` : ''}
             </div>
-            <p class="item-body">${esc(job.company)} · ${duration}</p>
-            ${job.description ? `<p class="item-body">${esc(job.description)}</p>` : ''}
           </li>`;
     }).join('');
-    return section('experience', 'experience', `<ul class="list">${items}</ul>`);
+    return `
+        <div class="col rise" id="experience">
+          <h2 class="col-head mono">Experience</h2>
+          <ul class="rows">${items}</ul>
+        </div>`;
   }
 
-  // Text-only rows: a label in the left column, the items in the right.
+  function education(list, credentials) {
+    const items = list.map((edu) => `
+          <li class="row">
+            <p class="d mono">${esc(edu.dates)}</p>
+            <div>
+              <h3 class="serif">${esc(edu.title)}</h3>
+              <p class="org">${esc(edu.subtitle)}</p>
+            </div>
+          </li>`).join('');
+    const creds = credentials.length
+      ? `<h2 class="col-head mono sub">Credentials</h2><ul class="creds">${credentials.map((c) => `<li>${esc(c)}</li>`).join('')}</ul>`
+      : '';
+    return `
+        <div class="col rise" id="education">
+          <h2 class="col-head mono">Education</h2>
+          <ul class="rows">${items}</ul>
+          ${creds}
+        </div>`;
+  }
+
+  // Tools, grouped: the medium the work is made in.
   function stack(groups) {
     const rows = groups.map((group) => `
-            <div class="stack-row">
-              <dt>${esc(group.group)}</dt>
-              <dd>${group.items.map((item) => esc(item)).join(' · ')}</dd>
+            <div class="tool-row">
+              <dt class="mono">${esc(group.group)}</dt>
+              <dd>${group.items.map((item) => esc(item)).join('<span class="sep" aria-hidden="true"> · </span>')}</dd>
             </div>`).join('');
-    return section('stack', 'stack', `<dl class="stack">${rows}</dl>`);
-  }
-
-  // Degree rows, shaped like the experience items.
-  function education(list) {
-    const items = list.map((edu) => `
-          <li class="item">
-            <div class="item-head">
-              <p class="item-title"><span class="marker" aria-hidden="true">&gt;</span><span class="name">${esc(edu.title)}</span></p>
-              <p class="dates">${esc(edu.dates)}</p>
-            </div>
-            <p class="item-body">${esc(edu.subtitle)}</p>
-          </li>`).join('');
-    return section('education', 'education', `<ul class="list">${items}</ul>`);
-  }
-
-  // Certificates and memberships, one compact line each.
-  function credentials(list) {
-    const items = list.map((cred) => `
-            <li><span class="marker" aria-hidden="true">&gt;</span><span>${esc(cred)}</span></li>`).join('');
-    return section('credentials', 'credentials', `<ul class="creds">${items}</ul>`);
+    return section('stack', chapter('stack', 'Tools &', 'materials', 'what the work is made of'),
+      `<dl class="tools rise">${rows}</dl>`);
   }
 
   // The heatmaps are the only parts filled in by app.js. Without JavaScript the
@@ -305,32 +343,38 @@
     const ghUrl = `https://github.com/${encodeURIComponent(username)}`;
     const lcUrl = `https://leetcode.com/u/${encodeURIComponent(leetcodeHandle)}/`;
     const body = `
-          <div class="heat-pair">
+          <div class="heat-pair rise">
             <div class="heat-block">
-              <h3 class="caption">github</h3>
-              <div id="contributions" data-handle="${esc(username)}"><p class="muted">contribution heatmap needs javascript. <a href="${esc(ghUrl)}"${linkAttrs(ghUrl)}>view activity on github →</a></p></div>
+              <h3 class="caption mono">GitHub</h3>
+              <div id="contributions" data-handle="${esc(username)}"><p class="muted">The contribution calendar needs JavaScript. <a href="${esc(ghUrl)}"${linkAttrs(ghUrl)}>See activity on GitHub →</a></p></div>
             </div>
             <div class="heat-block">
-              <h3 class="caption">leetcode</h3>
-              <div id="leetcode" data-handle="${esc(leetcodeHandle)}"><p class="muted">leetcode heatmap needs javascript. <a href="${esc(lcUrl)}"${linkAttrs(lcUrl)}>view on leetcode →</a></p></div>
+              <h3 class="caption mono">LeetCode</h3>
+              <div id="leetcode" data-handle="${esc(leetcodeHandle)}"><p class="muted">The LeetCode calendar needs JavaScript. <a href="${esc(lcUrl)}"${linkAttrs(lcUrl)}>See it on LeetCode →</a></p></div>
             </div>
           </div>`;
-    return section('activity', 'activity', body);
+    return section('activity', chapter('activity', 'A year of', 'practice', 'last 365 days'), body);
   }
 
   function offHours(item) {
-    return section('off-hours', 'off-hours', `
-          <div class="off-body">
-            <p class="films">fav films · ${esc(item.films)}</p>
-            <p class="quip-text">${esc(item.quip)}</p>
-          </div>`);
+    if (!item) return '';
+    const films = item.films.split('·').map((f) => f.trim()).filter(Boolean);
+    return `
+      <section class="off rise" aria-labelledby="off-title">
+        <h2 id="off-title" class="mono col-head">Off hours</h2>
+        <p class="quip serif">${esc(item.quip.charAt(0).toUpperCase() + item.quip.slice(1))}</p>
+        <p class="films"><span class="mono">Films I return to</span>${films.map((f) => `<span class="serif">${esc(f.replace(/\b\w/g, (c) => c.toUpperCase()))}</span>`).join('')}</p>
+      </section>`;
   }
 
   function footer(name, now) {
     return `
-      <footer class="footer">
-        <p>© ${now.getFullYear()} ${esc(name)} · built by hand, no framework</p>
-        <p>for agents → <a href="/for-agents.txt">/for-agents.txt</a> · <a href="/resume.json">/resume.json</a></p>
+      <footer class="foot">
+        ${painting('maroon', 'foot', '0.73')}
+        <div class="wrap foot-in">
+          <p class="big serif">Models that run on the <em>device</em>, not in the cloud.</p>
+          <p class="meta mono"><span>© ${now.getFullYear()} ${esc(name)} · built by hand, every painting generated</span><span>For agents: <a href="/for-agents.txt">for-agents.txt</a> · <a href="/resume.json">resume.json</a> · <a href="/llms.txt">llms.txt</a></span></p>
+        </div>
       </footer>`;
   }
 
@@ -342,16 +386,18 @@
     const now = options.now || new Date();
     const handle = data.profile.handle;
     return [
-      topbar(data.profile),
       hero(data.profile),
+      '<div class="wrap">',
+      intro(data.profile),
       proofs(data.proofs || []),
       projects(data.projects, data.moreProjects),
       building(data.building || []),
       awards(data.wins),
-      `<div class="duo">${experience(data.experience, now)}${stack(data.skills)}</div>`,
-      `<div class="duo">${education(data.education || [])}${credentials(data.credentials || [])}</div>`,
+      `<section class="section duo" aria-label="Experience and education">${experience(data.experience, now)}${education(data.education || [], data.credentials || [])}</section>`,
+      stack(data.skills),
       activity(handle, data.profile.leetcodeHandle || handle),
       offHours(data.offHours),
+      '</div>',
       footer(data.profile.name, now)
     ].join('');
   }
@@ -369,6 +415,8 @@
     linkAttrs,
     monthLabel,
     durationLabel,
+    painting,
+    PAINTINGS,
     content,
     refreshDurations
   };

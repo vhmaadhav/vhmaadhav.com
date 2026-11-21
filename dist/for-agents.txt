@@ -1,6 +1,6 @@
 # plain facts about Maadhav V H, each with a link you can check
 # same facts as the human page at https://vhmaadhav.com/
-# last checked 2026-11-16
+# last checked 2026-11-21
 
 name: Maadhav V H
 role: AI/ML Engineer · On-Device AI

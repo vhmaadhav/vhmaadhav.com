@@ -15,6 +15,10 @@
     "panel": {
       "facts": ["ON-DEVICE AI", "NPU · ARM · CAN", "SEMICON RUNNER-UP '26", "GRAD 2028 · OPEN TO WORK"]
     },
+    "tagline": "Machine-learning engineer. I make models small enough, and honest enough, to live on the hardware they were meant for.",
+    "heroMeta": ["Coimbatore, India", "ECE, class of 2028"],
+    "lead": ["Phone NPUs, Arm boards, a single ", "MI300X", ", a car's own signals. I like the problems where the hardware says no and you find a way anyway."],
+    "notes": ["Most of my work is measurement: building the benchmark first, deciding in advance what would count as a win, and saying so plainly when something doesn't hold up."],
     "bio": [
       "I build ML systems — small LLMs, vision models, RAG — and get them running on real hardware: phone NPUs, Arm boards, a car's own signals."
     ],
@@ -117,6 +121,7 @@
   "projects": [
     {
       "title": "DriftSense",
+      "paint": "umber",
       "what": "Finds where a wafer-inspection microscope actually is — under unknown 8–12× zoom and ±5° rotation — or says the pattern isn’t there.",
       "proof": "match F1 0.91 on 2,250 pairs · CAD-to-SEM within 1 px on 600",
       "tag": "runner-up · SEMICON India 2026",
@@ -127,6 +132,7 @@
     },
     {
       "title": "CoronarySafe",
+      "paint": "slate",
       "what": "Label-free quality control for AI coronary-artery reconstructions from CT angiography: ranks scans so a reviewer checking a fixed 20% catches the critical failures that Dice hides.",
       "proof": "sealed test, unseen segmenter: 29 of 64 critical failures in 32 of 160 reviews (best rule: 25) · normalised recall 0.906 · pre-registered",
       "tag": "preprint · pre-registered",
@@ -142,6 +148,7 @@
     },
     {
       "title": "AortaMix",
+      "paint": "olive",
       "what": "To our knowledge the first public simulation dataset of blood mixing in the aorta during peripheral VA-ECMO: adults at 50, 75 and 90% support, plus a child with a neck cannula. Research simulations of an idealized aorta, not for clinical use.",
       "proof": "3D spectral-element CFD (nekRS on an AMD MI300X) + 6,011 lumped-model samples · interactive viewer · short runs: the mixing zone had not settled at high support",
       "tag": "open dataset · CC BY 4.0",
@@ -154,6 +161,7 @@
     },
     {
       "title": "redline",
+      "paint": "ink",
       "what": "A batch-1 inference engine for one model on one GPU: Qwen3.8-27B on an AMD MI300X, Rust host and hand-written HIP kernels, no PyTorch at runtime.",
       "proof": "1k-token prompts: 5.56 ms/token vs vLLM 6.98 and SGLang 6.67 · exact mode: speculation gives the same tokens as plain decoding",
       "tag": "release 1 · AMD MI300X",
@@ -163,6 +171,7 @@
     },
     {
       "title": "VehicleGPT",
+      "paint": "tobacco",
       "what": "Ask a car about its own data: a small LLM answering from CAN logs, fully offline.",
       "proof": "hybrid 29.5% → 95.5% on 200 q · best single model 82% @ 1.74 s, 2 cores / 2 GiB",
       "tag": "Tata Elxsi Teliport S4",
@@ -172,6 +181,7 @@
     },
     {
       "title": "Mouna",
+      "paint": "plum",
       "what": "Speak by mouthing words — silent lip-reading turned into voice on a phone NPU, no internet.",
       "proof": "false utterances 23% → 7% · Kannada top-1 75.3%",
       "tag": "grand finale · iQOO 2026",
@@ -179,6 +189,7 @@
     },
     {
       "title": "DT Guardian",
+      "paint": "maroon",
       "what": "Simulated edge controller for a 200 kVA transformer: MILP scheduling of battery, EV charging and pump loads.",
       "proof": "energy not served, 6 h outage: 121.2 → 56.7 kWh (−53%)",
       "tag": "phase 2 · Schneider Yuva Yodha",
@@ -263,8 +274,8 @@
     { "group": "tooling", "items": ["Docker", "GitHub Actions", "pytest", "Git"] }
   ],
   "offHours": {
-    "films": "interstellar · tenet · mystic river · premam · the martian",
-    "quip": "favourite kind of plot: someone solves an impossible problem with whatever's on hand. same reason i fit llms into 2 gb."
+    "films": "Interstellar · Tenet · Mystic River · Premam · The Martian",
+    "quip": "Favourite kind of plot: someone solves an impossible problem with whatever's on hand. Same reason I fit LLMs into 2 GB."
   },
   "credentials": [
     "Bosch EMS & Vehicle Networking",

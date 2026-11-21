@@ -198,8 +198,8 @@ I build ML systems — small LLMs, vision models, RAG — and get them running o
 
 ## Off-hours
 
-- Films: interstellar · tenet · mystic river · premam · the martian
-- Note: favourite kind of plot: someone solves an impossible problem with whatever's on hand. same reason i fit llms into 2 gb.
+- Films: Interstellar · Tenet · Mystic River · Premam · The Martian
+- Note: Favourite kind of plot: someone solves an impossible problem with whatever's on hand. Same reason I fit LLMs into 2 GB.
 
 ## Verification
 

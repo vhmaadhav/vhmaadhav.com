@@ -110,7 +110,7 @@ const robots = [
 ].join('\n');
 
 // Case-study pages and the 404 page (lib/work.mjs). Their URLs join the sitemap.
-const workUrls = buildWork({ distDir, base, esc, ogImage, ogType, profile });
+const workUrls = buildWork({ distDir, base, esc, ogImage, ogType, profile, projects: data.projects, painting: SR.painting });
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
