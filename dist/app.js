@@ -146,6 +146,52 @@
     document.addEventListener('pointerleave', () => { px = py = -1e4; if (!running) { running = true; requestAnimationFrame(frame); } });
   }
 
+  // Depth under the cursor: a project painting tilts a few degrees toward the pointer, like a
+  // canvas on a wall seen from where you stand, and the hero name drifts slightly against it.
+  // One rAF loop that sleeps whenever nothing is easing; transforms only, so it stays cheap.
+  function depth() {
+    if (reduced || !matchMedia('(hover: hover)').matches) return;
+    const items = [];
+    document.querySelectorAll('[data-paint-host]').forEach((host) => {
+      const frame = host.querySelector('.art-frame');
+      if (!frame) return;
+      const it = { el: frame, x: 0, y: 0, tx: 0, ty: 0, kind: 'tilt' };
+      host.addEventListener('pointermove', (e) => {
+        const r = frame.getBoundingClientRect();
+        it.tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+        it.ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
+        wake();
+      }, { passive: true });
+      host.addEventListener('pointerleave', () => { it.tx = 0; it.ty = 0; wake(); });
+      items.push(it);
+    });
+    const name = document.querySelector('.hero-name h1');   // the h1, since .hero-name has its own scroll animation
+    if (name) {
+      const it = { el: name, x: 0, y: 0, tx: 0, ty: 0, kind: 'drift' };
+      addEventListener('pointermove', (e) => {
+        if (window.scrollY > window.innerHeight) return;
+        it.tx = (e.clientX / window.innerWidth - 0.5) * 2;
+        it.ty = (e.clientY / window.innerHeight - 0.5) * 2;
+        wake();
+      }, { passive: true });
+      items.push(it);
+    }
+    let running = false;
+    function wake() { if (!running) { running = true; requestAnimationFrame(step); } }
+    function step() {
+      let busy = false;
+      for (const it of items) {
+        it.x += (it.tx - it.x) * 0.1;
+        it.y += (it.ty - it.y) * 0.1;
+        if (Math.abs(it.tx - it.x) + Math.abs(it.ty - it.y) > 0.002) busy = true;
+        it.el.style.transform = it.kind === 'tilt'
+          ? `perspective(1400px) rotateY(${(it.x * 3.2).toFixed(3)}deg) rotateX(${(-it.y * 2.6).toFixed(3)}deg)`
+          : `translate3d(${(-it.x * 9).toFixed(2)}px, ${(-it.y * 6).toFixed(2)}px, 0)`;
+      }
+      if (busy) requestAnimationFrame(step); else running = false;
+    }
+  }
+
   const fmt = (n) => n.toLocaleString('en-US');
   const num = (v) => Number(v) || 0;
 
@@ -222,6 +268,7 @@
     const page = document.getElementById('portfolio');
     reveal();
     pointerAxes();
+    depth();
     if (!page) return;
     scrollChrome();
     if (SR) SR.refreshDurations(page, new Date());

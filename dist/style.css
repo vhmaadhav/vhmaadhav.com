@@ -54,7 +54,7 @@ img, canvas { display: block; }
 
 /* film-like grain over everything (a static image, so it costs nothing) */
 body::after {
-  content: ""; pointer-events: none; position: fixed; inset: 0; z-index: 90; opacity: .12; mix-blend-mode: overlay;
+  content: ""; pointer-events: none; position: fixed; inset: 0; z-index: 90; opacity: .07; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -174,7 +174,7 @@ body::after {
 /* Turrell: the painting lights the page around it in its own colour */
 .art-frame::before {
   content: ""; position: absolute; inset: -20% -16%; z-index: -1; pointer-events: none; border-radius: 50%;
-  background: radial-gradient(closest-side, var(--spill, transparent), transparent); filter: blur(30px); opacity: .5; transition: opacity 1.6s;
+  background: radial-gradient(closest-side, var(--spill, transparent), transparent); filter: blur(30px); opacity: .34; transition: opacity 1.6s;
 }
 .plate:hover .art-frame::before { opacity: .8; }
 .plate[data-tone="ember"] { --spill: rgba(224, 120, 46, .42); } .plate[data-tone="umber"] { --spill: rgba(184, 122, 52, .4); }
@@ -475,5 +475,5 @@ body.og::after { display: none; }
 .og-sub { position: absolute; left: 64px; bottom: 52px; color: var(--soft); font-size: 17px; }
 
 /* poster of the hero painting: the first paint shows the real painting, then paint.js takes over */
-.hero > .paint { background: #2a120d url(/hero-poster.d6639c80.webp) center / cover no-repeat; }
+.hero > .paint { background: #2a120d url(/hero-poster.548f8005.webp) center / cover no-repeat; }
 .hero > .paint::before { display: none; }

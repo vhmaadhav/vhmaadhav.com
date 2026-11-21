@@ -3,8 +3,8 @@
  *
  * Every element with [data-paint] holds a <canvas>. The element's CSS draws a
  * flat fallback of the same palette, so without JavaScript or WebGL the page
- * still shows the painting's colours. With WebGL this file paints soft,
- * feathered slabs of colour over a ground, with physical relief (short brush
+ * still shows the painting's colours. With WebGL this file paints matte,
+ * opaque slabs of colour over a ground, the way acrylic sits on canvas, with physical relief (short brush
  * strokes lit by a raking light), a faint seam of light where the slabs meet,
  * and a fingertip that pushes the wet paint.
  *
@@ -121,25 +121,25 @@ void main(){
   vec2 uv = uv0 - dsp;
   vec2 q = vec2(uv.x * asp, uv.y);
 
-  vec3 col = ground * (.82 + .3*fbm3(q*1.6 + seed));
+  vec3 col = ground * (.92 + .2*fbm3(q*1.6 + seed));
   float drag = fbm4(vec2(q.x*1.2, q.y*26.) + seed*3. + .01*t);
   float drag2 = fbm2(vec2(q.x*2.2, q.y*60.) + seed*7.);
   float cloud = fbm3(q*2.6 + seed*5. + .008*t);
   float breathe = .5 + .5*sin(t*.12 + seed*6.);
 
   float ha, hb, hc;
-  float a = slab(uv, rA, .06, 1., 0., ha);
-  float b = slab(uv, rB, .045, 4., .22, hb);
-  float c = slab(uv, rC, .065, 8., .08, hc);
+  float a = slab(uv, rA, .032, 1., 0., ha);
+  float b = slab(uv, rB, .026, 4., .22, hb);
+  float c = slab(uv, rC, .036, 8., .08, hc);
 
   // sfumato: each slab breathes a faint smoke of its own colour into the ground around it
-  col = mix(col, cA * (.55 + .3*cloud), clamp(ha - a, 0., 1.) * .2);
-  col = mix(col, cB * (.55 + .3*cloud), clamp(hb - b, 0., 1.) * .14);
-  col = mix(col, cC * (.55 + .3*cloud), clamp(hc - c, 0., 1.) * .2);
+  col = mix(col, cA * (.55 + .3*cloud), clamp(ha - a, 0., 1.) * .07);
+  col = mix(col, cB * (.55 + .3*cloud), clamp(hb - b, 0., 1.) * .05);
+  col = mix(col, cC * (.55 + .3*cloud), clamp(hc - c, 0., 1.) * .07);
 
-  col = mix(col, cA * (.7 + .26*drag + .08*drag2 + .3*cloud), a*.94);
-  col = mix(col, cB * (.72 + .24*drag + .06*drag2 + .3*cloud), b*.95);
-  col = mix(col, cC * (.72 + .24*drag + .3*cloud), c*.93);
+  col = mix(col, cA * (.86 + .13*drag + .05*drag2 + .1*cloud), a*.97);
+  col = mix(col, cB * (.87 + .12*drag + .04*drag2 + .1*cloud), b*.97);
+  col = mix(col, cC * (.87 + .12*drag + .1*cloud), c*.97);
 
   // the seam of light, a little brighter near the pointer
   vec2 pq = vec2(light.x * asp, light.y);
@@ -157,7 +157,7 @@ void main(){
   float eps = .0026;
   float h0 = stroke(q, flow, tilt);
   vec2 g = vec2(stroke(q + vec2(eps, 0.), flow, tilt) - h0, stroke(q + vec2(0., eps), flow, tilt) - h0) / eps;
-  g *= .0085 * thick * (.6 + .9*ridge);
+  g *= .0068 * thick * (.6 + .9*ridge);
   float pileW = 0.;
   if (smOn > .5) {
     float m0 = length(dsp);
@@ -176,17 +176,18 @@ void main(){
   }
   float lam = dot(N, L) - L.z;
   float body = .3 + .7*thick;
-  col *= 1. + lam * .95 * body;
+  col *= 1. + lam * .62 * body;
   col += glow * max(lam, 0.) * .035 * body;
   vec3 Hv = normalize(L + vec3(0., 0., 1.));
   float sp = pow(max(dot(N, Hv), 0.), 46.) - pow(Hv.z, 46.);
-  col += mix(vec3(.5), glow, .55) * max(sp, 0.) * .3 * (.25 + .75*thick);
+  col += mix(vec3(.5), glow, .55) * max(sp, 0.) * .07 * (.25 + .75*thick);
   col = max(col, 0.);
 
   float weave = .5 + .25*sin(gl_FragCoord.x*1.9) + .25*sin(gl_FragCoord.y*1.7);
   col *= .93 + .07*weave;
   col *= .94 + .12*h(gl_FragCoord.xy*.37);
-  col *= .55 + .45*smoothstep(1.25, .25, length((uv0 - .5)*vec2(1.05, 1.2)));
+  col *= .74 + .26*smoothstep(1.25, .25, length((uv0 - .5)*vec2(1.05, 1.2)));
+  col = col * 1.07 + .008;
   gl_FragColor = vec4(col, 1.);
 }`;
   const VERT = 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }';
